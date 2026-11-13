@@ -15,7 +15,7 @@ from fastapi.templating import Jinja2Templates
 
 from app import banco
 from app.status import cor_da_zona
-from ia.modelo import sugerir
+from ia.modelo import info_modelo, sugerir
 
 PASTA_APP = Path(__file__).resolve().parent
 
@@ -94,8 +94,7 @@ def painel(request: Request):
 
 @app.get("/sobre-modelo")
 def sobre_modelo(request: Request):
-    # TODO #6: mostrar como a IA foi treinada e a taxa de acerto.
-    return templates.TemplateResponse(request, "sobre_modelo.html", {})
+    return templates.TemplateResponse(request, "sobre_modelo.html", {"info": info_modelo()})
 
 
 # ---------- API (JSON) ----------
