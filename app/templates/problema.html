@@ -1,0 +1,54 @@
+{# Um problema: dados, ações do supervisor e linha do tempo (que nunca é apagada). #}
+{% extends "base.html" %}
+{% block titulo %}Problema #{{ p.id }} · Ronda Viva{% endblock %}
+{% block conteudo %}
+<div class="mx-auto" style="max-width: 720px" id="tela-problema" data-id="{{ p.id }}">
+  <a href="{{ url_for('telas.fila') }}" class="small">← Fila</a>
+  <h1 class="h4 mt-2">{{ p.zona_nome }}</h1>
+  <div class="mb-2">
+    <span class="badge prio-{{ p.prioridade }}">{{ p.prioridade }}</span>
+    <span class="badge text-bg-secondary">{{ p.status_nome }}</span>
+    {% if p.risco %}<span class="badge bg-danger">🚨 Avise a brigada pelo rádio</span>{% endif %}
+  </div>
+  <p class="mb-1">“{{ p.descricao }}”</p>
+  <div class="small text-secondary mb-3">{{ p.categoria_nome }} · {{ p.equipe_nome }} · aberto {{ p.quando }}
+    · IA sugeriu: {{ p.sugestao_nome }} {{ p.sugestao_prioridade }}</div>
+
+  <div id="mensagem"></div>
+
+  {% if p.status != 'resolvido' %}
+  <div class="card mb-3"><div class="card-body">
+    {% if not p.confirmado %}
+    <h2 class="h6">Supervisor: confirmar a sugestão</h2>
+    <div class="row g-2 mb-2">
+      <div class="col-12 col-sm-4"><select id="categoria" class="form-select">
+        {% for codigo, nome in categorias %}<option value="{{ codigo }}" {{ 'selected' if codigo == p.categoria }}>{{ nome }}</option>{% endfor %}
+      </select></div>
+      <div class="col-6 col-sm-4"><select id="prioridade" class="form-select">
+        {% for pr in prioridades %}<option value="{{ pr }}" {{ 'selected' if pr == p.prioridade }}>{{ pr }}</option>{% endfor %}
+      </select></div>
+      <div class="col-6 col-sm-4"><select id="equipe" class="form-select">
+        {% for e in equipes %}<option value="{{ e.id }}" {{ 'selected' if e.id == p.equipe_id }}>{{ e.nome }}</option>{% endfor %}
+      </select></div>
+    </div>
+    <button class="btn btn-primary w-100 mb-2 acao" data-acao="confirmar">✔️ Confirmar</button>
+    {% endif %}
+    <div class="d-flex gap-2">
+      {% if p.status == 'aberto' %}<button class="btn btn-warning flex-fill acao" data-acao="assumir">🙋 Assumir</button>{% endif %}
+      <button class="btn btn-success flex-fill acao" data-acao="resolver">✅ Resolver</button>
+    </div>
+  </div></div>
+  {% endif %}
+
+  <div class="d-flex justify-content-between align-items-center">
+    <h2 class="h6 mb-2">Linha do tempo</h2>
+    <button class="btn btn-sm btn-outline-light" onclick="window.print()">🖨️ Dossiê</button>
+  </div>
+  <ul class="linha-tempo">
+    {% for e in p.eventos %}
+    <li><div class="small text-secondary">{{ e.quando }} · {{ e.papel }}</div><div>{{ e.texto }}</div></li>
+    {% endfor %}
+  </ul>
+</div>
+{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', filename='js/problema.js') }}"></script>{% endblock %}
