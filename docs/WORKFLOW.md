@@ -38,7 +38,7 @@ Os nomes que todos usam estão em **[`contrato.md`](contrato.md)**. A estrutura 
 | `pip install` falha (Python muito novo) | Use Python 3.12. Ou peça ajuda no grupo com o print do erro. |
 | Internet cai na demo | Bootstrap e IA já ficam no projeto. Rode no notebook e conecte o celular no mesmo Wi-Fi ou hotspot. |
 | Esquecer de registrar o uso de IA | É item do PR: uma linha em `docs/IA.md` por tarefa. |
-| Imagem da planta no repo público | Proibido até a organização liberar. O `.gitignore` já bloqueia os nomes conhecidos. |
+| Planta do shopping (dado sensível) | Não usar no repo, na IA, na demo nem no vídeo. Mapa = desenho próprio em blocos. O `.gitignore` bloqueia os nomes conhecidos. |
 | Alguém some ou trava | Duplas de apoio: Backend ↔ IA e Telas ↔ Dados. Travou 30 min? Fala no grupo. |
 | Ninguém sabe explicar o código para a banca | Cada PR explica em 3 linhas o que faz. Código simples > código esperto. |
 | Mexer na reta final e quebrar | **Sábado 8h: congelamento.** Depois disso, só correção com PR revisado. |
