@@ -1,23 +1,29 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Ronda Viva</title>
-  <style>
-    body { font-family: sans-serif; margin: 1.25rem; line-height: 1.4; }
-    a { font-size: 1.15rem; }
-    li { margin: 0.6rem 0; }
-  </style>
-</head>
-<body>
-  <h1>Ronda Viva</h1>
-  <p>Mostra o que ninguém conferiu. Registra que cuidou.</p>
-  <h2>Zonas</h2>
-  <ul>
-    {% for zona in zonas %}
-      <li><a href="{{ url_for('zona.ver', codigo=zona.codigo) }}">{{ zona.nome }}</a> — {{ zona.rotulo }}</li>
-    {% endfor %}
-  </ul>
-</body>
-</html>
+{# Mapa das zonas em blocos (desenho próprio, sem a planta). Cinza = ninguém conferiu no prazo. #}
+{% extends "base.html" %}
+{% set pagina = 'mapa' %}
+{% block conteudo %}
+<div class="d-flex flex-wrap justify-content-between align-items-end mb-3 gap-2">
+  <div>
+    <h1 class="h4 mb-0">Mapa das zonas</h1>
+    <div class="small text-secondary">Toque numa zona para abrir a tela do QR.</div>
+  </div>
+  <div class="small d-flex flex-wrap gap-2">
+    <span class="badge estado-ok">OK</span><span class="badge estado-atencao">Atenção</span>
+    <span class="badge estado-problema">Problema</span><span class="badge estado-cinza">Ninguém conferiu</span>
+  </div>
+</div>
+
+{% for piso, zonas_do_piso in zonas|groupby('piso') %}
+<h2 class="h6 text-secondary mt-3">Piso {{ piso }}</h2>
+<div class="grade-zonas">
+  {% for z in zonas_do_piso %}
+  <a class="zona-bloco estado-{{ z.estado }}" href="{{ url_for('zona.ver', codigo=z.codigo) }}">
+    <div class="nome">{{ z.nome }}</div>
+    <div class="info">{{ z.rotulo }}</div>
+    <div class="info">{{ z.ha }}</div>
+    {% if z.reincidencia %}<div class="info">🔁 problema repetido</div>{% endif %}
+  </a>
+  {% endfor %}
+</div>
+{% endfor %}
+{% endblock %}
