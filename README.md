@@ -56,30 +56,35 @@ docs/
 
 ## 💻 Para quem vai programar
 
+**Leia primeiro:** [`docs/WORKFLOW.md`](docs/WORKFLOW.md) (como trabalhamos) e [`docs/contrato.md`](docs/contrato.md) (nomes que todos usam).
+**Vai usar IA?** Cole o arquivo da sua área em [`docs/contexto-ia/`](docs/contexto-ia/) no início da conversa. No Cursor não precisa: ele lê o `AGENTS.md`.
+
 ### 1. Preparar (uma vez só)
 ```bash
 git clone https://github.com/Hackarun-Dragonair/dragonair-shopping.git
 cd dragonair-shopping
 python3 -m venv .venv
 source .venv/bin/activate          # Windows: .venv\Scripts\activate
-# instruções de instalação e execução entram na Missão 2 (a partir de 13/11 10h)
+pip install -r requirements.txt
 ```
-> 💡 No **VS Code**: `File → Open Folder` na pasta do projeto. A aba **Source Control** (ícone de ramificação) faz commit e push com botões, sem terminal.
+> 💡 No **VS Code**: `File → Open Folder` na pasta do projeto. A aba **Source Control** faz commit e push com botões.
 
-### 2. Fluxo de cada tarefa
+### 2. Rodar
 ```bash
-git switch main && git pull                 # 1. atualizar
-git switch -c feature/nome-da-tarefa        # 2. criar sua branch
-# ... programar ...
-git add arquivo1.py arquivo2.py             # 3. escolher o que salvar
-git commit -m "feat: o que você fez"        # 4. salvar
-git push -u origin feature/nome-da-tarefa   # 5. enviar
+uvicorn app.main:app --reload --host 0.0.0.0
 ```
-6. No GitHub, clique em **Compare & pull request** → descreva → **Create pull request**.
-7. Outra pessoa revisa e clica em **Merge**.
+Abra http://localhost:8000. No celular (mesmo Wi-Fi): `http://IP-DO-NOTEBOOK:8000`.
+Testes: `pytest -q`
 
-### 3. Deu problema?
-- **Conflito** (`<<<<<<<` no arquivo): escolha o trecho certo, apague as marcas, salve, `git add`, `git commit`. Na dúvida, chame alguém ou um mentor.
+### 3. Estrutura (já pronta, não crie pastas novas)
+```
+app/main.py, banco.py   ← BACKEND      app/templates/, static/ ← TELAS
+ia/                     ← IA           dados/, app/status.py   ← DADOS
+tests/                  ← um teste por área
+```
+
+### 4. Deu problema?
+- **Conflito** (`<<<<<<<` no arquivo): chame o dono do arquivo ou um mentor.
 - **Desfazer mudança local:** `git restore arquivo`
 - 🚫 **Nunca** use `git push --force` nem `git reset --hard` na `main`.
 
@@ -89,16 +94,16 @@ git push -u origin feature/nome-da-tarefa   # 5. enviar
 1. **Nada de senhas, chaves de API ou dados pessoais** no repo (ele é público).
 2. **Usou IA? Registre em [`docs/IA.md`](docs/IA.md).** É exigido pelo regulamento.
 3. **Fez algo? Guarde evidência** em `docs/evidencias/` (print, foto, resultado de teste).
-4. **Pegou uma tarefa? Avise** comentando na issue: "peguei esta".
+4. **Pegou uma tarefa?** Arraste o cartão para **Fazendo** no [quadro](https://github.com/orgs/Hackarun-Dragonair/projects/1).
 5. **Código entra na `main` só por Pull Request**, depois que o protótipo existir.
 
 ---
 
 ## ▶️ Como executar
-Pré-requisito: Python 3.10+. Siga o passo 1 de "Para quem vai programar".
+Pré-requisito: Python 3.10+ (recomendado 3.12). Siga os passos 1 e 2 de "Para quem vai programar".
 
 ## 🤖 Uso de IA
 Declarado em [docs/IA.md](docs/IA.md).
 
 ## 📜 Créditos e licenças
-- _(serão listados na Missão 2: Flask, scikit-learn, Pico.css, htmx)_
+- FastAPI, Uvicorn, Jinja2 (licença BSD/MIT) · scikit-learn (BSD) · Bootstrap 5.3 (MIT) · pytest (MIT)
