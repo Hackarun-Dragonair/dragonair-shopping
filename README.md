@@ -42,6 +42,9 @@ Comece com o tipo e diga o que mudou:
 
 ```
 README.md              ← você está aqui (guia da equipe)
+app/                   ← API Flask (rotas, banco, triagem). As telas ficam com o front-end
+data/                  ← frases de treino e teste cego da IA
+tests/                 ← pytest
 docs/
   desafio.md           ← texto oficial do desafio
   IA.md                ← onde declaramos todo uso de IA (OBRIGATÓRIO)
@@ -50,6 +53,7 @@ docs/
   evidencias/          ← prints, fotos e testes (contam 20% da nota)
 .github/               ← modelo automático de Pull Request
 .gitignore             ← lista do que o Git NÃO deve enviar (senhas, lixo)
+render.yaml            ← serviço gratuito no Render (link público; a demo não depende dele)
 ```
 
 ---
@@ -62,7 +66,8 @@ git clone https://github.com/Hackarun-Dragonair/dragonair-shopping.git
 cd dragonair-shopping
 python3 -m venv .venv
 source .venv/bin/activate          # Windows: .venv\Scripts\activate
-# instruções de instalação e execução entram na Missão 2 (a partir de 13/11 10h)
+pip install -r requirements.txt
+# execução: seção "Como executar" abaixo
 ```
 > 💡 No **VS Code**: `File → Open Folder` na pasta do projeto. A aba **Source Control** (ícone de ramificação) faz commit e push com botões, sem terminal.
 
@@ -95,10 +100,52 @@ git push -u origin feature/nome-da-tarefa   # 5. enviar
 ---
 
 ## ▶️ Como executar
-Pré-requisito: Python 3.10+. Siga o passo 1 de "Para quem vai programar".
+Pré-requisito: Python 3.11+. Na Missão 2 o servidor é **Flask** (alternativa já prevista na Entrega 1). Esta pasta entrega a API. As telas ficam com o front-end.
+
+**Windows (PowerShell)**
+```powershell
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+$env:SEED_ON_START = "1"
+flask --app app:create_app run --host 0.0.0.0 --port 8000
+```
+
+**macOS / Linux**
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+SEED_ON_START=1 flask --app app:create_app run --host 0.0.0.0 --port 8000
+```
+
+`GET /` lista os endpoints. Os principais, todos em JSON:
+
+| Método | Caminho | Uso |
+|---|---|---|
+| GET | `/mapa` | zonas, estado (ok, atencao, problema, cinza) e a URL para o QR |
+| GET | `/z/<codigo>` | uma zona, histórico e botões daquele tipo |
+| POST | `/z/<codigo>/conferir` | `{resultado: ok\|atencao\|problema, origem: qr\|lista}` |
+| POST | `/z/<codigo>/triagem` | `{descricao}` → sugestão da IA |
+| POST | `/z/<codigo>/problema` | grava o problema na fila |
+| GET | `/fila` | problemas; filtros `piso`, `equipe`, `prioridade`, `status` |
+| POST | `/problemas/<id>/confirmar` | supervisor confirma categoria, prioridade e equipe |
+| POST | `/problemas/<id>/assumir` | em atendimento |
+| POST | `/problemas/<id>/resolver` | resolvido; a linha do tempo só cresce |
+| GET | `/painel` | os três indicadores, por zona e equipe |
+| GET | `/sobre-o-modelo` | acerto medido no teste cego |
+| GET | `/usuarios` | usuários fictícios da demo |
+| POST | `/entrar` | `{usuario_codigo}` grava a sessão; ou envie o cabeçalho `X-Usuario` |
+
+`SEED_ON_START=1` recria o shopping fictício a cada subida. Sem essa variável, o banco local só é semeado quando ainda está vazio. `PUBLIC_BASE_URL` é o endereço que o front-end coloca no QR.
+
+Testes: `python -m pytest`.
+
+**Link público:** o `render.yaml` sobe um Web Service gratuito (um worker, porque o banco é SQLite). O disco some quando o serviço dorme; por isso o cenário é recriado na subida. A apresentação usa o notebook.
 
 ## 🤖 Uso de IA
-Declarado em [docs/IA.md](docs/IA.md).
+Declarado em [docs/IA.md](docs/IA.md). Dentro do produto, o modelo é scikit-learn (TF-IDF + regressão logística), treinado nas frases de `data/treino.csv`. O acerto medido no teste cego sai em `GET /sobre-o-modelo`.
 
 ## 📜 Créditos e licenças
-- _(serão listados na Missão 2: Flask, scikit-learn, Pico.css, htmx)_
+- Flask (BSD) — API
+- scikit-learn (BSD) — modelo local de triagem

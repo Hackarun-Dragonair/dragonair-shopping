@@ -13,6 +13,7 @@ __pycache__/
 # Banco local
 *.db
 *.sqlite3
+instance/
 
 # Editor / SO
 .vscode/

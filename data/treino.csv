@@ -1,0 +1,82 @@
+frase,categoria,prioridade
+ta pingando do teto,hidraulica,P2
+cano vazando na area tecnica,hidraulica,P2
+vaso sanitario entupido,hidraulica,P2
+torneira nao fecha no banheiro,hidraulica,P2
+goteira em cima da praca,hidraulica,P2
+ralo entupido transbordando agua,hidraulica,P2
+infiltracao na parede do corredor,hidraulica,P3
+agua escorrendo do forro,hidraulica,P2
+alagando a praca de alimentacao,hidraulica,P1
+lampada queimada no corredor,eletrica,P3
+tomada soltando faisca,eletrica,P1
+corredor inteiro sem luz,eletrica,P2
+disjuntor caiu na area tecnica,eletrica,P2
+luz piscando sem parar,eletrica,P3
+quadro eletrico aberto,eletrica,P1
+cheiro de queimado na tomada,eletrica,P1
+escada rolante parada sem energia,eletrica,P2
+centelha na tomada do corredor,eletrica,P1
+ar condicionado pingando agua gelada,climatizacao,P2
+saida de ar sem vento,climatizacao,P3
+praca muito quente ar desligado,climatizacao,P2
+ar fazendo barulho forte,climatizacao,P3
+climatizacao parada no mall,climatizacao,P2
+duto do ar solto no teto,climatizacao,P2
+ar nao gela a praca,climatizacao,P3
+vento gelado demais no corredor,climatizacao,P4
+piso molhado sem placa,limpeza,P2
+lixo transbordando na praca,limpeza,P3
+banheiro sem papel,limpeza,P4
+mesa suja na praca de alimentacao,limpeza,P4
+mau cheiro no sanitario,limpeza,P3
+chao grudento no mall,limpeza,P3
+papel espalhado no corredor,limpeza,P4
+saboneteira vazia,limpeza,P4
+porta da doca aberta,seguranca,P2
+extintor sumiu do corredor,seguranca,P1
+camera da entrada desligada,seguranca,P2
+saida de emergencia bloqueada,seguranca,P1
+alarme disparando na doca,seguranca,P1
+portao do estacionamento aberto,seguranca,P2
+grade da area tecnica quebrada,seguranca,P2
+pessoa estranha na area tecnica,seguranca,P2
+piso quebrado na entrada,estrutura,P2
+placa do teto solta,estrutura,P1
+corrimao frouxo na escada,estrutura,P2
+azulejo caido no banheiro,estrutura,P3
+rachadura na parede do corredor,estrutura,P3
+degrau solto na escada,estrutura,P1
+forro caindo na praca,estrutura,P1
+vidro trincado na entrada,estrutura,P2
+tem fumaca saindo do quadro eletrico,eletrica,P1
+fogo na lixeira da praca,seguranca,P1
+pessoa presa no elevador,seguranca,P1
+choque na tomada do corredor,eletrica,P1
+agua descendo pelo forro do corredor,hidraulica,P2
+agua caindo do teto do sanitario,hidraulica,P2
+goteira caindo no box do banheiro,hidraulica,P2
+cano estourado no banheiro,hidraulica,P2
+poca de agua embaixo do ralo,hidraulica,P2
+lixeira cheia no corredor,limpeza,P3
+lixeira da entrada transbordando,limpeza,P3
+sanitario com fedor forte,limpeza,P3
+banheiro fedendo desde cedo,limpeza,P3
+cheiro ruim no sanitario masculino,limpeza,P3
+lixo acumulado demais na doca,limpeza,P3
+chao molhado na entrada sem sinalizacao,limpeza,P2
+fumaca no corredor de servico,seguranca,P1
+fumaca saindo da doca,seguranca,P1
+fumaca na praca perto das mesas,seguranca,P1
+porta da emergencia travada,seguranca,P1
+saida de emergencia nao abre,seguranca,P1
+doca aberta durante a noite,seguranca,P2
+portao aberto na garagem,seguranca,P2
+forro pendurado no mall,estrutura,P1
+pedaco de forro solto sobre a passagem,estrutura,P1
+placa pendurada no teto da entrada,estrutura,P1
+corredor escuro sem luz nenhuma,eletrica,P2
+mall ficou escuro de repente,eletrica,P2
+garagem escura sem iluminacao,eletrica,P2
+ar condicionado nao gela o corredor,climatizacao,P3
+grelha sem vento na loja,climatizacao,P3

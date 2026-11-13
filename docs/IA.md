@@ -14,7 +14,7 @@ A equipe revisou e responde por todo conteúdo gerado com IA.
 | 12/11 23h | Arthur | Claude (agentes: 6 especialistas + 8 avaliadores simulando perfis da banca) | Gerar ideias, criticar e comparar 13 propostas (incluindo a de um integrante) em várias rodadas | Arthur escolheu a Ronda Viva e incorporou peças da proposta do colega |
 | 13/11 madrugada | Arthur | Claude | Redigir o documento da Missão 1 a partir das decisões da equipe | Revisado pelo Arthur antes do envio |
 | 13/11 7h40 | Arthur | Claude (8 avaliadores simulados) | Rodada de estresse do dossiê completo: perguntas duras, incoerências e promessas exageradas | Equipe aplicou 8 mudanças: regra de risco nunca rebaixa, linha do tempo no lugar do login completo, pitch só com o que será demonstrado, slogan novo |
-| | | | | |
+| 13/11 12h30 | Bypaulohx | Cursor (Grok) | Implementar a base Flask da Missão 2: rotas, SQLite, triagem, mapa, fila, painel e linha do tempo, a partir do planejamento da equipe | A equipe revisa no pull request. As telas HTML geradas nessa sessão foram removidas: o front-end é de outra pessoa. A API ficou em JSON |
 
 ## Dentro da solução
 _(se o produto usar IA: onde, qual modelo, por quê, e como lidamos com erros da IA)_

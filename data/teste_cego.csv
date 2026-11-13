@@ -1,0 +1,21 @@
+frase,categoria,prioridade
+agua caindo do forro do banheiro,hidraulica,P2
+privada entupida outra vez,hidraulica,P2
+torneira jorrando sem parar,hidraulica,P2
+mall escuro sem nenhuma luz,eletrica,P2
+tomada estalando e soltando faisca na doca,eletrica,P1
+disjuntor desarmou de novo,eletrica,P2
+ar condicionado nao liga na praca,climatizacao,P2
+grelha do ar sem sair vento,climatizacao,P3
+duto de climatizacao solto,climatizacao,P2
+chao molhado perto da praca sem aviso,limpeza,P2
+lixeira da praca cheia demais,limpeza,P3
+sanitario fedendo muito,limpeza,P3
+emergencia com a porta travada,seguranca,P1
+extintor ausente no pilar,seguranca,P1
+doca ficou aberta a noite toda,seguranca,P2
+pedaco do forro pendurado,estrutura,P1
+piso da entrada afundado,estrutura,P2
+corrimao da escada bambo,estrutura,P2
+vi fumaca perto da praca de alimentacao,seguranca,P1
+pessoa presa dentro do elevador,seguranca,P1
