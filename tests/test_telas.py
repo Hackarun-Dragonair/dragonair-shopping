@@ -2,6 +2,7 @@
 
 
 def test_telas_abrem(client):
+    client.post("/entrar", json={"usuario_codigo": "otto"})  # painel é do gestor
     for rota in ["/", "/z/sanitario-piso1", "/telas/fila", "/telas/painel", "/telas/sobre-a-ia"]:
         resposta = client.get(rota)
         assert resposta.status_code == 200, rota

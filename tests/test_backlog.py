@@ -167,6 +167,7 @@ def test_ritmo_sugere_sem_trocar_o_prazo_da_zona(client):
 
 
 def test_etiquetas_em_json_e_pdf(client):
+    client.post("/entrar", json={"usuario_codigo": "otto"})  # PDF é do gestor
     lista = client.get("/etiquetas").get_json()["etiquetas"]
     assert any(item["codigo"] == "sanitario-piso1" and item["local_qr"] for item in lista)
     pdf = client.get("/etiquetas.pdf")
