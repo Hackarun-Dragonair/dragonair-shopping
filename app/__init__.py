@@ -25,6 +25,7 @@ def create_app(config: dict | None = None) -> Flask:
         CORS_ORIGIN=os.environ.get("CORS_ORIGIN", "*"),
         # Easter Egg sexta-feira 13: "auto" (só na data), "1" (sempre, para a demo), "0" (desliga).
         SEXTA13=os.environ.get("SEXTA13", "auto"),
+        PERMANENT_SESSION_LIFETIME=60 * 60 * 12,  # o celular lembra o crachá por 12 h
     )
     if config:
         app.config.update(config)
