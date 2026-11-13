@@ -1,0 +1,21 @@
+texto,categoria,prioridade,equipe
+vaso sanitário entupido,hidraulica,alta,manutencao
+torneira pingando sem parar,hidraulica,media,manutencao
+vazamento de água no teto,hidraulica,alta,manutencao
+chão molhado perto da pia,limpeza,media,limpeza
+lixeira cheia transbordando,limpeza,media,limpeza
+falta papel higiênico,limpeza,baixa,limpeza
+mesa suja com restos de comida,limpeza,baixa,limpeza
+cheiro forte no banheiro,limpeza,media,limpeza
+lâmpada queimada no corredor,eletrica,baixa,manutencao
+tomada soltando faísca,eletrica,urgente,manutencao
+cheiro de queimado no quadro de luz,eletrica,urgente,manutencao
+ar-condicionado sem gelar,climatizacao,media,manutencao
+ar-condicionado pingando no chão,climatizacao,media,manutencao
+porta da doca não fecha,estrutura,alta,manutencao
+piso quebrado com risco de tropeço,estrutura,alta,manutencao
+vidro trincado na entrada,estrutura,media,manutencao
+pessoa desconhecida na área técnica,seguranca,alta,seguranca
+porta de emergência bloqueada por caixas,seguranca,urgente,seguranca
+câmera de segurança desligada,seguranca,media,seguranca
+fumaça saindo da cozinha,seguranca,urgente,seguranca
