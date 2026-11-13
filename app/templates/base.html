@@ -22,8 +22,16 @@
     <div class="menu-itens">
       <a href="{{ url_for('mapa.inicio') }}" class="{{ 'ativo' if pagina == 'mapa' }}">{{ icone('mapa') }} Mapa das zonas</a>
       <a href="{{ url_for('telas.fila') }}" class="{{ 'ativo' if pagina == 'fila' }}">{{ icone('fila') }} Fila de problemas</a>
-      <a href="{{ url_for('telas.painel') }}" class="{{ 'ativo' if pagina == 'painel' }}">{{ icone('painel') }} Painel de gestão</a>
+      {% if usuario_atual and usuario_atual.perfil == 'gestor' %}<a href="{{ url_for('telas.painel') }}" class="{{ 'ativo' if pagina == 'painel' }}">{{ icone('painel') }} Painel de gestão</a>{% endif %}
       <a href="{{ url_for('telas.sobre_ia') }}" class="{{ 'ativo' if pagina == 'ia' }}">{{ icone('ia') }} Sobre a IA</a>
+    </div>
+    <div class="menu-usuario">
+      {% if usuario_atual %}
+        <div class="small"><strong>{{ usuario_atual.nome }}</strong><br><span class="text-secondary">{{ usuario_atual.perfil_nome }}</span></div>
+        <form method="post" action="{{ url_for('acesso.sair') }}"><button class="btn btn-sm btn-outline-light w-100 mt-2">Sair</button></form>
+      {% else %}
+        <a href="{{ url_for('acesso.entrar_tela') }}" class="btn btn-sm btn-primary w-100">Entrar com crachá</a>
+      {% endif %}
     </div>
     <div class="menu-rodape">
       Equipe Dragonair · HackaRun 2026<br>
@@ -38,7 +46,8 @@
   <nav class="menu-celular">
     <a href="{{ url_for('mapa.inicio') }}" class="{{ 'ativo' if pagina == 'mapa' }}">{{ icone('mapa') }}<span>Mapa</span></a>
     <a href="{{ url_for('telas.fila') }}" class="{{ 'ativo' if pagina == 'fila' }}">{{ icone('fila') }}<span>Fila</span></a>
-    <a href="{{ url_for('telas.painel') }}" class="{{ 'ativo' if pagina == 'painel' }}">{{ icone('painel') }}<span>Painel</span></a>
+    {% if usuario_atual and usuario_atual.perfil == 'gestor' %}<a href="{{ url_for('telas.painel') }}" class="{{ 'ativo' if pagina == 'painel' }}">{{ icone('painel') }}<span>Painel</span></a>
+    {% else %}<a href="{{ url_for('acesso.entrar_tela') }}" class="{{ 'ativo' if pagina == 'entrar' }}">{{ icone('escudo') }}<span>{{ 'Perfil' if usuario_atual else 'Entrar' }}</span></a>{% endif %}
     <a href="{{ url_for('telas.sobre_ia') }}" class="{{ 'ativo' if pagina == 'ia' }}">{{ icone('ia') }}<span>IA</span></a>
   </nav>
 
