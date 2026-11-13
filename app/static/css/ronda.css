@@ -79,6 +79,10 @@ body { background: var(--fundo); font-family: "Segoe UI", Roboto, system-ui, san
   border: 1px solid #454d5a; border-radius: 12px; padding: 14px; box-shadow: 0 10px 30px #0009; }
 @media (max-width: 768px) {
   .mapa-caixa { height: calc(62vw + 120px); min-height: 330px; }
+  /* Alvos de toque com pelo menos ~40px no celular */
+  .pisos button { padding: 9px 12px; }
+  .btn-sm { padding: .5rem .75rem; }
+  a.small[href] { display: inline-block; padding: 8px 0; }
   .inspetor { top: auto; bottom: 12px; right: 12px; left: 12px; width: auto; }
 }
 
