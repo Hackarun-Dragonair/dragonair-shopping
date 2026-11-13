@@ -1,6 +1,0 @@
-id,nome,tipo,piso,x,y,largura,altura,prazo_min
-sanitario-fem-p1,Sanitário feminino (piso 1),sanitario,1,120,80,60,40,60
-sanitario-masc-p1,Sanitário masculino (piso 1),sanitario,1,190,80,60,40,60
-praca-alimentacao,Praça de alimentação,praca,2,400,300,220,140,30
-corredor-central-p1,Corredor central (piso 1),corredor,1,300,200,400,40,120
-doca-1,Doca de carga 1,doca,1,850,600,80,60,240
