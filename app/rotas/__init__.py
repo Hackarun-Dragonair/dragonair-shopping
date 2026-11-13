@@ -1,3 +1,4 @@
+from app.rotas.eventos import bp as eventos_bp
 from app.rotas.mapa import bp as mapa_bp
 from app.rotas.painel import bp as painel_bp
 from app.rotas.problemas import bp as problemas_bp
@@ -13,3 +14,4 @@ def registrar(app) -> None:
     app.register_blueprint(mapa_bp)
     app.register_blueprint(painel_bp)
     app.register_blueprint(telas_bp)
+    app.register_blueprint(eventos_bp)
