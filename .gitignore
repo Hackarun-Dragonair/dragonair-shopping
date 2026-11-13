@@ -13,16 +13,14 @@ __pycache__/
 # Banco local
 *.db
 *.sqlite3
+instance/
 
 # Editor / SO
 .vscode/
 .idea/
 .DS_Store
 
-# Modelo treinado (gerado por ia/treinar.py)
-ia/modelo.joblib
-
-# Planta do shopping: NÃO subir até a organização liberar
+# Planta do shopping: dado sensível, NUNCA subir
 planta/
 *piso*.jpg
 *piso*.png
