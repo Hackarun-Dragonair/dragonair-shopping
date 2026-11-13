@@ -161,6 +161,14 @@ Para o cliente que pede JSON, envie `Accept: application/json` ou `?format=json`
 | POST | `/problemas/<id>/confirmar` | supervisor confirma categoria, prioridade e equipe |
 | POST | `/problemas/<id>/assumir` | em atendimento |
 | POST | `/problemas/<id>/resolver` | resolvido; a linha do tempo só cresce |
+| GET | `/problemas/<id>/dossie` | resumo para imprimir (JSON, ou texto com `Accept: text/plain`) |
+| POST | `/dispositivos` | autoriza o celular `{apelido, token}` |
+| POST | `/crachas/entrar` | `{codigo, token}` troca o usuário da demo se o aparelho e o crachá forem válidos |
+| POST | `/fila-envio` | reenvia conferências e problemas guardados quando a rede voltou |
+| GET | `/alertas` | OK divergente e semana sem achados, por zona |
+| GET | `/zonas/<codigo>/ritmo` | prazo sugerido pelo histórico; em 24/12, 25/12 e 31/12 o prazo cai pela metade |
+| GET | `/etiquetas` | nome da zona, onde colar e a URL |
+| GET | `/etiquetas.pdf` | o mesmo conteúdo em PDF, com o QR |
 | GET | `/painel` | os três indicadores, por zona e equipe |
 | GET | `/sobre-o-modelo` | acerto medido no teste cego |
 | GET | `/usuarios` | usuários fictícios da demo |

@@ -39,6 +39,13 @@ def inicio():
                     "modelo": "/sobre-o-modelo",
                     "usuarios": "/usuarios",
                     "zona": "/z/<codigo>",
+                    "dossie": "/problemas/<id>/dossie",
+                    "dispositivos": "/dispositivos",
+                    "cracha": "/crachas/entrar",
+                    "fila_envio": "/fila-envio",
+                    "alertas": "/alertas",
+                    "ritmo": "/zonas/<codigo>/ritmo",
+                    "etiquetas": "/etiquetas",
                 },
             }
         )

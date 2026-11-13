@@ -92,6 +92,13 @@ CREATE TABLE IF NOT EXISTS crachas (
   ativo INTEGER NOT NULL DEFAULT 1 CHECK (ativo IN (0, 1))
 );
 
+CREATE TABLE IF NOT EXISTS envios (
+  id INTEGER PRIMARY KEY,
+  chave TEXT NOT NULL UNIQUE,
+  tipo TEXT NOT NULL,
+  criado_em TEXT NOT NULL
+);
+
 CREATE INDEX IF NOT EXISTS idx_conferencias_zona ON conferencias (zona_id, criado_em);
 CREATE INDEX IF NOT EXISTS idx_problemas_zona ON problemas (zona_id, status);
 CREATE INDEX IF NOT EXISTS idx_eventos_problema ON eventos (problema_id, id);

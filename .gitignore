@@ -20,6 +20,9 @@ instance/
 .idea/
 .DS_Store
 
+# Notas pessoais da banca — não sobem no repositório público
+notas/
+
 # Planta do shopping: dado sensível, NUNCA subir
 planta/
 *piso*.jpg

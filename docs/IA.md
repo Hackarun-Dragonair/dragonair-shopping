@@ -18,6 +18,7 @@ A equipe revisou e responde por todo conteúdo gerado com IA.
 | 13/11 manhã | Mateus | Gemini | Gerar o protótipo visual das telas (HTML + Bootstrap) | Equipe usou o protótipo como base do visual. A parte que usava a planta do shopping foi retirada (dado sensível) |
 | 13/11 13h | Arthur | Claude | Montar o quadro de tarefas, o guia da equipe, o roteiro do teste com usuários e o roteiro do vídeo | Arthur definiu a divisão; equipe revisa |
 | 13/11 15h | Arthur | Claude | Criar as telas responsivas (mapa em blocos, tela da zona com sugestão da IA, fila, linha do tempo, painel, Sobre a IA) em cima da API do Paulo, seguindo o visual do protótipo do Mateus | Arthur revisa e ensaia a explicação; Mateus ajusta o visual |
+| 13/11 19h30 | Bypaulohx | Cursor (Grok) | Completar o backend que ainda estava em aberto: dossiê, celular autorizado com crachá, fila de envio, PDF das etiquetas e alertas por zona | Sem telas novas. A equipe revisa no pull request |
 
 ## Dentro da solução
 
