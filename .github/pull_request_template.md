@@ -6,7 +6,7 @@ Closes #
 1.
 
 ## Checklist
-- [ ] `pytest -q` passou
+- [ ] `python -m pytest` passou
 - [ ] Mexi só nos arquivos da minha área (ver docs/WORKFLOW.md)
 - [ ] Segui os nomes do docs/contrato.md
 - [ ] Sem senha, chave, dado pessoal ou imagem da planta

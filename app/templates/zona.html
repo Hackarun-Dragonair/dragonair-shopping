@@ -1,14 +1,58 @@
-{# Tela que abre ao ler o QR da zona. Dono: BACKEND + TELAS (tarefa #3). #}
+{# Tela que abre ao ler o QR da zona: OK / Atenção / Problema. #}
 {% extends "base.html" %}
+{% block titulo %}{{ zona.nome }} · Ronda Viva{% endblock %}
 {% block conteudo %}
-<h1 class="h4">{{ zona.nome }}</h1>
-{% if salvo %}<div class="alert alert-success">✅ Conferência registrada!</div>{% endif %}
+<div class="mx-auto" style="max-width: 560px">
+  <a href="{{ url_for('mapa.inicio') }}" class="small">← Mapa</a>
+  <h1 class="h4 mt-2 mb-1">{{ zona.nome }}</h1>
+  <div class="small text-secondary mb-3">
+    Piso {{ zona.piso }} · última conferência: {{ zona.ha }} ·
+    <span class="badge estado-{{ zona.estado }}">{{ zona.rotulo }}</span>
+  </div>
 
-<form method="post" class="d-grid gap-3">
-  <textarea name="texto" class="form-control" rows="2" placeholder="O que você viu? (só se não estiver OK)"></textarea>
-  {# TODO #6: mostrar aqui a sugestão da IA (GET /api/sugestao?texto=...) e o aviso da brigada. #}
-  <button name="status" value="ok" class="btn btn-success btn-lg">✅ OK</button>
-  <button name="status" value="atencao" class="btn btn-warning btn-lg">⚠️ Atenção</button>
-  <button name="status" value="problema" class="btn btn-danger btn-lg">🚨 Problema</button>
-</form>
+  {% if registrado == 'ok' %}
+    <div class="alert alert-success">✅ Conferência OK registrada.</div>
+  {% elif registrado == 'atencao' %}
+    <div class="alert alert-warning">⚠️ Conferência Atenção registrada.</div>
+  {% endif %}
+
+  {# OK e Atenção gravam direto. Problema abre o formulário abaixo (static/js/zona.js). #}
+  <form method="post" action="{{ url_for('zona.conferir', codigo=zona.codigo) }}" class="d-grid gap-3">
+    <input type="hidden" name="origem" value="qr">
+    <button type="submit" name="resultado" value="ok" class="btn btn-success botao-ronda">✅ OK</button>
+    <button type="submit" name="resultado" value="atencao" class="btn btn-warning botao-ronda">⚠️ Atenção</button>
+    <button type="submit" name="resultado" value="problema" id="botao-problema" class="btn btn-danger botao-ronda">🚨 Problema</button>
+  </form>
+
+  <section id="painel-problema" class="card mt-3 d-none" data-zona="{{ zona.codigo }}">
+    <div class="card-body">
+      <h2 class="h6">O que você viu?</h2>
+      <div id="atalhos" class="d-flex flex-wrap gap-2 mb-2"></div>
+      <textarea id="descricao" class="form-control mb-2" rows="2" placeholder="Escreva do seu jeito. Ex.: vaso entupido"></textarea>
+      <label class="small text-secondary" for="perto">Perto de (opcional)</label>
+      <select id="perto" class="form-select mb-3"><option value="">—</option></select>
+      <button id="botao-sugestao" class="btn btn-primary w-100">🤖 Ver sugestão da IA</button>
+
+      <div id="sugestao" class="mt-3 d-none">
+        <div id="alerta-risco" class="alert alert-danger fw-bold d-none"></div>
+        <div class="small text-secondary mb-2" id="confianca"></div>
+        <div class="row g-2">
+          <div class="col-12 col-sm-4"><label class="small">Categoria</label><select id="categoria" class="form-select"></select></div>
+          <div class="col-6 col-sm-4"><label class="small">Prioridade</label><select id="prioridade" class="form-select"></select></div>
+          <div class="col-6 col-sm-4"><label class="small">Equipe</label><select id="equipe" class="form-select"></select></div>
+        </div>
+        <button id="botao-registrar" class="btn btn-danger w-100 mt-3">Registrar problema</button>
+      </div>
+      <div id="resultado" class="mt-3"></div>
+    </div>
+  </section>
+
+  {% if historico %}
+  <h2 class="h6 mt-4">Últimas conferências</h2>
+  <ul class="small text-secondary">
+    {% for h in historico[:5] %}<li>{{ h.quando }} · {{ h.resultado }} ({{ h.origem }})</li>{% endfor %}
+  </ul>
+  {% endif %}
+</div>
 {% endblock %}
+{% block scripts %}<script src="{{ url_for('static', filename='js/zona.js') }}"></script>{% endblock %}

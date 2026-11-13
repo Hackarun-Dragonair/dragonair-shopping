@@ -1,71 +1,56 @@
-# 📜 Contrato da equipe
+# 📜 Contrato da equipe (versão Flask)
 
 São os nomes que **todos** usam. Mudar algo daqui? **Combine no grupo antes** e atualize este arquivo no mesmo PR.
 
 ## 1. Valores permitidos
 
-| Campo | Valores (sempre minúsculo, sem acento) |
-|---|---|
-| `tipo` de zona | `sanitario` · `praca` · `corredor` · `area_tecnica` · `doca` · `entrada` · `estacionamento` |
-| `status` da ronda | `ok` · `atencao` · `problema` |
-| `categoria` | `limpeza` · `hidraulica` · `eletrica` · `climatizacao` · `estrutura` · `seguranca` · `outros` |
-| `prioridade` | `baixa` · `media` · `alta` · `urgente` |
-| `equipe` | `limpeza` · `manutencao` · `seguranca` |
-| `estado` da ocorrência | `aberto` · `em_atendimento` · `resolvido` |
-| cor da zona no mapa | `verde` (ok) · `amarelo` (atenção) · `vermelho` (problema) · `cinza` (ninguém conferiu no prazo) |
+| Campo | Valores (minúsculo, sem acento) | Onde está no código |
+|---|---|---|
+| `categoria` | `hidraulica` · `eletrica` · `climatizacao` · `limpeza` · `seguranca` · `estrutura` | `app/dominio.py` (CATEGORIAS) |
+| `prioridade` | `P1` (risco a pessoas) · `P2` (grave) · `P3` (incomoda) · `P4` (detalhe) | `app/dominio.py` (PRIORIDADES) |
+| equipe | `manutencao` · `limpeza` · `seguranca` · `climatizacao` | `app/seed.py` |
+| resultado da conferência | `ok` · `atencao` · `problema` | rota `/z/<codigo>/conferir` |
+| estado da zona (cor do mapa) | `ok` (verde) · `atencao` (amarelo) · `problema` (vermelho) · `cinza` (ninguém conferiu no prazo) | `app/dominio.py` (estado_da_zona) |
+| status do problema | `aberto` · `em_atendimento` · `resolvido` | `app/consultas.py` |
+| tipo de zona | `sanitario` · `praca_alimentacao` · `corredor` · `escada` · `area_tecnica` · `doca` · `entrada` · `estacionamento` | `app/seed.py` |
 
-`id` de zona: minúsculo com hífen. Ex.: `sanitario-fem-p1`.
+Código de zona: minúsculo com hífen. Ex.: `sanitario-piso1`.
 
-## 2. Planilhas (pasta `dados/`)
+## 2. Planilhas da IA (pasta `data/`)
 
-**`zonas.csv`**: `id,nome,tipo,piso,x,y,largura,altura,prazo_min`
-- `x,y,largura,altura`: posição do bloco no mapa (desenho de 1000 × 700).
-- `prazo_min`: depois de quantos minutos sem conferência a zona fica cinza.
-- Só **áreas comuns**. Nada de loja.
+**`treino.csv`** e **`teste_cego.csv`**: `frase,categoria,prioridade`
+- Frases como alguém da ronda escreveria no celular. **Fictícias, sem nome de pessoa nem de loja.**
+- `teste_cego.csv` é só para medir: **nunca** copiar frases de lá para o treino.
+- Guia passo a passo: [`missao-2/guia-dados.md`](missao-2/guia-dados.md).
 
-**`frases.csv`**: `texto,categoria,prioridade,equipe`
-- Frases como alguém da ronda escreveria. **Sem nome de pessoas.**
-
-O teste `tests/test_dados.py` confere tudo isso sozinho.
-
-## 3. Banco (SQLite, recriado toda vez que o servidor liga)
-
-| Tabela | Colunas |
-|---|---|
-| `zonas` | as mesmas do `zonas.csv` |
-| `registros` | `id, zona_id, status, texto, criado_em` |
-| `ocorrencias` | `id, registro_id, zona_id, texto, categoria, prioridade, equipe, estado, risco, criado_em` |
-| `eventos` | `id, ocorrencia_id, tipo, detalhe, criado_em`. **Só insere, nunca altera nem apaga** (o banco bloqueia). |
-
-Datas: texto ISO, ex. `2026-11-13T19:30:00`.
+## 3. Regras que não mudam
+- Fumaça, fogo, choque ou pessoa presa → **P1** e **"Avise a brigada pelo rádio"**. Ninguém rebaixa (`garantir_prioridade`). O sistema não aciona ninguém sozinho.
+- A IA só **sugere**. O supervisor confirma.
+- A **linha do tempo** (tabela `eventos`) só recebe novos registros. Nunca altera nem apaga.
+- Indicadores por **zona e equipe**, nunca por pessoa. Usuários da demo são fictícios.
+- **Planta do shopping é dado sensível.** O mapa é desenho nosso em blocos.
 
 ## 4. Funções que ligam as partes
-
 ```python
-# ia/modelo.py  (IA)
-sugerir(texto: str) -> dict
-# {"categoria": str, "prioridade": str, "equipe": str,
-#  "confianca": float (0 a 1), "risco": bool, "aviso": str | None}
-
-# ia/risco.py  (IA)
-detectar_risco(texto: str) -> bool
-
-# app/status.py  (dados + telas)
-cor_da_zona(ultimo_status: str | None, ultimo_em: str | None,
-            prazo_min: int, agora: datetime) -> str
+# app/modelo.py (IA)
+obter_modelo().prever(texto) -> Previsao      # categoria + prioridade + confiança
+# app/dominio.py (regras)
+triar(texto, previsao) -> Sugestao            # junta IA + regra de risco
+garantir_prioridade(texto, prioridade) -> (prioridade, risco)
+estado_da_zona(...) -> "ok" | "atencao" | "problema" | "cinza"
 ```
 
-## 5. Endereços (rotas)
+## 5. Endereços
 
-| Rota | O que mostra | Tarefa |
+**Telas (HTML, para pessoas):**
+
+| Rota | Tela | Arquivos |
 |---|---|---|
-| `GET /` | Mapa das zonas | #10 |
-| `GET /z/{id}` | Tela dos 3 botões (abre pelo QR) | #3 |
-| `POST /z/{id}` | Salva a conferência | #3 |
-| `GET /fila` | Fila de ocorrências | #11 |
-| `POST /ocorrencias/{id}/estado` | Muda o estado | #11 |
-| `GET /ocorrencias/{id}` | Linha do tempo + dossiê | #12 |
-| `GET /painel` | Indicadores por zona e equipe | #4 |
-| `GET /sobre-modelo` | Como a IA funciona | #6 |
-| `GET /api/sugestao?texto=` | Sugestão da IA em JSON | #6 |
-| `GET /api/zonas` | Zonas + cor em JSON (para o mapa) | #10 |
+| `GET /` | Mapa das zonas | `templates/inicio.html` |
+| `GET /z/<codigo>` | Tela do QR (OK / Atenção / Problema) | `templates/zona.html`, `static/js/zona.js` |
+| `GET /telas/fila` | Fila de problemas | `templates/fila.html` |
+| `GET /telas/problemas/<id>` | Problema + linha do tempo | `templates/problema.html`, `static/js/problema.js` |
+| `GET /telas/painel` | Painel | `templates/painel.html` |
+| `GET /telas/sobre-a-ia` | Sobre a IA | `templates/sobre_ia.html` |
+
+**API (JSON, usada pelas telas):** lista completa no README, seção "Como executar".

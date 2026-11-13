@@ -42,14 +42,28 @@ Comece com o tipo e diga o que mudou:
 
 ```
 README.md              ← você está aqui (guia da equipe)
+AGENTS.md              ← contexto do projeto para qualquer IA (Cursor lê sozinho)
+wsgi.py                ← liga o servidor Flask (python wsgi.py)
+app/
+  __init__.py          ← cria o app Flask e semeia os dados de exemplo
+  rotas/               ← endereços: API em JSON (zona, problemas, mapa, painel) e telas (telas.py)
+  dominio.py           ← regras: risco → P1 + brigada, cor da zona, categorias
+  modelo.py            ← IA: treina e prevê categoria e prioridade
+  servico.py, consultas.py, db.py, seed.py ← banco SQLite, consultas e dados fictícios
+  templates/           ← telas HTML (Jinja)
+  static/              ← CSS, JavaScript e Bootstrap local
+data/                  ← frases de treino e teste cego da IA
+tests/                 ← pytest
 docs/
-  desafio.md           ← texto oficial do desafio
+  contrato.md          ← nomes que todos usam (valores, rotas, funções)
+  WORKFLOW.md          ← como a equipe trabalha + problemas previstos
+  contexto-ia/         ← texto pronto para colar na IA de cada área
   IA.md                ← onde declaramos todo uso de IA (OBRIGATÓRIO)
-  missao-1/README.md   ← modelo da 1ª entrega: problema, público, telas, arquitetura...
-  missao-1/telas/      ← fotos/prints dos esboços das telas
+  missao-1/, missao-2/, missao-3/ ← entregas e roteiros (teste, vídeo)
   evidencias/          ← prints, fotos e testes (contam 20% da nota)
-.github/               ← modelo automático de Pull Request
-.gitignore             ← lista do que o Git NÃO deve enviar (senhas, lixo)
+.github/               ← modelo de Pull Request e testes automáticos
+.gitignore             ← lista do que o Git NÃO deve enviar (senhas, lixo, planta)
+render.yaml            ← serviço gratuito no Render (link público; a demo não depende dele)
 ```
 
 ---
@@ -58,6 +72,7 @@ docs/
 
 **Leia primeiro:** [`docs/WORKFLOW.md`](docs/WORKFLOW.md) (como trabalhamos) e [`docs/contrato.md`](docs/contrato.md) (nomes que todos usam).
 **Vai usar IA?** Cole o arquivo da sua área em [`docs/contexto-ia/`](docs/contexto-ia/) no início da conversa. No Cursor não precisa: ele lê o `AGENTS.md`.
+📋 **Quadro de tarefas:** https://github.com/orgs/Hackarun-Dragonair/projects/1
 
 ### 1. Preparar (uma vez só)
 ```bash
@@ -66,25 +81,24 @@ cd dragonair-shopping
 python3 -m venv .venv
 source .venv/bin/activate          # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
+# execução: seção "Como executar" abaixo
 ```
-> 💡 No **VS Code**: `File → Open Folder` na pasta do projeto. A aba **Source Control** faz commit e push com botões.
+> 💡 No **VS Code**: `File → Open Folder` na pasta do projeto. A aba **Source Control** (ícone de ramificação) faz commit e push com botões, sem terminal.
 
-### 2. Rodar
+### 2. Fluxo de cada tarefa
 ```bash
-uvicorn app.main:app --reload --host 0.0.0.0
+git switch main && git pull                 # 1. atualizar
+git switch -c tarefa-NUMERO                 # 2. criar sua branch (ex.: tarefa-9)
+# ... programar ...
+git add arquivo1.py arquivo2.py             # 3. escolher o que salvar
+git commit -m "feat: o que você fez"        # 4. salvar
+git push -u origin tarefa-NUMERO            # 5. enviar
 ```
-Abra http://localhost:8000. No celular (mesmo Wi-Fi): `http://IP-DO-NOTEBOOK:8000`.
-Testes: `pytest -q`
+6. No GitHub, clique em **Compare & pull request** → escreva `Closes #NUMERO` → **Create pull request**.
+7. Outra pessoa revisa e clica em **Merge**.
 
-### 3. Estrutura (já pronta, não crie pastas novas)
-```
-app/main.py, banco.py   ← BACKEND      app/templates/, static/ ← TELAS
-ia/                     ← IA           dados/, app/status.py   ← DADOS
-tests/                  ← um teste por área
-```
-
-### 4. Deu problema?
-- **Conflito** (`<<<<<<<` no arquivo): chame o dono do arquivo ou um mentor.
+### 3. Deu problema?
+- **Conflito** (`<<<<<<<` no arquivo): escolha o trecho certo, apague as marcas, salve, `git add`, `git commit`. Na dúvida, chame alguém ou um mentor.
 - **Desfazer mudança local:** `git restore arquivo`
 - 🚫 **Nunca** use `git push --force` nem `git reset --hard` na `main`.
 
@@ -95,15 +109,76 @@ tests/                  ← um teste por área
 2. **Usou IA? Registre em [`docs/IA.md`](docs/IA.md).** É exigido pelo regulamento.
 3. **Fez algo? Guarde evidência** em `docs/evidencias/` (print, foto, resultado de teste).
 4. **Pegou uma tarefa?** Arraste o cartão para **Fazendo** no [quadro](https://github.com/orgs/Hackarun-Dragonair/projects/1).
-5. **Código entra na `main` só por Pull Request**, depois que o protótipo existir.
+5. **Código entra na `main` só por Pull Request.** O GitHub roda os testes sozinho: ❌ vermelho = não juntar.
+6. **Planta do shopping é dado sensível:** nunca no repo, na IA, na demo ou no vídeo. O mapa é desenho nosso.
 
 ---
 
 ## ▶️ Como executar
-Pré-requisito: Python 3.10+ (recomendado 3.12). Siga os passos 1 e 2 de "Para quem vai programar".
+Pré-requisito: Python 3.11+. Na Missão 2 o servidor é **Flask** (alternativa já prevista na Entrega 1). A API segue em JSON. A página inicial e a rota do QR já abrem no navegador.
+
+**Windows (PowerShell)**
+```powershell
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+python wsgi.py
+```
+
+**macOS / Linux**
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+python wsgi.py
+```
+
+`python wsgi.py` sobe o servidor, recria o banco com os dados de exemplo e abre http://127.0.0.1:8000/ no navegador. A rota do QR de exemplo é http://127.0.0.1:8000/z/sanitario-piso1 (nome da zona e os botões OK, Atenção e Problema). O OK grava uma conferência no SQLite.
+
+**Telas (abrem no navegador, celular ou computador):**
+
+| Tela | Endereço |
+|---|---|
+| Mapa das zonas (cinza = ninguém conferiu) | `/` |
+| Tela do QR da zona (OK / Atenção / Problema + sugestão da IA) | `/z/sanitario-piso1` |
+| Fila de problemas | `/telas/fila` |
+| Problema + linha do tempo + dossiê | `/telas/problemas/<id>` |
+| Painel | `/telas/painel` |
+| Sobre a IA (acerto real) | `/telas/sobre-a-ia` |
+
+No celular, conecte no mesmo Wi-Fi ou hotspot do notebook e abra `http://IP-DO-NOTEBOOK:8000`.
+
+Para o cliente que pede JSON, envie `Accept: application/json` ou `?format=json`. `GET /` nesse modo lista os endpoints. Os principais:
+
+| Método | Caminho | Uso |
+|---|---|---|
+| GET | `/mapa` | zonas, estado (ok, atencao, problema, cinza) e a URL para o QR |
+| GET | `/z/<codigo>` | uma zona, histórico e botões daquele tipo |
+| POST | `/z/<codigo>/conferir` | `{resultado: ok\|atencao\|problema, origem: qr\|lista}` |
+| POST | `/z/<codigo>/triagem` | `{descricao}` → sugestão da IA |
+| POST | `/z/<codigo>/problema` | grava o problema na fila |
+| GET | `/fila` | problemas; filtros `piso`, `equipe`, `prioridade`, `status` |
+| POST | `/problemas/<id>/confirmar` | supervisor confirma categoria, prioridade e equipe |
+| POST | `/problemas/<id>/assumir` | em atendimento |
+| POST | `/problemas/<id>/resolver` | resolvido; a linha do tempo só cresce |
+| GET | `/painel` | os três indicadores, por zona e equipe |
+| GET | `/sobre-o-modelo` | acerto medido no teste cego |
+| GET | `/usuarios` | usuários fictícios da demo |
+| POST | `/entrar` | `{usuario_codigo}` grava a sessão; ou envie o cabeçalho `X-Usuario` |
+
+Ao iniciar, o banco é recriado com os dados de exemplo. Para preservar o arquivo local entre uma subida e outra, use `SEED_ON_START=0`. `PUBLIC_BASE_URL` é o endereço que entra no QR.
+
+Testes: `python -m pytest`.
+
+**Link público:** o `render.yaml` sobe um Web Service gratuito (um worker, porque o banco é SQLite). O disco some quando o serviço dorme; por isso o cenário é recriado na subida. A apresentação usa o notebook.
 
 ## 🤖 Uso de IA
-Declarado em [docs/IA.md](docs/IA.md).
+Declarado em [docs/IA.md](docs/IA.md). Dentro do produto, o modelo é scikit-learn (TF-IDF + regressão logística), treinado nas frases de `data/treino.csv`. O acerto medido no teste cego sai em `GET /sobre-o-modelo`.
 
 ## 📜 Créditos e licenças
-- FastAPI, Uvicorn, Jinja2 (licença BSD/MIT) · scikit-learn (BSD) · Bootstrap 5.3 (MIT) · pytest (MIT)
+- Flask (BSD) — API
+- scikit-learn (BSD) — modelo local de triagem
+- Bootstrap 5.3 (MIT) — visual das telas, incluído no projeto para funcionar sem internet
+- Protótipo visual inicial: Mateus Castro (equipe, com apoio do Gemini)
+- Dados de treino, zonas e usuários: fictícios, criados pela equipe
+- Mapa: desenho próprio em blocos (não usa a planta do shopping)

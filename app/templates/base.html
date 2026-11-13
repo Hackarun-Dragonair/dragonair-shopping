@@ -1,34 +1,38 @@
-{# Molde de todas as telas. Dono: TELAS (tarefas #4 e #5). #}
-<!doctype html>
+{# Molde de todas as telas: menu lateral no computador, menu de baixo no celular. #}
+<!DOCTYPE html>
 <html lang="pt-BR" data-bs-theme="dark">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{% block titulo %}Ronda Viva{% endblock %}</title>
-  {# Bootstrap fica no próprio projeto: funciona sem internet no dia da demo #}
-  <link rel="stylesheet" href="{{ url_for('static', path='vendor/bootstrap.min.css') }}">
-  <link rel="stylesheet" href="{{ url_for('static', path='css/ronda.css') }}">
+  {# Bootstrap fica dentro do projeto: funciona sem internet na demo #}
+  <link rel="stylesheet" href="{{ url_for('static', filename='vendor/bootstrap.min.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/ronda.css') }}">
 </head>
 <body>
-  <nav class="navbar bg-body-tertiary border-bottom">
-    <div class="container-fluid">
-      <a class="navbar-brand fw-bold" href="/">🐉 Ronda Viva</a>
-      <div class="d-none d-md-flex gap-3">
-        <a href="/">Mapa</a><a href="/fila">Fila</a><a href="/painel">Painel</a><a href="/sobre-modelo">Sobre a IA</a>
-      </div>
-    </div>
+  {% set pagina = pagina|default('') %}
+  <nav class="menu-lateral">
+    <div class="fs-5 fw-bold mb-1">🐉 Ronda Viva</div>
+    <div class="small text-secondary mb-3">Mostra o que ninguém conferiu.</div>
+    <a href="{{ url_for('mapa.inicio') }}" class="{{ 'ativo' if pagina == 'mapa' }}">🗺️ Mapa</a>
+    <a href="{{ url_for('telas.fila') }}" class="{{ 'ativo' if pagina == 'fila' }}">📋 Fila</a>
+    <a href="{{ url_for('telas.painel') }}" class="{{ 'ativo' if pagina == 'painel' }}">📊 Painel</a>
+    <a href="{{ url_for('telas.sobre_ia') }}" class="{{ 'ativo' if pagina == 'ia' }}">🤖 Sobre a IA</a>
   </nav>
 
-  <main class="container py-3 conteudo">
+  <main class="conteudo">
     {% block conteudo %}{% endblock %}
   </main>
 
-  {# Menu de baixo: só aparece no celular #}
-  <nav class="menu-celular d-md-none border-top bg-body-tertiary">
-    <a href="/">🗺️<span>Mapa</span></a><a href="/fila">📋<span>Fila</span></a><a href="/painel">📊<span>Painel</span></a>
+  <nav class="menu-celular">
+    <a href="{{ url_for('mapa.inicio') }}" class="{{ 'ativo' if pagina == 'mapa' }}"><span>🗺️</span>Mapa</a>
+    <a href="{{ url_for('telas.fila') }}" class="{{ 'ativo' if pagina == 'fila' }}"><span>📋</span>Fila</a>
+    <a href="{{ url_for('telas.painel') }}" class="{{ 'ativo' if pagina == 'painel' }}"><span>📊</span>Painel</a>
+    <a href="{{ url_for('telas.sobre_ia') }}" class="{{ 'ativo' if pagina == 'ia' }}"><span>🤖</span>IA</a>
   </nav>
 
-  <script src="{{ url_for('static', path='vendor/bootstrap.bundle.min.js') }}"></script>
-  <script src="{{ url_for('static', path='js/ronda.js') }}"></script>
+  <script src="{{ url_for('static', filename='vendor/bootstrap.bundle.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/api.js') }}"></script>
+  {% block scripts %}{% endblock %}
 </body>
 </html>

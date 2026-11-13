@@ -1,0 +1,34 @@
+{# Como a IA funciona e quanto ela acerta (números reais do teste cego). #}
+{% extends "base.html" %}
+{% block titulo %}Sobre a IA · Ronda Viva{% endblock %}
+{% block conteudo %}
+<div style="max-width: 760px">
+<h1 class="h4">Sobre a IA</h1>
+<p>A IA lê o que a pessoa escreveu na ronda e <strong>sugere</strong> a categoria e a prioridade. Quem decide é o supervisor.
+Ela foi treinada pela equipe e roda <strong>dentro do sistema, sem internet e sem API paga</strong>.</p>
+
+<div class="row g-2 my-3">
+  <div class="col-4"><div class="card h-100"><div class="card-body">
+    <div class="numero-grande">{{ (r.acerto_categoria * 100)|round|int }}%</div><div class="small text-secondary">acerto na categoria</div></div></div></div>
+  <div class="col-4"><div class="card h-100"><div class="card-body">
+    <div class="numero-grande">{{ (r.acerto_prioridade * 100)|round|int }}%</div><div class="small text-secondary">acerto na prioridade</div></div></div></div>
+  <div class="col-4"><div class="card h-100"><div class="card-body">
+    <div class="numero-grande text-secondary">{{ (r.acerto_baseline * 100)|round|int }}%</div><div class="small text-secondary">regra simples de palavras (comparação)</div></div></div></div>
+</div>
+<p class="small text-secondary">Medido num <strong>teste cego</strong>: {{ r.teste }} frases que o modelo nunca viu (treinado com {{ r.treino }}). Motor: {{ fonte }}. Frases fictícias escritas pela equipe.</p>
+
+<h2 class="h6 mt-4">Como ela aprendeu</h2>
+<ol class="small">
+  <li>Cada frase vira números (TF-IDF): palavras e pedaços de palavra, para entender erro de digitação.</li>
+  <li>Um modelo de Regressão Logística aprende quais palavras indicam cada categoria e prioridade.</li>
+  <li>Comparamos com uma regra simples de palavras-chave, para provar que a IA vale a pena.</li>
+</ol>
+
+<h2 class="h6 mt-4">Regras que a IA não muda</h2>
+<ul class="small">
+  <li>Fumaça, fogo, choque ou pessoa presa → <strong>P1</strong> e aviso <strong>"Avise a brigada pelo rádio"</strong>. Ninguém consegue rebaixar. O sistema não aciona ninguém sozinho.</li>
+  <li>A IA nunca fecha um problema nem avalia pessoas.</li>
+  <li>Toda sugestão e toda correção do supervisor ficam na linha do tempo.</li>
+</ul>
+</div>
+{% endblock %}
