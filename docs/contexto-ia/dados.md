@@ -14,6 +14,7 @@ Não sugira outras tecnologias, API paga, login, React nem banco externo.
 Regras:
 - Use exatamente os nomes do contrato abaixo. Não invente campos, rotas ou pastas.
 - Mexa só nos meus arquivos (lista abaixo).
+- O mapa é um desenho próprio em blocos. Não use nem peça a planta do shopping (dado sensível).
 - Passos pequenos e código simples, com comentários em português, que eu consiga explicar.
 - No fim, me diga como testar e um resumo de 3 linhas para eu registrar o uso de IA.
 

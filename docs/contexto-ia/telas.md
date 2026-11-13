@@ -14,6 +14,7 @@ Não sugira outras tecnologias, API paga, login, React nem banco externo.
 Regras:
 - Use exatamente os nomes do contrato abaixo. Não invente campos, rotas ou pastas.
 - Mexa só nos meus arquivos (lista abaixo).
+- O mapa é um desenho próprio em blocos. Não use nem peça a planta do shopping (dado sensível).
 - Passos pequenos e código simples, com comentários em português, que eu consiga explicar.
 - No fim, me diga como testar e um resumo de 3 linhas para eu registrar o uso de IA.
 
@@ -24,6 +25,6 @@ Contrato da minha parte: Telas usam Bootstrap 5 que já está em app/static/vend
 ```
 
 **Exemplo de pedido depois do contexto:**
-> Estou na tarefa #4. Vou colar o HTML do protótipo e o app/templates/base.html. Quero transformar a tela do mapa num template Jinja que estende base.html, sem números fixos.
+> Estou na tarefa #4. Vou colar o HTML do protótipo (sem as imagens piso1/piso2) e o app/templates/base.html. Quero transformar as telas num template Jinja que estende base.html, sem números fixos e sem as imagens da planta.
 
 ✅ Antes de abrir o PR: rode `pytest -q` e registre o uso de IA em `docs/IA.md`.
