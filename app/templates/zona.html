@@ -10,6 +10,12 @@
     <span class="badge estado-{{ zona.estado }}">{{ zona.rotulo }}</span>
   </div>
 
+  {% if espantou %}
+    <div class="alert alert-dark">{{ frase_espantou }}</div>
+  {% elif zona.gato %}
+    <div class="alert alert-dark small">🐈‍⬛ Sexta-feira 13: o gato preto está aqui, porque esta é a zona esquecida há mais tempo. Confira para espantá-lo.</div>
+  {% endif %}
+
   {% if registrado == 'ok' %}
     <div class="alert alert-success">✅ Conferência OK registrada.</div>
   {% elif registrado == 'atencao' %}
