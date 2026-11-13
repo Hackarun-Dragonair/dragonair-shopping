@@ -36,4 +36,11 @@ A equipe revisou e responde por todo conteúdo gerado com IA.
 - Toda sugestão e toda correção ficam na **linha do tempo**, que não se apaga.
 - Não avalia pessoas: indicadores só por zona e equipe.
 
+### 2ª IA (proposta, branch `proposta-camera`): visão computacional
+**Onde:** `camera/contador.py`, no notebook, fora do servidor.
+**Qual modelo:** YOLOv8n pré-treinado (Ultralytics, **AGPL-3.0**) + ByteTrack e PolygonZone (Roboflow supervision, **MIT**). Não treinamos esse modelo; usamos o pronto, só com a classe "pessoa".
+**O que sai:** só números (pessoas por zona). Nenhuma imagem vai para o sistema; no vídeo de saída as pessoas ficam pixeladas.
+**Erros da IA:** contagem erra com oclusão e multidão. Por isso exigimos 3 leituras seguidas acima do limite, não duplicamos ocorrência e a câmera só **sugere** (uma pessoa confirma). A câmera não tira a zona do cinza.
+**Sensor de fumaça:** **SIMULADO** (botão e script). Usa a mesma regra P1 + brigada.
+
 **Limite (sendo honestos):** a regra simples de palavras já acerta bastante no teste cego. A vantagem da IA aparece com frases variadas e erros de digitação, por isso estamos ampliando as frases de treino.
