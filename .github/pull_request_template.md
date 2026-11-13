@@ -1,9 +1,13 @@
-## O que faz
+Closes #
+
+## O que faz (3 linhas, para qualquer um explicar à banca)
 
 ## Como testar
 1.
 
 ## Checklist
-- [ ] Rodei o app e funcionou
-- [ ] Sem chaves/dados pessoais no código
-- [ ] Se usei IA, registrei em docs/IA.md
+- [ ] `pytest -q` passou
+- [ ] Mexi só nos arquivos da minha área (ver docs/WORKFLOW.md)
+- [ ] Segui os nomes do docs/contrato.md
+- [ ] Sem senha, chave, dado pessoal ou imagem da planta
+- [ ] Registrei o uso de IA em docs/IA.md
