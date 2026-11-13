@@ -2,9 +2,8 @@
 
 Como funciona, em 4 passos:
 1. YOLOv8n (Ultralytics) acha as pessoas em cada quadro.
-2. ByteTrack (supervision) dá um número para cada pessoa entre os quadros.
-3. PolygonZone (supervision) conta quantas estão dentro de cada zona desenhada.
-4. A cada N segundos salva {t, zona, pessoas} e, se pedido, manda para a Ronda Viva.
+2. PolygonZone (supervision) conta quantas estão dentro de cada zona desenhada.
+3. A cada N segundos salva {t, zona, pessoas} e, se pedido, manda para a Ronda Viva.
 
 No vídeo de saída as pessoas aparecem PIXELADAS (privacidade/LGPD).
 
@@ -63,8 +62,7 @@ def main() -> None:
     zonas = carregar_zonas(Path(a.zonas), largura, altura)
 
     modelo = YOLO("yolov8n.pt")  # baixa ~6 MB na 1ª vez; depois roda offline
-    rastreador = sv.ByteTrack()
-    pixelar = sv.PixelateAnnotator(pixel_size=12)
+    pixelar = sv.PixelateAnnotator(pixel_size=30)
     desenhos = [sv.PolygonZoneAnnotator(zone=z, color=sv.Color.YELLOW, thickness=2) for _n, z in zonas]
 
     gravador = None
@@ -84,7 +82,7 @@ def main() -> None:
         quadro_n += 1
 
         resultado = modelo(quadro, classes=[PESSOA], conf=a.confianca, verbose=False)[0]
-        deteccoes = rastreador.update_with_detections(sv.Detections.from_ultralytics(resultado))
+        deteccoes = sv.Detections.from_ultralytics(resultado)
 
         if t >= proxima:
             proxima = t + a.intervalo
