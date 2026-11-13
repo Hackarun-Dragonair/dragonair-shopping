@@ -178,6 +178,8 @@ Declarado em [docs/IA.md](docs/IA.md). Dentro do produto, o modelo é scikit-lea
 ## 📜 Créditos e licenças
 - Flask (BSD) — API
 - scikit-learn (BSD) — modelo local de triagem
+- Ultralytics YOLOv8n (AGPL-3.0) — contagem de pessoas na câmera (proposta, pasta `camera/`)
+- Roboflow supervision (MIT) — rastreio, zonas e pixelização
 - Bootstrap 5.3 (MIT) — visual das telas, incluído no projeto para funcionar sem internet
 - Protótipo visual inicial: Mateus Castro (equipe, com apoio do Gemini)
 - Dados de treino, zonas e usuários: fictícios, criados pela equipe
