@@ -1,5 +1,6 @@
-from flask import Blueprint, abort, request
+from flask import Blueprint, Response, abort, request
 
+from app.dossie import texto_dossie
 from app.consultas import (
     agora_utc,
     equipe_da_categoria,
@@ -77,6 +78,24 @@ def _dados_confirmacao(problema: dict) -> tuple[str, str, int, str | None]:
     if db.execute("SELECT 1 FROM equipes WHERE id = ?", (equipe_id,)).fetchone() is None:
         equipe_id, _nome = equipe_da_categoria(db, categoria)
     return categoria, prioridade, equipe_id, aviso
+
+
+@bp.get("/problemas/<int:problema_id>/dossie")
+def dossie(problema_id: int):
+    problema = _carregar(problema_id)
+    texto = texto_dossie(problema)
+    accept = request.headers.get("Accept", "")
+    if "text/plain" in accept and "application/json" not in accept:
+        return Response(texto, mimetype="text/plain; charset=utf-8")
+    return json_resposta(
+        {
+            "problema_id": problema_id,
+            "prioridade": problema["prioridade"],
+            "status": problema["status"],
+            "eventos": len(problema["eventos"]),
+            "texto": texto,
+        }
+    )
 
 
 @bp.post("/problemas/<int:problema_id>/confirmar")

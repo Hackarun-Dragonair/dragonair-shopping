@@ -57,6 +57,7 @@ def _limpar(conn: sqlite3.Connection) -> None:
     conn.execute("DROP TRIGGER IF EXISTS eventos_sem_delete")
     conn.execute("DROP TRIGGER IF EXISTS eventos_sem_update")
     for tabela in (
+        "envios",
         "eventos",
         "problemas",
         "conferencias",
