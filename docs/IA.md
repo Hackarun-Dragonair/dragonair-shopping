@@ -37,4 +37,8 @@ A equipe revisou e responde por todo conteúdo gerado com IA.
 - Toda sugestão e toda correção ficam na **linha do tempo**, que não se apaga.
 - Não avalia pessoas: indicadores só por zona e equipe.
 
-**Limite (sendo honestos):** a regra simples de palavras já acerta bastante no teste cego. A vantagem da IA aparece com frases variadas e erros de digitação, por isso estamos ampliando as frases de treino.
+**Ampliação das frases (13/11, noite):** o Pedro escreveu 80 relatos curtos de equipamentos, do jeito que a equipe de campo fala (com erro de digitação: "paro", "queimo", "ta"). Os rótulos (categoria e prioridade) foram propostos com o Claude por regras simples e explicáveis (ex.: câmera sem sinal → Segurança P2; lâmpada queimada → Elétrica P3) e ficam para a equipe revisar. 64 frases foram para o treino e 16 para o teste cego (uma a cada cinco), sem repetir.
+
+**Resultado no teste cego (36 frases):** IA acerta **92%** da categoria contra **81%** da regra simples de palavras; prioridade **81%**. Com frases do jeito real, a IA passou a ganhar da regra simples.
+
+**Limite (sendo honestos):** os erros que sobraram são casos ambíguos (ex.: "painel informativo travou" pode ser Elétrica ou Segurança; câmera com imagem ruim pode ser P2 ou P3). Por isso a IA só sugere e o supervisor confirma.
