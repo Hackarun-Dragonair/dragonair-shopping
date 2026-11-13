@@ -4,7 +4,9 @@
 
 **O problema:** um shopping precisa acompanhar as condições dos ambientes, identificar ocorrências, organizar atividades operacionais e garantir que os serviços não parem. ([texto oficial](docs/desafio.md))
 
-**Nossa solução:** _(em definição — discussão na [Issue #1](../../issues/1))_
+**Nossa solução: Ronda Viva** — *"Percebe antes do cliente. Prova que cuidou."* Sistema web responsivo que mostra quais ambientes ninguém conferiu, usa uma IA treinada pela equipe (offline) para classificar e encaminhar cada problema achado na ronda, e guarda a prova do que foi feito.
+
+➡️ **Planejamento completo (1ª entrega): [`docs/missao-1/README.md`](docs/missao-1/README.md)** · Pitch e perguntas difíceis: [`docs/missao-1/pitch-e-faq.md`](docs/missao-1/pitch-e-faq.md)
 
 ---
 
@@ -38,8 +40,6 @@ Comece com o tipo e diga o que mudou:
 
 ```
 README.md              ← você está aqui (guia da equipe)
-app.py                 ← ponto de entrada do sistema (código)
-requirements.txt       ← lista de bibliotecas Python que o sistema usa
 docs/
   desafio.md           ← texto oficial do desafio
   IA.md                ← onde declaramos todo uso de IA (OBRIGATÓRIO)
@@ -60,8 +60,7 @@ git clone https://github.com/Hackarun-Dragonair/dragonair-shopping.git
 cd dragonair-shopping
 python3 -m venv .venv
 source .venv/bin/activate          # Windows: .venv\Scripts\activate
-pip install -r requirements.txt
-streamlit run app.py               # abre em http://localhost:8501
+# instruções de instalação e execução entram na Missão 2 (a partir de 13/11 10h)
 ```
 > 💡 No **VS Code**: `File → Open Folder` na pasta do projeto. A aba **Source Control** (ícone de ramificação) faz commit e push com botões, sem terminal.
 
@@ -100,4 +99,4 @@ Pré-requisito: Python 3.10+. Siga o passo 1 de "Para quem vai programar".
 Declarado em [docs/IA.md](docs/IA.md).
 
 ## 📜 Créditos e licenças
-- [Streamlit](https://streamlit.io) — Apache 2.0
+- _(serão listados na Missão 2: Flask, scikit-learn, Pico.css, htmx)_
