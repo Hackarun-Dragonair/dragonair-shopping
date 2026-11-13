@@ -26,7 +26,7 @@
         </div>
         <span class="badge text-bg-secondary">{{ p.status_nome }}</span>
       </div>
-      <div class="small mt-1">{{ p.descricao }}</div>
+      <div class="small mt-1">{% if p.origem == 'camera' %}<span class="badge text-bg-info">📹 Câmera</span> {% elif p.origem == 'sensor' %}<span class="badge text-bg-danger">📟 Sensor</span> {% endif %}{{ p.descricao }}</div>
       <div class="small text-secondary">{{ p.categoria_nome }} · {{ p.equipe_nome }} · {{ p.quando }}
         {% if not p.confirmado %} · <span class="text-warning">aguarda confirmação</span>{% endif %}</div>
     </div>

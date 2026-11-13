@@ -55,7 +55,7 @@ CREATE TABLE IF NOT EXISTS problemas (
   usuario_id INTEGER REFERENCES usuarios(id),
   descricao TEXT NOT NULL,
   perto_de TEXT,
-  origem TEXT NOT NULL CHECK (origem IN ('qr','lista')),
+  origem TEXT NOT NULL CHECK (origem IN ('qr','lista','camera','sensor')),
   categoria TEXT NOT NULL,
   prioridade TEXT NOT NULL CHECK (prioridade IN ('P1','P2','P3','P4')),
   equipe_id INTEGER NOT NULL REFERENCES equipes(id),
@@ -92,6 +92,16 @@ CREATE TABLE IF NOT EXISTS crachas (
   ativo INTEGER NOT NULL DEFAULT 1 CHECK (ativo IN (0, 1))
 );
 
+CREATE TABLE IF NOT EXISTS leituras (
+  id INTEGER PRIMARY KEY,
+  zona_id INTEGER NOT NULL REFERENCES zonas(id),
+  fonte TEXT NOT NULL CHECK (fonte IN ('camera','sensor')),
+  tipo TEXT NOT NULL,
+  valor INTEGER NOT NULL,
+  criado_em TEXT NOT NULL
+);
+
+CREATE INDEX IF NOT EXISTS idx_leituras_zona ON leituras (zona_id, id);
 CREATE INDEX IF NOT EXISTS idx_conferencias_zona ON conferencias (zona_id, criado_em);
 CREATE INDEX IF NOT EXISTS idx_problemas_zona ON problemas (zona_id, status);
 CREATE INDEX IF NOT EXISTS idx_eventos_problema ON eventos (problema_id, id);
@@ -142,8 +152,23 @@ def instalar_triggers(conn: sqlite3.Connection) -> None:
     )
 
 
+def _schema_antigo(db: sqlite3.Connection) -> bool:
+    """Banco criado antes da câmera não aceita origem 'camera'/'sensor'."""
+    row = db.execute(
+        "SELECT sql FROM sqlite_master WHERE type = 'table' AND name = 'problemas'"
+    ).fetchone()
+    return row is not None and "'camera'" not in row["sql"]
+
+
 def init_db() -> None:
     db = get_db()
+    if _schema_antigo(db):
+        # Só existe cenário fictício: recria as tabelas e o seed preenche de novo.
+        db.execute("PRAGMA foreign_keys = OFF")
+        for tabela in ("eventos", "problemas", "conferencias", "crachas", "dispositivos",
+                       "encaminhamento", "usuarios", "zonas", "equipes"):
+            db.execute(f"DROP TABLE IF EXISTS {tabela}")
+        db.execute("PRAGMA foreign_keys = ON")
     db.executescript(SCHEMA)
     instalar_triggers(db)
     db.commit()

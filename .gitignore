@@ -25,3 +25,10 @@ planta/
 *piso*.jpg
 *piso*.png
 *CDS_MIX*.pdf
+
+# Câmera: vídeo de pessoas NUNCA vai para o repo (LGPD). Só números.
+*.mp4
+*.avi
+*.mov
+*.mkv
+yolov8n.pt

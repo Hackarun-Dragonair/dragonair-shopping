@@ -1,0 +1,102 @@
+[
+ {
+  "t": 0.0,
+  "zona": "praca-a",
+  "pessoas": 1
+ },
+ {
+  "t": 0.0,
+  "zona": "praca-b",
+  "pessoas": 0
+ },
+ {
+  "t": 5.0,
+  "zona": "praca-a",
+  "pessoas": 2
+ },
+ {
+  "t": 5.0,
+  "zona": "praca-b",
+  "pessoas": 1
+ },
+ {
+  "t": 10.0,
+  "zona": "praca-a",
+  "pessoas": 2
+ },
+ {
+  "t": 10.0,
+  "zona": "praca-b",
+  "pessoas": 1
+ },
+ {
+  "t": 15.0,
+  "zona": "praca-a",
+  "pessoas": 4
+ },
+ {
+  "t": 15.0,
+  "zona": "praca-b",
+  "pessoas": 1
+ },
+ {
+  "t": 20.0,
+  "zona": "praca-a",
+  "pessoas": 6
+ },
+ {
+  "t": 20.0,
+  "zona": "praca-b",
+  "pessoas": 2
+ },
+ {
+  "t": 25.0,
+  "zona": "praca-a",
+  "pessoas": 7
+ },
+ {
+  "t": 25.0,
+  "zona": "praca-b",
+  "pessoas": 1
+ },
+ {
+  "t": 30.0,
+  "zona": "praca-a",
+  "pessoas": 8
+ },
+ {
+  "t": 30.0,
+  "zona": "praca-b",
+  "pessoas": 1
+ },
+ {
+  "t": 35.0,
+  "zona": "praca-a",
+  "pessoas": 7
+ },
+ {
+  "t": 35.0,
+  "zona": "praca-b",
+  "pessoas": 0
+ },
+ {
+  "t": 40.0,
+  "zona": "praca-a",
+  "pessoas": 3
+ },
+ {
+  "t": 40.0,
+  "zona": "praca-b",
+  "pessoas": 0
+ },
+ {
+  "t": 45.0,
+  "zona": "praca-a",
+  "pessoas": 2
+ },
+ {
+  "t": 45.0,
+  "zona": "praca-b",
+  "pessoas": 0
+ }
+]
