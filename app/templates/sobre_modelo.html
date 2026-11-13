@@ -1,6 +1,38 @@
-{# Dono: tarefa #6 (IA). #}
+{# Tela "Sobre a IA". Dono: IA (tarefa #6). Números vêm de ia.modelo.info_modelo(). #}
 {% extends "base.html" %}
 {% block conteudo %}
 <h1 class="h4">Sobre a IA</h1>
-<p class="text-secondary">🚧 Em construção: tarefa #6 (IA).</p>
+<p>A IA lê o que a pessoa escreveu na ronda e <strong>sugere</strong> categoria, prioridade e equipe.
+Quem decide é o supervisor. Ela roda <strong>dentro do sistema, sem internet e sem API paga</strong>.</p>
+
+<h2 class="h6 mt-4">Como ela aprendeu</h2>
+<ol class="small">
+  <li>Usamos {{ info.total_frases if info else "as" }} frases de exemplo escritas pela equipe (dados fictícios).</li>
+  <li>Cada frase vira números (TF-IDF): palavras inteiras e pedaços de palavra, para entender erro de digitação.</li>
+  <li>Uma Regressão Logística aprende quais palavras indicam cada categoria, prioridade e equipe.</li>
+</ol>
+
+{% if info %}
+<h2 class="h6 mt-4">Quanto ela acerta</h2>
+<p class="small text-secondary">Medido em frases que o modelo não viu no treino (validação cruzada), comparado com um "chute" que sempre responde o valor mais comum.</p>
+<div class="table-responsive">
+<table class="table table-sm">
+  <thead><tr><th>Campo</th><th>IA</th><th>Chute</th><th>Partes da validação</th></tr></thead>
+  <tbody>
+  {% for campo, m in info.campos.items() %}
+    <tr><td>{{ campo }}</td><td><strong>{{ (m.acerto_modelo * 100)|round|int }}%</strong></td>
+        <td>{{ (m.acerto_chute * 100)|round|int }}%</td><td>{{ m.partes_validacao }}</td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+</div>
+{% endif %}
+
+<h2 class="h6 mt-4">Regras que a IA não muda</h2>
+<ul class="small">
+  <li>Palavras de risco (fumaça, fogo, choque, pessoa presa...) → prioridade <strong>urgente</strong> e aviso
+      <strong>"Avise a brigada pelo rádio"</strong>. O sistema não chama ninguém sozinho.</li>
+  <li>A IA nunca fecha uma ocorrência nem avalia pessoas. Indicadores são por zona e equipe.</li>
+  <li>Quando a confiança é baixa, a tela pede para a pessoa escolher.</li>
+</ul>
 {% endblock %}

@@ -4,7 +4,8 @@
 <h1 class="h4">Mapa das zonas</h1>
 <p class="text-secondary small">Cinza = ninguém conferiu no prazo.</p>
 
-{# TODO #10: separar por piso e deixar o mapa bonito (base: protótipo, modo vetor). #}
+{# TODO #10: separar por piso e deixar o mapa bonito.
+   ATENÇÃO: desenho PRÓPRIO em blocos. Não copiar imagem nem posições da planta do shopping (dado sensível). #}
 <svg viewBox="0 0 1000 700" class="mapa w-100 border rounded">
   {% for z in zonas %}
   <a href="/z/{{ z.id }}">
