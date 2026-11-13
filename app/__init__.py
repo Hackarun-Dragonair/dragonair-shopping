@@ -20,7 +20,7 @@ def create_app(config: dict | None = None) -> Flask:
     app.config.from_mapping(
         SECRET_KEY=os.environ.get("SECRET_KEY", "demo-ronda-viva"),
         DATABASE=os.environ.get("DATABASE_PATH", str(raiz / "instance" / "ronda.sqlite3")),
-        SEED_ON_START=os.environ.get("SEED_ON_START", "0") == "1",
+        SEED_ON_START=os.environ.get("SEED_ON_START", "1") == "1",
         PUBLIC_BASE_URL=os.environ.get("PUBLIC_BASE_URL", "").strip(),
         CORS_ORIGIN=os.environ.get("CORS_ORIGIN", "*"),
     )

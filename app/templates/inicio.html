@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ronda Viva</title>
+  <style>
+    body { font-family: sans-serif; margin: 1.25rem; line-height: 1.4; }
+    a { font-size: 1.15rem; }
+    li { margin: 0.6rem 0; }
+  </style>
+</head>
+<body>
+  <h1>Ronda Viva</h1>
+  <p>Mostra o que ninguém conferiu. Registra que cuidou.</p>
+  <h2>Zonas</h2>
+  <ul>
+    {% for zona in zonas %}
+      <li><a href="{{ url_for('zona.ver', codigo=zona.codigo) }}">{{ zona.nome }}</a> — {{ zona.rotulo }}</li>
+    {% endfor %}
+  </ul>
+</body>
+</html>

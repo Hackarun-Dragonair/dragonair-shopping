@@ -1,6 +1,6 @@
 from dataclasses import asdict
 
-from flask import Blueprint, abort, request
+from flask import Blueprint, abort, redirect, render_template, request, url_for
 
 from app.consultas import agora_utc, equipe_da_categoria, historico_zona, listar_equipes, obter_zona
 from app.db import get_db
@@ -13,7 +13,7 @@ from app.dominio import (
     triar,
 )
 from app.modelo import obter_modelo
-from app.rotas.comum import ator_atual, corpo, json_resposta, origem_do_pedido
+from app.rotas.comum import ator_atual, corpo, json_resposta, origem_do_pedido, quer_json
 from app.servico import abrir_problema, registrar_conferencia
 
 bp = Blueprint("zona", __name__)
@@ -42,14 +42,22 @@ def _perto() -> str:
 @bp.get("/z/<codigo>")
 def ver(codigo: str):
     zona = _zona_ou_404(codigo)
-    return json_resposta(
-        {
-            "zona": zona,
-            "historico": historico_zona(get_db(), zona["id"]),
-            "origem": origem_do_pedido(),
-            "botoes": list(BOTOES_POR_TIPO.get(zona["tipo"], ())),
-            "perto_de": [{"codigo": codigo_perto, "nome": nome} for codigo_perto, nome in PERTO_DE],
-        }
+    historico = historico_zona(get_db(), zona["id"])
+    if quer_json():
+        return json_resposta(
+            {
+                "zona": zona,
+                "historico": historico,
+                "origem": origem_do_pedido(),
+                "botoes": list(BOTOES_POR_TIPO.get(zona["tipo"], ())),
+                "perto_de": [{"codigo": codigo_perto, "nome": nome} for codigo_perto, nome in PERTO_DE],
+            }
+        )
+    return render_template(
+        "zona.html",
+        zona=zona,
+        historico=historico,
+        registrado=request.args.get("registrado", ""),
     )
 
 
@@ -59,9 +67,11 @@ def conferir(codigo: str):
     resultado = str(corpo().get("resultado", ""))
     origem = origem_do_pedido()
     if resultado == "problema":
-        return json_resposta(
-            {"acao": "abrir_problema", "codigo": codigo, "origem": origem}
-        )
+        if quer_json():
+            return json_resposta(
+                {"acao": "abrir_problema", "codigo": codigo, "origem": origem}
+            )
+        return redirect(url_for("zona.ver", codigo=codigo, origem=origem, registrado="problema"))
     if resultado not in {"ok", "atencao"}:
         return json_resposta({"erro": "resultado_invalido"}, 400)
     db = get_db()
@@ -74,6 +84,8 @@ def conferir(codigo: str):
             no_local=origem == "qr",
             agora=agora_utc(),
         )
+    if not quer_json():
+        return redirect(url_for("zona.ver", codigo=codigo, origem=origem, registrado=resultado))
     return json_resposta(
         {"resultado": resultado, "zona": _zona_ou_404(codigo)},
         201,

@@ -37,6 +37,7 @@ ENCAMINHAMENTO = (
 )
 
 ZONAS = (
+    ("sanitario-piso1", "Sanitário piso 1", "sanitario", "L1", 1, 60, "Placa de aviso no corredor dos banheiros"),
     ("entrada-principal", "Entrada principal", "entrada", "Térreo", 0, 120, "Lado de dentro, junto à porta"),
     ("praca-a", "Praça de alimentação — setor A", "praca_alimentacao", "L1", 1, 90, "Pilar do contorno, setor A"),
     ("praca-b", "Praça de alimentação — setor B", "praca_alimentacao", "L1", 1, 90, "Pilar do contorno, setor B"),

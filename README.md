@@ -100,15 +100,14 @@ git push -u origin feature/nome-da-tarefa   # 5. enviar
 ---
 
 ## ▶️ Como executar
-Pré-requisito: Python 3.11+. Na Missão 2 o servidor é **Flask** (alternativa já prevista na Entrega 1). Esta pasta entrega a API. As telas ficam com o front-end.
+Pré-requisito: Python 3.11+. Na Missão 2 o servidor é **Flask** (alternativa já prevista na Entrega 1). A API segue em JSON. A página inicial e a rota do QR já abrem no navegador.
 
 **Windows (PowerShell)**
 ```powershell
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
 pip install -r requirements.txt
-$env:SEED_ON_START = "1"
-flask --app app:create_app run --host 0.0.0.0 --port 8000
+python wsgi.py
 ```
 
 **macOS / Linux**
@@ -116,10 +115,12 @@ flask --app app:create_app run --host 0.0.0.0 --port 8000
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
-SEED_ON_START=1 flask --app app:create_app run --host 0.0.0.0 --port 8000
+python wsgi.py
 ```
 
-`GET /` lista os endpoints. Os principais, todos em JSON:
+`python wsgi.py` sobe o servidor, recria o banco com os dados de exemplo e abre http://127.0.0.1:8000/ no navegador. A rota do QR de exemplo é http://127.0.0.1:8000/z/sanitario-piso1 (nome da zona e os botões OK, Atenção e Problema). O OK grava uma conferência no SQLite.
+
+Para o cliente que pede JSON, envie `Accept: application/json` ou `?format=json`. `GET /` nesse modo lista os endpoints. Os principais:
 
 | Método | Caminho | Uso |
 |---|---|---|
@@ -137,7 +138,7 @@ SEED_ON_START=1 flask --app app:create_app run --host 0.0.0.0 --port 8000
 | GET | `/usuarios` | usuários fictícios da demo |
 | POST | `/entrar` | `{usuario_codigo}` grava a sessão; ou envie o cabeçalho `X-Usuario` |
 
-`SEED_ON_START=1` recria o shopping fictício a cada subida. Sem essa variável, o banco local só é semeado quando ainda está vazio. `PUBLIC_BASE_URL` é o endereço que o front-end coloca no QR.
+Ao iniciar, o banco é recriado com os dados de exemplo. Para preservar o arquivo local entre uma subida e outra, use `SEED_ON_START=0`. `PUBLIC_BASE_URL` é o endereço que entra no QR.
 
 Testes: `python -m pytest`.
 

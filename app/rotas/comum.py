@@ -39,6 +39,15 @@ def ator_atual() -> dict:
     return dict(row)
 
 
+def quer_json() -> bool:
+    if request.args.get("format") == "json":
+        return True
+    if request.is_json:
+        return True
+    accept = request.accept_mimetypes
+    return accept["application/json"] > accept["text/html"] and accept["application/json"] > 0
+
+
 def origem_do_pedido() -> str:
     origem = str(corpo().get("origem") or request.args.get("origem") or "qr")
     return origem if origem in {"qr", "lista"} else "qr"

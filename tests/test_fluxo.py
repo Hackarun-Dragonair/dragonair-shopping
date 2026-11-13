@@ -18,7 +18,7 @@ def test_mapa_marca_zona_cinza(client):
     assert estados["praca-a"] == "cinza"
     assert estados["banheiro-l2-norte"] == "ok"
     assert estados["corredor-norte"] == "problema"
-    assert dados["cinza"] == 4
+    assert dados["cinza"] == 5
     assert dados["zonas"][0]["url"].startswith("http")
 
 
@@ -138,11 +138,48 @@ def test_painel_nao_ranqueia_pessoa(app):
         from app.db import get_db
 
         dados = indicadores(get_db())
-    assert dados["zonas_no_prazo_pct"] == 60
-    assert dados["zonas_cinza"] == 4
+    assert dados["zonas_no_prazo_pct"] == 55
+    assert dados["zonas_cinza"] == 5
     assert dados["reincidencia"] == 1
     assert "usuario" not in dados
     assert "Rita" not in str(dados)
+
+
+def test_pagina_inicial_abre(client):
+    resposta = client.get("/")
+    assert resposta.status_code == 200
+    assert "text/html" in resposta.content_type
+    assert "Ronda Viva" in resposta.get_data(as_text=True)
+    assert "Sanitário piso 1" in resposta.get_data(as_text=True)
+
+
+def test_qr_sanitario_piso1_registra_ok(client, app):
+    pagina = client.get("/z/sanitario-piso1")
+    html = pagina.get_data(as_text=True)
+    assert pagina.status_code == 200
+    assert "Sanitário piso 1" in html
+    assert 'value="ok"' in html
+    assert 'value="atencao"' in html
+    assert 'value="problema"' in html
+
+    depois = client.post(
+        "/z/sanitario-piso1/conferir",
+        data={"resultado": "ok", "origem": "qr"},
+        follow_redirects=True,
+    )
+    assert "Conferência OK registrada." in depois.get_data(as_text=True)
+    with app.app_context():
+        from app.db import get_db
+
+        total = get_db().execute(
+            """
+            SELECT COUNT(*) AS n
+            FROM conferencias c
+            JOIN zonas z ON z.id = c.zona_id
+            WHERE z.codigo = 'sanitario-piso1' AND c.resultado = 'ok'
+            """
+        ).fetchone()["n"]
+    assert total == 1
 
 
 def test_zona_inexistente(client):

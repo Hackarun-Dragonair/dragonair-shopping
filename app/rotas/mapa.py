@@ -1,8 +1,8 @@
-from flask import Blueprint, current_app, request, url_for
+from flask import Blueprint, current_app, render_template, request, url_for
 
-from app.consultas import montar_mapa
+from app.consultas import listar_zonas, montar_mapa
 from app.db import get_db
-from app.rotas.comum import json_resposta
+from app.rotas.comum import json_resposta, quer_json
 
 bp = Blueprint("mapa", __name__)
 
@@ -26,20 +26,22 @@ def _com_url(mapa: dict) -> dict:
 
 @bp.get("/")
 def inicio():
-    return json_resposta(
-        {
-            "servico": "ronda-viva",
-            "endpoints": {
-                "saude": "/saude",
-                "mapa": "/mapa",
-                "fila": "/fila",
-                "painel": "/painel",
-                "modelo": "/sobre-o-modelo",
-                "usuarios": "/usuarios",
-                "zona": "/z/<codigo>",
-            },
-        }
-    )
+    if quer_json():
+        return json_resposta(
+            {
+                "servico": "ronda-viva",
+                "endpoints": {
+                    "saude": "/saude",
+                    "mapa": "/mapa",
+                    "fila": "/fila",
+                    "painel": "/painel",
+                    "modelo": "/sobre-o-modelo",
+                    "usuarios": "/usuarios",
+                    "zona": "/z/<codigo>",
+                },
+            }
+        )
+    return render_template("inicio.html", zonas=listar_zonas(get_db()))
 
 
 @bp.get("/mapa")
