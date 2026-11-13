@@ -19,3 +19,9 @@ instance/
 .vscode/
 .idea/
 .DS_Store
+
+# Planta do shopping: dado sensível, NUNCA subir
+planta/
+*piso*.jpg
+*piso*.png
+*CDS_MIX*.pdf
