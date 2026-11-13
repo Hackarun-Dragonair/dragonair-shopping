@@ -4,9 +4,11 @@
 
 **O problema:** um shopping precisa acompanhar as condições dos ambientes, identificar ocorrências, organizar atividades operacionais e garantir que os serviços não parem. ([texto oficial](docs/desafio.md))
 
-**Nossa solução: Ronda Viva** — *"Percebe antes do cliente. Prova que cuidou."* Sistema web responsivo que mostra quais ambientes ninguém conferiu, usa uma IA treinada pela equipe (offline) para classificar e encaminhar cada problema achado na ronda, e guarda a prova do que foi feito.
+**Nossa solução: Ronda Viva** — *"Mostra o que ninguém conferiu. Registra que cuidou."* Sistema web responsivo que mostra quais ambientes ninguém conferiu, usa uma IA treinada pela equipe (offline) para classificar e encaminhar cada problema achado na ronda, e registra cada passo numa linha do tempo.
 
-➡️ **Planejamento completo (1ª entrega): [`docs/missao-1/README.md`](docs/missao-1/README.md)** · Pitch e perguntas difíceis: [`docs/missao-1/pitch-e-faq.md`](docs/missao-1/pitch-e-faq.md)
+📌 **Entrega 1 — Planejamento técnico: [`docs/missao-1/ENTREGA-1.md`](docs/missao-1/ENTREGA-1.md)**
+
+➡️ Planejamento detalhado: [`docs/missao-1/README.md`](docs/missao-1/README.md) · Pitch e perguntas difíceis: [`docs/missao-1/pitch-e-faq.md`](docs/missao-1/pitch-e-faq.md)
 
 ---
 
