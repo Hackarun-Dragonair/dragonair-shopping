@@ -34,8 +34,9 @@ docs/                documentos                  todos
 3. Mudanças **pequenas**. Código simples que um aluno do 1º período consiga explicar para a banca.
 4. Nomes de variáveis e comentários **em português**.
 5. Depois de mudar, rode `pytest -q`. Tudo precisa passar.
-6. Nunca coloque senha, chave de API, dado pessoal ou imagem da planta do shopping no código.
-7. Explique em 3 linhas o que o código faz, para a pessoa registrar em `docs/IA.md`.
+6. Nunca coloque senha, chave de API ou dado pessoal no código.
+7. **Planta do shopping é dado sensível:** não usar imagem, PDF nem posições copiadas dela. O mapa é um desenho próprio em blocos. Nunca cole a planta numa IA.
+8. Explique em 3 linhas o que o código faz, para a pessoa registrar em `docs/IA.md`.
 
 ## Como rodar
 ```bash

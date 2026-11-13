@@ -106,4 +106,7 @@ Pré-requisito: Python 3.10+ (recomendado 3.12). Siga os passos 1 e 2 de "Para q
 Declarado em [docs/IA.md](docs/IA.md).
 
 ## 📜 Créditos e licenças
-- FastAPI, Uvicorn, Jinja2 (licença BSD/MIT) · scikit-learn (BSD) · Bootstrap 5.3 (MIT) · pytest (MIT)
+- FastAPI, Uvicorn, Jinja2 (licença BSD/MIT) · scikit-learn e joblib (BSD) · Bootstrap 5.3 (MIT) · pytest (MIT)
+- Protótipo de telas inicial: Mateus Castro (equipe)
+- Dados de treino e zonas: fictícios, criados pela equipe
+- Mapa: desenho próprio em blocos (não usa a planta do shopping)
