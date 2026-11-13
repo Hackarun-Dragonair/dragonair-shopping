@@ -10,7 +10,7 @@
     <span class="badge text-bg-secondary">{{ p.status_nome }}</span>
     {% if p.risco %}<span class="badge bg-danger">🚨 Avise a brigada pelo rádio</span>{% endif %}
   </div>
-  <p class="mb-1">“{{ p.descricao }}”</p>
+  <p class="mb-1">{% if p.origem == 'camera' %}<span class="badge text-bg-info">📹 Câmera</span> {% elif p.origem == 'sensor' %}<span class="badge text-bg-danger">📟 Sensor</span> {% endif %}“{{ p.descricao }}”</p>
   <div class="small text-secondary mb-3">{{ p.categoria_nome }} · {{ p.equipe_nome }} · aberto {{ p.quando }}
     · IA sugeriu: {{ p.sugestao_nome }} {{ p.sugestao_prioridade }}</div>
 

@@ -47,6 +47,13 @@
     </div>
   </section>
 
+  {# Sensor de verdade ainda não existe: o botão deixa claro que é SIMULADO. #}
+  <form method="post" action="{{ url_for('eventos.sensor') }}" class="mt-4">
+    <input type="hidden" name="zona" value="{{ zona.codigo }}">
+    <input type="hidden" name="tipo" value="fumaca">
+    <button type="submit" class="btn btn-outline-danger btn-sm w-100">📟 Simular sensor de fumaça (SIMULADO)</button>
+  </form>
+
   {% if historico %}
   <h2 class="h6 mt-4">Últimas conferências</h2>
   <ul class="small text-secondary">

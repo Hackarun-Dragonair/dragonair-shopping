@@ -22,8 +22,15 @@
     <div class="info">{{ z.rotulo }}</div>
     <div class="info">{{ z.ha }}</div>
     {% if z.reincidencia %}<div class="info">🔁 problema repetido</div>{% endif %}
+    {% if z.pessoas is not none %}<div class="info">📹 {{ z.pessoas }} pessoas agora</div>{% endif %}
   </a>
   {% endfor %}
 </div>
 {% endfor %}
+{% endblock %}
+{% block scripts %}
+<script>
+  // Mapa se atualiza sozinho a cada 10 s para mostrar a contagem da câmera.
+  setTimeout(() => { if (!document.hidden) location.reload(); }, 10000);
+</script>
 {% endblock %}
