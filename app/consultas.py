@@ -109,6 +109,9 @@ def listar_zonas(conn: sqlite3.Connection, agora: datetime | None = None) -> lis
         )
     }
     repetidas = _reincidencias(conn, agora)
+    from app.sensores import pessoas_agora  # import tardio evita ciclo
+
+    contagens = pessoas_agora(conn, agora)
     zonas = []
     for row in conn.execute("SELECT * FROM zonas ORDER BY ordem_piso, nome"):
         ultima = ultimas.get(row["id"])
@@ -134,6 +137,7 @@ def listar_zonas(conn: sqlite3.Connection, agora: datetime | None = None) -> lis
                 "quando": formato_local(ultima["criado_em"]) if ultima else "",
                 "problema_id": abertos.get(row["id"]),
                 "reincidencia": repetidas.get(row["id"], []),
+                "pessoas": contagens.get(row["id"]),
             }
         )
         zonas.append(item)

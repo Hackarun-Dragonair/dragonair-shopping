@@ -23,6 +23,9 @@ def create_app(config: dict | None = None) -> Flask:
         SEED_ON_START=os.environ.get("SEED_ON_START", "1") == "1",
         PUBLIC_BASE_URL=os.environ.get("PUBLIC_BASE_URL", "").strip(),
         CORS_ORIGIN=os.environ.get("CORS_ORIGIN", "*"),
+        # Câmera: limite fixo para a demo (ex.: 3 com a webcam) e chave opcional.
+        LIMITE_USO=int(os.environ.get("LIMITE_USO", "0")) or None,
+        CAMERA_CHAVE=os.environ.get("CAMERA_CHAVE", "").strip() or None,
     )
     if config:
         app.config.update(config)
