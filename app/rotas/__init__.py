@@ -1,3 +1,4 @@
+from app.rotas.acesso_web import bp as acesso_bp
 from app.rotas.backlog import bp as backlog_bp
 from app.rotas.mapa import bp as mapa_bp
 from app.rotas.painel import bp as painel_bp
@@ -8,6 +9,7 @@ from app.rotas.zona import bp as zona_bp
 
 
 def registrar(app) -> None:
+    app.register_blueprint(acesso_bp)
     app.register_blueprint(saude_bp)
     app.register_blueprint(zona_bp)
     app.register_blueprint(problemas_bp)

@@ -28,7 +28,20 @@ def usuarios():
 
 @bp.post("/entrar")
 def entrar():
-    codigo = str(corpo().get("usuario_codigo", ""))
+    """API: entrar com crachá fictício. `usuario_codigo` direto só vale nos testes."""
+    dados = corpo()
+    from flask import current_app
+    from app.perfis import buscar_cracha
+
+    if dados.get("cracha"):
+        usuario, erro = buscar_cracha(str(dados["cracha"]))
+        if usuario is None:
+            return json_resposta({"erro": "cracha_invalido", "mensagem": erro}, 404)
+        codigo = usuario["codigo"]
+    elif current_app.config.get("TESTING"):
+        codigo = str(dados.get("usuario_codigo", ""))
+    else:
+        return json_resposta({"erro": "cracha_obrigatorio"}, 400)
     row = get_db().execute(
         "SELECT * FROM usuarios WHERE codigo = ?", (codigo,)
     ).fetchone()

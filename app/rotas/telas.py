@@ -18,7 +18,10 @@ from app.consultas import (
 from app.db import get_db
 from app.dominio import CATEGORIAS, PRIORIDADES
 from app.modelo import obter_modelo
+from app.perfis import eh_gestor
 from app.ritmo import listar_alertas
+
+from app.rotas.acesso_web import so_gestor  # noqa: E402
 
 bp = Blueprint("telas", __name__, url_prefix="/telas")
 
@@ -44,12 +47,13 @@ def problema(problema_id: int):
     if item is None:
         abort(404)
     return render_template(
-        "problema.html", pagina="fila", p=item,
+        "problema.html", pagina="fila", p=item, pode_confirmar=eh_gestor(),
         equipes=listar_equipes(get_db()), categorias=CATEGORIAS, prioridades=PRIORIDADES,
     )
 
 
 @bp.get("/painel")
+@so_gestor
 def painel():
     db = get_db()
     abertos = listar_problemas(db, status="abertos")
