@@ -1,0 +1,20 @@
+{# Indicadores por zona e equipe. Nunca por pessoa. #}
+{% extends "base.html" %}
+{% block titulo %}Painel · Ronda Viva{% endblock %}
+{% block conteudo %}
+<h1 class="h4 mb-3">Painel</h1>
+<div class="row g-2">
+  <div class="col-6 col-md-3"><div class="card h-100"><div class="card-body">
+    <div class="numero-grande">{{ d.zonas_no_prazo_pct }}%</div><div class="small text-secondary">zonas conferidas no prazo</div></div></div></div>
+  <div class="col-6 col-md-3"><div class="card h-100"><div class="card-body">
+    <div class="numero-grande text-secondary">{{ d.zonas_cinza }}</div><div class="small text-secondary">zonas que ninguém conferiu</div></div></div></div>
+  <div class="col-6 col-md-3"><div class="card h-100"><div class="card-body">
+    <div class="numero-grande">{{ d.tempo_medio_min }} min</div><div class="small text-secondary">tempo médio para resolver</div></div></div></div>
+  <div class="col-6 col-md-3"><div class="card h-100"><div class="card-body">
+    <div class="numero-grande">{{ d.problemas_resolvidos }}</div><div class="small text-secondary">problemas resolvidos</div></div></div></div>
+</div>
+{% if d.zonas_reincidentes %}
+<div class="alert alert-warning mt-3">🔁 Problema repetido em: {{ d.zonas_reincidentes|join(', ') }}</div>
+{% endif %}
+<p class="small text-secondary mt-3">Indicadores por zona e equipe. O sistema não avalia pessoas. Dados fictícios de demonstração.</p>
+{% endblock %}
