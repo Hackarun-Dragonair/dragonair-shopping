@@ -19,7 +19,8 @@ body { background: var(--fundo); font-family: "Segoe UI", Roboto, system-ui, san
 .menu-itens a { display: flex; gap: 10px; align-items: center; padding: 10px 12px; border-radius: 9px; color: #c9ced6; text-decoration: none; margin-bottom: 2px; }
 .menu-itens a:hover { background: #ffffff0d; color: #fff; }
 .menu-itens a.ativo { background: var(--azul); color: #fff; font-weight: 600; }
-.menu-rodape { margin-top: auto; font-size: .75rem; color: var(--texto-2); padding: 12px 8px 0; border-top: 1px solid var(--borda); }
+.menu-usuario { margin-top: auto; padding: 12px 8px; border-top: 1px solid var(--borda); }
+.menu-rodape { font-size: .75rem; color: var(--texto-2); padding: 12px 8px 0; border-top: 1px solid var(--borda); }
 .menu-rodape span { color: #6ea8fe; }
 .conteudo { margin-left: 240px; padding: 20px 26px 90px; max-width: 1280px; }
 .menu-celular { display: none; }
