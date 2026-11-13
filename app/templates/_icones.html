@@ -1,0 +1,18 @@
+{# Ícones em SVG dentro do projeto (sem CDN: a demo funciona sem internet). Uso: {{ icone('mapa') }} #}
+{% macro icone(nome, classe='ic') -%}
+<svg class="{{ classe }}" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+{%- if nome == 'mapa' -%}<path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2z"/><path d="M9 4v14M15 6v14"/>
+{%- elif nome == 'fila' -%}<path d="M9 6h11M9 12h11M9 18h11"/><path d="m3 6 1.5 1.5L7 5M3 12l1.5 1.5L7 11M3 18l1.5 1.5L7 17"/>
+{%- elif nome == 'painel' -%}<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>
+{%- elif nome == 'ia' -%}<rect x="5" y="8" width="14" height="11" rx="3"/><path d="M12 4v4M9 13h.01M15 13h.01M9 16h6"/>
+{%- elif nome == 'qr' -%}<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3M21 14v.01M17 21h4v-4M14 21v-3"/>
+{%- elif nome == 'escudo' -%}<path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6l-8-3z"/><path d="m9 12 2 2 4-4"/>
+{%- elif nome == 'relogio' -%}<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>
+{%- elif nome == 'alerta' -%}<path d="M12 3 2 20h20L12 3z"/><path d="M12 10v4M12 17h.01"/>
+{%- elif nome == 'ok' -%}<circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/>
+{%- elif nome == 'mais' -%}<path d="M12 5v14M5 12h14"/>
+{%- elif nome == 'menos' -%}<path d="M5 12h14"/>
+{%- elif nome == 'ajustar' -%}<path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/>
+{%- endif -%}
+</svg>
+{%- endmacro %}

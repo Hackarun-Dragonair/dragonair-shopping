@@ -1,15 +1,19 @@
-{# Mapa das zonas em blocos (desenho próprio, sem a planta). Cinza = ninguém conferiu no prazo. #}
+{# Mapa das zonas: desenho próprio e fictício (sem a planta do shopping). Cinza = ninguém conferiu no prazo. #}
 {% extends "base.html" %}
+{% from "_icones.html" import icone %}
 {% set pagina = 'mapa' %}
+{% block titulo %}Mapa · Ronda Viva{% endblock %}
 {% block conteudo %}
-<div class="d-flex flex-wrap justify-content-between align-items-end mb-3 gap-2">
+<div class="titulo-tela">
   <div>
-    <h1 class="h4 mb-0">Mapa das zonas</h1>
-    <div class="small text-secondary">Toque numa zona para abrir a tela do QR.</div>
+    <h1>Mapa das zonas</h1>
+    <div class="small text-secondary">Toque numa zona para ver detalhes, conferir ou abrir a tela do QR.</div>
   </div>
-  <div class="small d-flex flex-wrap gap-2">
-    <span class="badge estado-ok">OK</span><span class="badge estado-atencao">Atenção</span>
-    <span class="badge estado-problema">Problema</span><span class="badge estado-cinza">Ninguém conferiu</span>
+  <div class="contadores">
+    <span class="contador estado-ok">OK: <span id="n-ok">{{ zonas|selectattr('estado','equalto','ok')|list|length }}</span></span>
+    <span class="contador estado-atencao">Atenção: <span id="n-atencao">{{ zonas|selectattr('estado','equalto','atencao')|list|length }}</span></span>
+    <span class="contador estado-problema">Problema: <span id="n-problema">{{ zonas|selectattr('estado','equalto','problema')|list|length }}</span></span>
+    <span class="contador estado-cinza">Ninguém conferiu: <span id="n-cinza">{{ zonas|selectattr('estado','equalto','cinza')|list|length }}</span></span>
   </div>
 </div>
 
@@ -22,8 +26,26 @@
 </div>
 {% endif %}
 
-{% for piso, zonas_do_piso in zonas|groupby('piso') %}
-<h2 class="h6 text-secondary mt-3">Piso {{ piso }}</h2>
+<div class="mapa-caixa" id="mapa-caixa">
+  <div class="pisos" id="pisos" aria-label="Escolher piso"></div>
+  <div class="inspetor d-none" id="inspetor"></div>
+  <div class="controles-mapa">
+    <button type="button" id="zoom-mais" title="Aproximar">{{ icone('mais') }}</button>
+    <button type="button" id="zoom-menos" title="Afastar">{{ icone('menos') }}</button>
+    <button type="button" id="zoom-ajustar" title="Ajustar na tela">{{ icone('ajustar') }}</button>
+  </div>
+  <div class="legenda-mapa">
+    <span><i style="background:var(--ok)"></i>OK</span>
+    <span><i style="background:var(--atencao)"></i>Atenção</span>
+    <span><i style="background:var(--problema)"></i>Problema</span>
+    <span><i style="background:var(--cinza)"></i>Ninguém conferiu</span>
+  </div>
+</div>
+<div class="small text-secondary mt-1 mb-3">Desenho esquemático feito pela equipe. Não é a planta real do shopping.</div>
+
+<h2 class="h6 text-secondary">Todas as zonas</h2>
+{% for ordem, zonas_do_piso in zonas|groupby('ordem_piso') %}
+<div class="small text-secondary mt-2 mb-1">Piso {{ zonas_do_piso[0].piso }}</div>
 <div class="grade-zonas">
   {% for z in zonas_do_piso %}
   <a class="zona-bloco estado-{{ z.estado }}" href="{{ url_for('zona.ver', codigo=z.codigo) }}">
@@ -36,3 +58,4 @@
 </div>
 {% endfor %}
 {% endblock %}
+{% block scripts %}<script src="{{ url_for('static', filename='js/mapa.js') }}"></script>{% endblock %}

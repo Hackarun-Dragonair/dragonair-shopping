@@ -1,36 +1,54 @@
-{# Fila de problemas: urgentes primeiro. Toque para ver a linha do tempo. #}
+{# Fila em quadro: Aberto → Em atendimento → Resolvido. Urgentes primeiro. Toque para ver a linha do tempo. #}
 {% extends "base.html" %}
 {% block titulo %}Fila · Ronda Viva{% endblock %}
+{% macro cartao(p) %}
+<a href="{{ url_for('telas.problema', problema_id=p.id) }}" class="cartao prio-borda-{{ p.prioridade }}">
+  <div class="d-flex justify-content-between align-items-start gap-2">
+    <strong>{{ p.zona_nome }}</strong>
+    <span class="badge prio-{{ p.prioridade }}">{{ p.prioridade }}</span>
+  </div>
+  <div class="small mt-1">{% if p.origem == 'camera' %}📹 {% elif p.origem == 'sensor' %}📟 {% endif %}{{ p.descricao }}</div>
+  <div class="small text-secondary mt-1">{{ p.categoria_nome }} · {{ p.equipe_nome }} · {{ p.quando }}</div>
+  <div class="mt-1">
+    {% if p.risco %}<span class="badge bg-danger">🚨 Avise a brigada</span>{% endif %}
+    {% if not p.confirmado and p.status != 'resolvido' %}<span class="badge text-bg-warning">aguarda confirmação</span>{% endif %}
+  </div>
+</a>
+{% endmacro %}
 {% block conteudo %}
-<div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
-  <h1 class="h4 mb-0">Fila de problemas</h1>
-  <div class="btn-group btn-group-sm">
-    <a href="?status=abertos" class="btn btn-outline-light {{ 'active' if status != 'todos' }}">Abertos</a>
-    <a href="?status=todos" class="btn btn-outline-light {{ 'active' if status == 'todos' }}">Todos</a>
+<div class="titulo-tela">
+  <div>
+    <h1>Fila de problemas</h1>
+    <div class="small text-secondary">Urgentes primeiro. A IA sugere, o supervisor confirma.</div>
+  </div>
+  <div class="contadores">
+    <span class="contador estado-problema">Abertos: {{ colunas.aberto|length }}</span>
+    <span class="contador estado-atencao">Em atendimento: {{ colunas.em_atendimento|length }}</span>
   </div>
 </div>
 
-{% if not problemas %}
+{% if not colunas.aberto and not colunas.em_atendimento %}
   <div class="alert alert-secondary">Nenhum problema aberto. 🎉</div>
 {% endif %}
 
-<div class="d-grid gap-2">
-{% for p in problemas %}
-  <a href="{{ url_for('telas.problema', problema_id=p.id) }}" class="card text-decoration-none">
-    <div class="card-body py-2">
-      <div class="d-flex justify-content-between align-items-start gap-2">
-        <div>
-          <span class="badge prio-{{ p.prioridade }}">{{ p.prioridade }}</span>
-          {% if p.risco %}<span class="badge bg-danger">🚨 brigada</span>{% endif %}
-          <span class="fw-semibold ms-1">{{ p.zona_nome }}</span>
-        </div>
-        <span class="badge text-bg-secondary">{{ p.status_nome }}</span>
-      </div>
-      <div class="small mt-1">{{ p.descricao }}</div>
-      <div class="small text-secondary">{{ p.categoria_nome }} · {{ p.equipe_nome }} · {{ p.quando }}
-        {% if not p.confirmado %} · <span class="text-warning">aguarda confirmação</span>{% endif %}</div>
+<div class="quadro">
+  <section class="coluna coluna-aberto">
+    <div class="coluna-topo">Aberto <span class="badge bg-danger">{{ colunas.aberto|length }}</span></div>
+    <div class="coluna-corpo">
+      {% for p in colunas.aberto %}{{ cartao(p) }}{% else %}<div class="vazio">Nada aberto.</div>{% endfor %}
     </div>
-  </a>
-{% endfor %}
+  </section>
+  <section class="coluna coluna-atendimento">
+    <div class="coluna-topo">Em atendimento <span class="badge text-bg-warning">{{ colunas.em_atendimento|length }}</span></div>
+    <div class="coluna-corpo">
+      {% for p in colunas.em_atendimento %}{{ cartao(p) }}{% else %}<div class="vazio">Ninguém em atendimento.</div>{% endfor %}
+    </div>
+  </section>
+  <section class="coluna coluna-resolvido">
+    <div class="coluna-topo">Resolvidos (últimos) <span class="badge bg-success">{{ colunas.resolvido|length }}</span></div>
+    <div class="coluna-corpo">
+      {% for p in colunas.resolvido %}{{ cartao(p) }}{% else %}<div class="vazio">Nada resolvido ainda.</div>{% endfor %}
+    </div>
+  </section>
 </div>
 {% endblock %}

@@ -19,3 +19,19 @@ piso da entrada afundado,estrutura,P2
 corrimao da escada bambo,estrutura,P2
 vi fumaca perto da praca de alimentacao,seguranca,P1
 pessoa presa dentro do elevador,seguranca,P1
+Camera da doca 2 ta com a tela toda preta no monitor e caiu o sinal.,seguranca,P2
+Painel digital do estacionamento apago o visor e nao mostra os numero.,eletrica,P3
+Fita de led da sanca ta com metade dos ponto queimado e a outra metade piscando.,eletrica,P4
+Camera do corredor do cinema fico girando sem parar e nao obedece comando.,seguranca,P3
+Tomada do totem desligo sozinha e paro de mandar energia pro aparelho.,eletrica,P3
+Tomada perto dos sofa paro de carrega e ta sem corrente eletrica.,eletrica,P3
+Camera 41 ta sem sinal de imagem e aparece como desconectada no sistema.,seguranca,P2
+Sensor de fumaca ta com a luzinha piscando rapido e dando erro no painel.,seguranca,P1
+Luz do espelho do banheiro queimo e nao liga de jeito nenhum.,eletrica,P3
+Camera 02 fico offline do nada e nao manda mais sinal pro gravador.,seguranca,P2
+Painel de senha apago o visor e saiu da rede do sistema.,eletrica,P3
+Luz de balizamento do degrau apago uma fileira inteira de led.,eletrica,P2
+Camera 11 ta com a imagem chuviscando muito e falhando o video.,seguranca,P3
+Refletor da area externa nao acendeu e ta com erro de alimentacao.,eletrica,P3
+Painel informativo travo numa tela branca e perdeu o sinal.,eletrica,P3
+Camera 50 caiu o sinal de rede e fico totalmente fora do ar.,seguranca,P2

@@ -1,20 +1,67 @@
-{# Indicadores por zona e equipe. Nunca por pessoa. #}
+{# Painel de gestão: indicadores por zona e equipe. Nunca por pessoa. #}
 {% extends "base.html" %}
 {% block titulo %}Painel · Ronda Viva{% endblock %}
 {% block conteudo %}
-<h1 class="h4 mb-3">Painel</h1>
-<div class="row g-2">
-  <div class="col-6 col-md-3"><div class="card h-100"><div class="card-body">
-    <div class="numero-grande">{{ d.zonas_no_prazo_pct }}%</div><div class="small text-secondary">zonas conferidas no prazo</div></div></div></div>
-  <div class="col-6 col-md-3"><div class="card h-100"><div class="card-body">
-    <div class="numero-grande text-secondary">{{ d.zonas_cinza }}</div><div class="small text-secondary">zonas que ninguém conferiu</div></div></div></div>
-  <div class="col-6 col-md-3"><div class="card h-100"><div class="card-body">
-    <div class="numero-grande">{{ d.tempo_medio_min }} min</div><div class="small text-secondary">tempo médio para resolver</div></div></div></div>
-  <div class="col-6 col-md-3"><div class="card h-100"><div class="card-body">
-    <div class="numero-grande">{{ d.problemas_resolvidos }}</div><div class="small text-secondary">problemas resolvidos</div></div></div></div>
+<div class="titulo-tela">
+  <div>
+    <h1>Painel de gestão</h1>
+    <div class="small text-secondary">Por zona e por equipe. O sistema não avalia pessoas.</div>
+  </div>
+  <a class="btn btn-sm btn-outline-light" href="{{ url_for('backlog.etiquetas_pdf') }}">🏷️ Etiquetas QR (PDF)</a>
 </div>
-{% if d.zonas_reincidentes %}
-<div class="alert alert-warning mt-3">🔁 Problema repetido em: {{ d.zonas_reincidentes|join(', ') }}</div>
+
+<div class="row g-2">
+  <div class="col-6 col-lg-3"><div class="kpi kpi-ok">
+    <div class="numero-grande text-success">{{ d.zonas_no_prazo_pct }}%</div>
+    <div class="small text-secondary">zonas conferidas no prazo ({{ d.zonas_no_prazo }} de {{ d.total_zonas }})</div></div></div>
+  <div class="col-6 col-lg-3"><div class="kpi kpi-cinza">
+    <div class="numero-grande">{{ d.zonas_cinza }}</div>
+    <div class="small text-secondary">zonas que ninguém conferiu</div></div></div>
+  <div class="col-6 col-lg-3"><div class="kpi kpi-tempo">
+    <div class="numero-grande text-warning">{{ d.tempo_medio_min if d.tempo_medio_min is not none else '—' }}{% if d.tempo_medio_min is not none %} min{% endif %}</div>
+    <div class="small text-secondary">tempo médio para resolver ({{ d.problemas_resolvidos }} resolvidos)</div></div></div>
+  <div class="col-6 col-lg-3"><div class="kpi kpi-ia">
+    <div class="numero-grande text-info">{{ (ia.acerto_categoria * 100)|round|int }}%</div>
+    <div class="small text-secondary">acerto da IA na categoria (teste cego)</div></div></div>
+</div>
+
+<div class="row g-3 mt-1">
+  <div class="col-lg-7">
+    <div class="card h-100"><div class="card-body">
+      <h2 class="h6">Situação das zonas</h2>
+      {% set total = zonas|length or 1 %}
+      {% for estado, nome, cor in [('ok','OK','var(--ok)'),('atencao','Atenção','var(--atencao)'),('problema','Problema','var(--problema)'),('cinza','Ninguém conferiu','var(--cinza)')] %}
+        {% set n = zonas|selectattr('estado','equalto',estado)|list|length %}
+        <div class="d-flex justify-content-between small mt-2"><span>{{ nome }}</span><span>{{ n }}</span></div>
+        <div class="barra"><div style="width: {{ (100 * n / total)|round|int }}%; background: {{ cor }}"></div></div>
+      {% endfor %}
+      {% if d.zonas_reincidentes %}
+      <div class="alert alert-warning py-2 small mt-3 mb-0">🔁 Problema repetido em: {{ d.zonas_reincidentes|join(', ') }}</div>
+      {% endif %}
+    </div></div>
+  </div>
+  <div class="col-lg-5">
+    <div class="card h-100"><div class="card-body">
+      <h2 class="h6">Problemas abertos por equipe</h2>
+      <div class="small text-secondary mb-2">{{ abertos }} {{ 'aberto' if abertos == 1 else 'abertos' }}{% if p1 %} · <span class="text-danger fw-semibold">{{ p1 }} urgente(s) P1</span>{% endif %}</div>
+      {% for equipe, n in por_equipe %}
+        <div class="d-flex justify-content-between small mt-2"><span>{{ equipe }}</span><span>{{ n }}</span></div>
+        <div class="barra"><div style="width: {{ (100 * n / (abertos or 1))|round|int }}%; background: var(--azul)"></div></div>
+      {% else %}
+        <div class="vazio">Nenhum problema aberto. 🎉</div>
+      {% endfor %}
+    </div></div>
+  </div>
+</div>
+
+{% if alertas.ok_divergente or alertas.semana_sem_achados %}
+<div class="card mt-3"><div class="card-body">
+  <h2 class="h6">Alertas por zona</h2>
+  <ul class="small mb-0">
+    {% for a in alertas.ok_divergente %}<li><strong>{{ a.nome }}</strong>: a última conferência foi OK, mas tem problema aberto lá. Vale conferir de novo.</li>{% endfor %}
+    {% for a in alertas.semana_sem_achados %}<li><strong>{{ a.nome }}</strong>: uma semana sem nenhum achado. Está tudo bem mesmo ou ninguém está olhando?</li>{% endfor %}
+  </ul>
+</div></div>
 {% endif %}
-<p class="small text-secondary mt-3">Indicadores por zona e equipe. O sistema não avalia pessoas. Dados fictícios de demonstração.</p>
+<p class="small text-secondary mt-3">Dados fictícios de demonstração.</p>
 {% endblock %}

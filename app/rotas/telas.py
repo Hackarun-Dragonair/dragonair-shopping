@@ -7,19 +7,35 @@ from dataclasses import asdict
 
 from flask import Blueprint, abort, render_template, request
 
-from app.consultas import indicadores, listar_equipes, listar_problemas, obter_problema
+from app.consultas import (
+    agora_utc,
+    indicadores,
+    listar_equipes,
+    listar_problemas,
+    listar_zonas,
+    obter_problema,
+)
 from app.db import get_db
 from app.dominio import CATEGORIAS, PRIORIDADES
 from app.modelo import obter_modelo
+from app.ritmo import listar_alertas
 
 bp = Blueprint("telas", __name__, url_prefix="/telas")
 
 
 @bp.get("/fila")
 def fila():
-    status = request.args.get("status", "abertos")
-    problemas = listar_problemas(get_db(), status=status)
-    return render_template("fila.html", pagina="fila", problemas=problemas, status=status)
+    """Quadro em 3 colunas: Aberto, Em atendimento e Resolvido (os últimos 8)."""
+    problemas = listar_problemas(get_db(), status="todos")
+    colunas = {
+        "aberto": [p for p in problemas if p["status"] == "aberto"],
+        "em_atendimento": [p for p in problemas if p["status"] == "em_atendimento"],
+        "resolvido": sorted(
+            (p for p in problemas if p["status"] == "resolvido"),
+            key=lambda p: p["resolvido_em"] or "", reverse=True,
+        )[:8],
+    }
+    return render_template("fila.html", pagina="fila", colunas=colunas)
 
 
 @bp.get("/problemas/<int:problema_id>")
@@ -35,7 +51,17 @@ def problema(problema_id: int):
 
 @bp.get("/painel")
 def painel():
-    return render_template("painel.html", pagina="painel", d=indicadores(get_db()))
+    db = get_db()
+    abertos = listar_problemas(db, status="abertos")
+    por_equipe: dict[str, int] = {}
+    for p in abertos:
+        por_equipe[p["equipe_nome"]] = por_equipe.get(p["equipe_nome"], 0) + 1
+    return render_template(
+        "painel.html", pagina="painel", d=indicadores(db),
+        zonas=listar_zonas(db), por_equipe=sorted(por_equipe.items(), key=lambda x: -x[1]),
+        abertos=len(abertos), p1=sum(1 for p in abertos if p["prioridade"] == "P1"),
+        alertas=listar_alertas(db, agora_utc()), ia=obter_modelo().relatorio,
+    )
 
 
 @bp.get("/sobre-a-ia")

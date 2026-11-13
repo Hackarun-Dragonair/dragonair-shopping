@@ -80,3 +80,67 @@ mall ficou escuro de repente,eletrica,P2
 garagem escura sem iluminacao,eletrica,P2
 ar condicionado nao gela o corredor,climatizacao,P3
 grelha sem vento na loja,climatizacao,P3
+Camera 04 paro de manda imagem pro sistema e travo virada pro canto.,seguranca,P2
+Refletor da praca fico piscando rapido e depois queimo de vez.,eletrica,P3
+"Tomada do corredor ta sem energia nenhuma, nao passa carga quando liga algo.",eletrica,P3
+Sensor de presenca do banheiro nao ta ativando quando passa na frente.,eletrica,P4
+Luminaria de emergencia ta com a luzinha vermelha apagada e nao liga no teste.,eletrica,P2
+Tomada do quiosque ta frouxa na caixa e nao ta funcionando nada nela.,eletrica,P2
+Camera 19 travo a gravacao do nada e fico offline no sistema.,seguranca,P2
+"Luz do corredor de servico nao acende mais, lampada parece que queimo.",eletrica,P3
+Camera da entrada B perdeu o foco total e congelo a imagem.,seguranca,P3
+Refletor da fachada externa nao acendeu na hora programada e ta apagado.,eletrica,P3
+Tomada perto do bebedouro paro de passa corrente e ta morta.,eletrica,P3
+Camera do elevador perdeu a conexao de rede com a central de monitoramento.,seguranca,P2
+Sensor da porta automatica ta falhando e demora muito pra reconhecer movimento.,estrutura,P3
+Camera 33 perdeu o sinal de video depois que comeco a chover.,seguranca,P2
+Luz do banheiro familia ta bem fraca e fazendo um zumbido alto no reator.,eletrica,P3
+Tomada perto do fraldario nao ta passando energia nenhuma pro aparelho.,eletrica,P3
+Refletor do jardim apago sozinho e o sistema acuso falha nele.,eletrica,P4
+Cancela das moto ta com o visor apagado e nao ta lendo o cartao.,eletrica,P2
+Camera 08 ta com a imagem toda chiada e caindo o sinal toda hora.,seguranca,P3
+Luminaria do hall solto a tampa de plastico e ta pendurada pela trava.,estrutura,P2
+Camera da saida 4 fico offline no sistema e nao volta o sinal.,seguranca,P2
+Luz do deposito queimo e nao acende mais quando aperta o botao.,eletrica,P3
+"Refletor de chao nao acende de jeito nenhum, parece que entro em curto.",eletrica,P2
+Camera 12 fico com a tela toda azul na central e perdeu o video.,seguranca,P2
+Exaustor do banheiro paro de girar e nao ta puxando o ar.,climatizacao,P3
+Camera das joalheria perdeu o sinal com o servidor e sumiu da tela.,seguranca,P2
+Luz de emergencia da escada ta piscando sem parar e apitando fraco.,eletrica,P2
+Totem de pagamento travo na tela inicial e perdeu a conexao de rede.,eletrica,P3
+Refletor grande do teto queimo uma das lampada e fico bem fraco.,eletrica,P3
+Tomada da parede do caixa ta sem energia e nao liga nenhum equipamento.,eletrica,P3
+Camera da entrada de funcionario congelo a imagem e nao atualiza mais.,seguranca,P2
+Luz do corredor do cinema apago e nao liga mesmo mexendo no interruptor.,eletrica,P3
+Camera 27 perdeu a cor da imagem e logo depois caiu o sinal todo.,seguranca,P3
+Tomada do corredor de manutencao ta sem corrente e com o espelho solto.,eletrica,P2
+Luminaria do fraldario apago sozinha e nao acende mais.,eletrica,P3
+Camera do patio perdeu a comunicacao com a central e fico offline.,seguranca,P2
+Refletor da entrada C apago e deu alerta de queda de tensao no sistema.,eletrica,P2
+Camera 15 ta com a imagem toda embacada e caiu a transmissao.,seguranca,P3
+Tomada perto da escada do subsolo paro de funciona e ta sem energia.,eletrica,P3
+Sirene do alarme deu falha de comunicacao no painel central.,seguranca,P2
+Luz do teto perto do banheiro ta piscando muito forte sem parar.,eletrica,P3
+Tomada do apoio dos seguranca paro de passa carga e ta morta.,eletrica,P3
+Camera 38 ta sem imagem nenhuma na tela e deu erro de conexao.,seguranca,P2
+Refletor da parede externa queimo e nao acendeu hoje a noite.,eletrica,P3
+Camera de tras das loja fico fora do ar e nao grava mais nada.,seguranca,P2
+Luminaria tubular da garagem queimo e ta toda apagada.,eletrica,P3
+Tomada perto do caixa rapido ta sem sinal de energia nenhum.,eletrica,P3
+Camera 22 travo o motor e nao vira mais pros lado.,seguranca,P3
+Sensor da porta do subsolo desregulo e fica abrindo e fechando sozinho.,estrutura,P2
+Camera 45 perdeu o sinal de rede com a central de seguranca.,seguranca,P2
+Refletor perto da claraboia queimo a lampada e deu erro no sistema.,eletrica,P3
+Tomada da maquina de cafe cortou a energia do nada e nao volta.,eletrica,P3
+Luz do corredor de emergencia apago e nao acende mais.,eletrica,P2
+Tomada do quiosque de capinha paro de passa energia pros aparelho.,eletrica,P3
+Camera 30 perdeu o sinal de video e aparece com erro no monitor.,seguranca,P2
+Luminaria do teto solto um lado do suporte e fico pendurada pelo fio.,estrutura,P2
+Camera 09 fico fora do ar sozinha e nao reconecta no sistema.,seguranca,P2
+Tomada perto do orelhao ta sem corrente e nao funciona nada.,eletrica,P3
+Luz do banheiro PNE nao acende quando aperta o interruptor da parede.,eletrica,P3
+Camera 36 ta offline no sistema e nao manda imagem nenhuma.,seguranca,P2
+Refletor do estacionamento apago de vez e deu falha no circuito.,eletrica,P3
+Camera 17 paro de transmitir video pro gravador da central.,seguranca,P2
+Tomada perto da saida ta sem energia e nao passa corrente nenhuma.,eletrica,P3
+Luz de emergencia nao acendeu no teste e acuso erro de bateria.,eletrica,P2
