@@ -1,0 +1,34 @@
+{# Molde de todas as telas. Dono: TELAS (tarefas #4 e #5). #}
+<!doctype html>
+<html lang="pt-BR" data-bs-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block titulo %}Ronda Viva{% endblock %}</title>
+  {# Bootstrap fica no próprio projeto: funciona sem internet no dia da demo #}
+  <link rel="stylesheet" href="{{ url_for('static', path='vendor/bootstrap.min.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', path='css/ronda.css') }}">
+</head>
+<body>
+  <nav class="navbar bg-body-tertiary border-bottom">
+    <div class="container-fluid">
+      <a class="navbar-brand fw-bold" href="/">🐉 Ronda Viva</a>
+      <div class="d-none d-md-flex gap-3">
+        <a href="/">Mapa</a><a href="/fila">Fila</a><a href="/painel">Painel</a><a href="/sobre-modelo">Sobre a IA</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container py-3 conteudo">
+    {% block conteudo %}{% endblock %}
+  </main>
+
+  {# Menu de baixo: só aparece no celular #}
+  <nav class="menu-celular d-md-none border-top bg-body-tertiary">
+    <a href="/">🗺️<span>Mapa</span></a><a href="/fila">📋<span>Fila</span></a><a href="/painel">📊<span>Painel</span></a>
+  </nav>
+
+  <script src="{{ url_for('static', path='vendor/bootstrap.bundle.min.js') }}"></script>
+  <script src="{{ url_for('static', path='js/ronda.js') }}"></script>
+</body>
+</html>

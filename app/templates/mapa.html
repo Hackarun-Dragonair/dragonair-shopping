@@ -1,0 +1,16 @@
+{# Mapa das zonas. Dono: TELAS + DADOS (tarefa #10). Cores vêm de app/status.py. #}
+{% extends "base.html" %}
+{% block conteudo %}
+<h1 class="h4">Mapa das zonas</h1>
+<p class="text-secondary small">Cinza = ninguém conferiu no prazo.</p>
+
+{# TODO #10: separar por piso e deixar o mapa bonito (base: protótipo, modo vetor). #}
+<svg viewBox="0 0 1000 700" class="mapa w-100 border rounded">
+  {% for z in zonas %}
+  <a href="/z/{{ z.id }}">
+    <rect x="{{ z.x }}" y="{{ z.y }}" width="{{ z.largura }}" height="{{ z.altura }}" class="zona zona-{{ z.cor }}"/>
+    <text x="{{ z.x + 4 }}" y="{{ z.y + 16 }}" class="zona-nome">{{ z.nome }}</text>
+  </a>
+  {% endfor %}
+</svg>
+{% endblock %}
