@@ -1,0 +1,6 @@
+# Só para o notebook que roda a câmera. NÃO entra no requirements.txt nem na CI.
+# Instale o torch versão CPU primeiro (evita baixar 2 GB de CUDA):
+#   pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
+ultralytics>=8.3   # AGPL-3.0 — declarado no README e em docs/IA.md
+supervision>=0.25  # MIT
+opencv-python>=4.8
