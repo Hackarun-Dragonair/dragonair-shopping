@@ -12,6 +12,7 @@ from app.dominio import (
     garantir_prioridade,
     triar,
 )
+from app import sexta13
 from app.modelo import obter_modelo
 from app.rotas.comum import ator_atual, corpo, json_resposta, origem_do_pedido, quer_json
 from app.servico import abrir_problema, registrar_conferencia
@@ -58,6 +59,8 @@ def ver(codigo: str):
         zona=zona,
         historico=historico,
         registrado=request.args.get("registrado", ""),
+        espantou=request.args.get("espantou") == "1",
+        frase_espantou=sexta13.FRASE_ESPANTOU,
     )
 
 
@@ -74,6 +77,7 @@ def conferir(codigo: str):
         return redirect(url_for("zona.ver", codigo=codigo, origem=origem, registrado="problema"))
     if resultado not in {"ok", "atencao"}:
         return json_resposta({"erro": "resultado_invalido"}, 400)
+    espantou = bool(zona.get("gato"))  # Easter Egg: conferir espanta o gato
     db = get_db()
     with db:
         registrar_conferencia(
@@ -85,9 +89,10 @@ def conferir(codigo: str):
             agora=agora_utc(),
         )
     if not quer_json():
-        return redirect(url_for("zona.ver", codigo=codigo, origem=origem, registrado=resultado))
+        extra = {"espantou": "1"} if espantou else {}
+        return redirect(url_for("zona.ver", codigo=codigo, origem=origem, registrado=resultado, **extra))
     return json_resposta(
-        {"resultado": resultado, "zona": _zona_ou_404(codigo)},
+        {"resultado": resultado, "zona": _zona_ou_404(codigo), "espantou_gato": espantou},
         201,
     )
 

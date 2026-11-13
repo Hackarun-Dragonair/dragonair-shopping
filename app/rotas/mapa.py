@@ -2,6 +2,7 @@ from flask import Blueprint, current_app, render_template, request, url_for
 
 from app.consultas import listar_zonas, montar_mapa
 from app.db import get_db
+from app.sexta13 import FRASE as FRASE_SEXTA13
 from app.rotas.comum import json_resposta, quer_json
 
 bp = Blueprint("mapa", __name__)
@@ -41,7 +42,9 @@ def inicio():
                 },
             }
         )
-    return render_template("inicio.html", zonas=listar_zonas(get_db()))
+    return render_template(
+        "inicio.html", zonas=listar_zonas(get_db()), frase_sexta13=FRASE_SEXTA13
+    )
 
 
 @bp.get("/mapa")

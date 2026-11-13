@@ -172,6 +172,18 @@ Testes: `python -m pytest`.
 
 **Link público:** o `render.yaml` sobe um Web Service gratuito (um worker, porque o banco é SQLite). O disco some quando o serviço dorme; por isso o cenário é recriado na subida. A apresentação usa o notebook.
 
+## 🐈‍⬛ Easter Egg: sexta-feira 13
+Na sexta-feira 13, um **gato preto** se esconde na zona que **ninguém confere há mais tempo** (a mais esquecida entre as cinzas).
+- O mapa mostra a frase uma vez no topo e o 🐈‍⬛ em **uma zona só**.
+- Quem confere a zona pelo QR **espanta o gato**, e ele pula para a próxima zona esquecida. Sem zona cinza, o gato vai embora.
+- É o diferencial da Ronda Viva (o que ninguém conferiu) virando brincadeira: o gato mostra onde a ronda deve ir primeiro.
+
+**Para demonstrar em outro dia** (ex.: final de sábado):
+```bash
+SEXTA13=1 python wsgi.py     # Windows (PowerShell): $env:SEXTA13="1"; python wsgi.py
+```
+`SEXTA13=auto` (padrão) liga só na sexta-feira 13; `SEXTA13=0` desliga. Código: `app/sexta13.py`, testes: `tests/test_sexta13.py`.
+
 ## 🤖 Uso de IA
 Declarado em [docs/IA.md](docs/IA.md). Dentro do produto, o modelo é scikit-learn (TF-IDF + regressão logística), treinado nas frases de `data/treino.csv`. O acerto medido no teste cego sai em `GET /sobre-o-modelo`.
 

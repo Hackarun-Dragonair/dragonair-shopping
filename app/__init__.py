@@ -23,6 +23,8 @@ def create_app(config: dict | None = None) -> Flask:
         SEED_ON_START=os.environ.get("SEED_ON_START", "1") == "1",
         PUBLIC_BASE_URL=os.environ.get("PUBLIC_BASE_URL", "").strip(),
         CORS_ORIGIN=os.environ.get("CORS_ORIGIN", "*"),
+        # Easter Egg sexta-feira 13: "auto" (só na data), "1" (sempre, para a demo), "0" (desliga).
+        SEXTA13=os.environ.get("SEXTA13", "auto"),
     )
     if config:
         app.config.update(config)

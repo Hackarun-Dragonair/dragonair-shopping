@@ -13,12 +13,21 @@
   </div>
 </div>
 
+{% set zona_gato = zonas|selectattr('gato')|first %}
+{% if zona_gato %}
+{# Easter Egg sexta-feira 13 (app/sexta13.py): frase uma vez só, gato em uma zona só. #}
+<div class="alert alert-dark d-flex align-items-center gap-2 py-2" role="status">
+  <span class="fs-4" aria-hidden="true">🐈‍⬛</span>
+  <span class="small">{{ frase_sexta13 }} Agora ele está em <strong>{{ zona_gato.nome }}</strong>.</span>
+</div>
+{% endif %}
+
 {% for piso, zonas_do_piso in zonas|groupby('piso') %}
 <h2 class="h6 text-secondary mt-3">Piso {{ piso }}</h2>
 <div class="grade-zonas">
   {% for z in zonas_do_piso %}
   <a class="zona-bloco estado-{{ z.estado }}" href="{{ url_for('zona.ver', codigo=z.codigo) }}">
-    <div class="nome">{{ z.nome }}</div>
+    <div class="nome">{% if z.gato %}<span title="Gato preto da sexta-feira 13">🐈‍⬛</span> {% endif %}{{ z.nome }}</div>
     <div class="info">{{ z.rotulo }}</div>
     <div class="info">{{ z.ha }}</div>
     {% if z.reincidencia %}<div class="info">🔁 problema repetido</div>{% endif %}
