@@ -120,6 +120,19 @@ python wsgi.py
 
 `python wsgi.py` sobe o servidor, recria o banco com os dados de exemplo e abre http://127.0.0.1:8000/ no navegador. A rota do QR de exemplo é http://127.0.0.1:8000/z/sanitario-piso1 (nome da zona e os botões OK, Atenção e Problema). O OK grava uma conferência no SQLite.
 
+**Telas (abrem no navegador, celular ou computador):**
+
+| Tela | Endereço |
+|---|---|
+| Mapa das zonas (cinza = ninguém conferiu) | `/` |
+| Tela do QR da zona (OK / Atenção / Problema + sugestão da IA) | `/z/sanitario-piso1` |
+| Fila de problemas | `/telas/fila` |
+| Problema + linha do tempo + dossiê | `/telas/problemas/<id>` |
+| Painel | `/telas/painel` |
+| Sobre a IA (acerto real) | `/telas/sobre-a-ia` |
+
+No celular, conecte no mesmo Wi-Fi ou hotspot do notebook e abra `http://IP-DO-NOTEBOOK:8000`.
+
 Para o cliente que pede JSON, envie `Accept: application/json` ou `?format=json`. `GET /` nesse modo lista os endpoints. Os principais:
 
 | Método | Caminho | Uso |
@@ -150,3 +163,7 @@ Declarado em [docs/IA.md](docs/IA.md). Dentro do produto, o modelo é scikit-lea
 ## 📜 Créditos e licenças
 - Flask (BSD) — API
 - scikit-learn (BSD) — modelo local de triagem
+- Bootstrap 5.3 (MIT) — visual das telas, incluído no projeto para funcionar sem internet
+- Protótipo visual inicial: Mateus Castro (equipe, com apoio do Gemini)
+- Dados de treino, zonas e usuários: fictícios, criados pela equipe
+- Mapa: desenho próprio em blocos (não usa a planta do shopping)
