@@ -5,7 +5,10 @@ from __future__ import annotations
 import sqlite3
 from datetime import datetime, timedelta, timezone
 
+from flask import current_app
+
 from app.dominio import estado_da_zona, ha_quanto, nome_categoria
+from app.sexta13 import marcar_gato
 
 SP = timezone(timedelta(hours=-3))
 ORDEM_ESTADO = {"problema": 0, "cinza": 1, "atencao": 2, "ok": 3}
@@ -134,10 +137,18 @@ def listar_zonas(conn: sqlite3.Connection, agora: datetime | None = None) -> lis
                 "quando": formato_local(ultima["criado_em"]) if ultima else "",
                 "problema_id": abertos.get(row["id"]),
                 "reincidencia": repetidas.get(row["id"], []),
+                "ultima_em": ultima["criado_em"] if ultima else "",
             }
         )
         zonas.append(item)
-    return zonas
+    return marcar_gato(zonas, agora, _modo_sexta13())
+
+
+def _modo_sexta13() -> str:
+    try:
+        return str(current_app.config.get("SEXTA13", "auto"))
+    except RuntimeError:  # fora de uma requisição/app (ex.: script)
+        return "auto"
 
 
 def obter_zona(conn: sqlite3.Connection, codigo: str, agora: datetime | None = None) -> dict | None:
