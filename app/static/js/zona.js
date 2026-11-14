@@ -5,6 +5,7 @@
   const codigo = painel.dataset.zona;
   const $ = (id) => document.getElementById(id);
   let sugestaoIA = null;   // o que a IA sugeriu (para saber se a pessoa mudou)
+  let enviando = false;    // true enquanto um registro está indo para o servidor
 
   // 1) Problema: em vez de enviar o formulário, abre o painel
   $("botao-problema").addEventListener("click", async function (evento) {
@@ -22,6 +23,7 @@
 
   // 2) Sugestão da IA
   $("botao-sugestao").addEventListener("click", async function () {
+    if (enviando) return;                 // espera o registro em andamento terminar
     const descricao = $("descricao").value.trim();
     if (!descricao) { $("descricao").focus(); return; }
     let r;
@@ -96,7 +98,8 @@
   // 3) Registrar
   $("botao-registrar").addEventListener("click", async function () {
     const botao = this;
-    if (botao.disabled) return;           // evita registrar duas vezes
+    if (botao.disabled || enviando) return;   // evita registrar duas vezes
+    enviando = true;
     botao.disabled = true;
     botao.textContent = "Enviando…";
     try {
@@ -117,6 +120,8 @@
       $("resultado").innerHTML = `<div class="aviso aviso-problema">${seguro(erro.message)}</div>`;
       botao.disabled = false;
       botao.textContent = "Tentar de novo";
+    } finally {
+      enviando = false;
     }
   });
 })();
