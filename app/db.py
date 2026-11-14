@@ -99,6 +99,23 @@ CREATE TABLE IF NOT EXISTS envios (
   criado_em TEXT NOT NULL
 );
 
+-- Planta de fundo e blocos do mapa (desenhados pelo gestor). Ficam fora do seed.
+CREATE TABLE IF NOT EXISTS plantas (
+  piso TEXT PRIMARY KEY,
+  arquivo TEXT,
+  proporcao REAL NOT NULL DEFAULT 0.62,
+  colunas INTEGER NOT NULL DEFAULT 40,
+  linhas INTEGER NOT NULL DEFAULT 25
+);
+
+CREATE TABLE IF NOT EXISTS celulas (
+  piso TEXT NOT NULL,
+  col INTEGER NOT NULL,
+  lin INTEGER NOT NULL,
+  zona_codigo TEXT NOT NULL,
+  PRIMARY KEY (piso, col, lin)
+);
+
 CREATE INDEX IF NOT EXISTS idx_conferencias_zona ON conferencias (zona_id, criado_em);
 CREATE INDEX IF NOT EXISTS idx_problemas_zona ON problemas (zona_id, status);
 CREATE INDEX IF NOT EXISTS idx_eventos_problema ON eventos (problema_id, id);
