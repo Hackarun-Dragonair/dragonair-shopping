@@ -6,9 +6,15 @@ async function chamarApi(url, dados) {
     opcoes.headers["Content-Type"] = "application/json";
     opcoes.body = JSON.stringify(dados);
   }
-  const resposta = await fetch(url, opcoes);
-  const json = await resposta.json();
-  if (!resposta.ok) throw new Error(json.erro || "erro");
+  let resposta;
+  try {
+    resposta = await fetch(url, opcoes);
+  } catch (erro) {
+    // Sem rede: falha alto, nunca finge que enviou.
+    throw new Error("Não enviado: sem conexão. Verifique a internet e tente de novo.");
+  }
+  const json = await resposta.json().catch(() => ({}));
+  if (!resposta.ok) throw new Error(json.mensagem || json.erro || "Não deu certo (erro " + resposta.status + ").");
   return json;
 }
 

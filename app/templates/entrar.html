@@ -1,46 +1,64 @@
-{# Entrar com crachá fictício: Gestor (ADM) ou Funcionário. Protótipo: sem senha e sem dado pessoal. #}
+{# Acesso por crachá: Gestor (ADM) ou Funcionário. Protótipo: crachás fictícios, sem senha e sem dado pessoal. #}
 {% extends "base.html" %}
-{% block titulo %}Entrar · Ronda Viva{% endblock %}
+{% from "_icones.html" import icone %}
+{% set pagina = 'entrar' %}
+{% block titulo %}Acesso · Ronda Viva{% endblock %}
 {% block conteudo %}
-<div class="mx-auto" style="max-width: 640px">
-  <h1 class="h4 mb-1">Entrar</h1>
-  <p class="small text-secondary mb-3">Escolha o perfil e digite o código do crachá.
-    <span class="badge text-bg-secondary">Protótipo: crachás e nomes fictícios, sem senha</span></p>
-
-  {% if erro %}<div class="alert alert-danger py-2">{{ erro }}</div>{% endif %}
-  {% if usuario_atual %}<div class="alert alert-info py-2 small">Você está como <strong>{{ usuario_atual.nome }}</strong> ({{ usuario_atual.perfil_nome }}). Entrar com outro crachá troca o perfil.</div>{% endif %}
-
-  <form method="post" action="{{ url_for('acesso.entrar_cracha') }}" class="card"><div class="card-body">
-    <input type="hidden" name="proximo" value="{{ proximo }}">
-    <div class="row g-2 mb-3" role="radiogroup" aria-label="Perfil">
-      <div class="col-6">
-        <input type="radio" class="btn-check" name="perfil" id="p-func" value="funcionario" {{ 'checked' if perfil != 'gestor' }}>
-        <label class="btn btn-outline-light w-100 py-3" for="p-func"><div class="fs-4">🧹</div><strong>Funcionário</strong><div class="small text-secondary">ronda, assumir, resolver</div></label>
-      </div>
-      <div class="col-6">
-        <input type="radio" class="btn-check" name="perfil" id="p-gest" value="gestor" {{ 'checked' if perfil == 'gestor' }}>
-        <label class="btn btn-outline-light w-100 py-3" for="p-gest"><div class="fs-4">🧑‍💼</div><strong>Gestor (ADM)</strong><div class="small text-secondary">confirmar IA, painel</div></label>
-      </div>
+<div class="tela-entrar">
+  <section class="entrar-marca">
+    <div>
+      <div class="rotulo-campo" style="color: var(--ouro-claro)">Capim Dourado Shopping · Operações</div>
+      <h1 class="mt-2">Ronda Viva</h1>
+      <p class="fs-5">O shopping percebe <span class="destaque">antes do cliente reclamar</span>.</p>
+      <ul class="mt-4">
+        <li>Mapa das zonas com o que ninguém conferiu</li>
+        <li>Ocorrência registrada em 3 toques pelo QR</li>
+        <li>IA local sugere categoria e prioridade</li>
+        <li>Linha do tempo que não se apaga</li>
+      </ul>
     </div>
-    <label for="cracha" class="form-label small">Código do crachá</label>
-    <input id="cracha" name="cracha" class="form-control form-control-lg mb-3" autocomplete="off" autocapitalize="characters" placeholder="Ex.: OTTO" required>
-    <button class="btn btn-primary btn-lg w-100">Entrar</button>
-  </div></form>
+    <div class="small" style="color:#a9a193">Protótipo do HackaRun 2026 · Equipe Dragonair · crachás e nomes fictícios</div>
+  </section>
 
-  <h2 class="h6 mt-4 mb-2">Crachás de demonstração</h2>
-  <div class="d-grid gap-2">
-    {% for c in crachas %}
+  <section class="entrar-form">
+    <h2 class="h4 fw-bold mb-1">Acessar o sistema</h2>
+    <p class="text-secondary small mb-3">Escolha o perfil e informe o código do crachá.</p>
+
+    {% if erro %}<div class="aviso aviso-problema">{{ erro }}</div>{% endif %}
+    {% if usuario_atual %}<div class="aviso aviso-neutro">Conectado como <strong class="ms-1">{{ usuario_atual.nome }}</strong>&nbsp;({{ usuario_atual.perfil_nome }}). Entrar com outro crachá troca o perfil.</div>{% endif %}
+
     <form method="post" action="{{ url_for('acesso.entrar_cracha') }}">
-      <input type="hidden" name="cracha" value="{{ c.cracha }}">
-      <input type="hidden" name="perfil" value="{{ c.perfil }}">
       <input type="hidden" name="proximo" value="{{ proximo }}">
-      <button class="cartao w-100 text-start d-flex justify-content-between align-items-center">
-        <span><strong>{{ c.cracha }}</strong> · {{ c.nome }} <span class="text-secondary small">({{ c.funcao }})</span></span>
-        <span class="badge {{ 'estado-atencao' if c.perfil == 'gestor' else 'text-bg-secondary' }}">{{ 'Gestor' if c.perfil == 'gestor' else 'Funcionário' }}</span>
-      </button>
+      <div class="row g-2 mb-3" role="radiogroup" aria-label="Perfil">
+        <div class="col-6">
+          <input type="radio" class="btn-check" name="perfil" id="p-func" value="funcionario" {{ 'checked' if perfil != 'gestor' }}>
+          <label class="perfil-opcao" for="p-func">{{ icone('qr') }}<div class="fw-bold mt-1">Funcionário</div><div class="small text-secondary">Ronda, assumir e resolver</div></label>
+        </div>
+        <div class="col-6">
+          <input type="radio" class="btn-check" name="perfil" id="p-gest" value="gestor" {{ 'checked' if perfil == 'gestor' }}>
+          <label class="perfil-opcao" for="p-gest">{{ icone('painel') }}<div class="fw-bold mt-1">Gestor (ADM)</div><div class="small text-secondary">Confirmar IA, painel e mapa</div></label>
+        </div>
+      </div>
+      <label for="cracha" class="form-label small fw-semibold">Código do crachá</label>
+      <input id="cracha" name="cracha" class="form-control form-control-lg mb-3" autocomplete="off" autocapitalize="characters" placeholder="Ex.: OTTO" required>
+      <button class="btn btn-primary btn-lg w-100">Entrar</button>
     </form>
-    {% endfor %}
-  </div>
-  <p class="small text-secondary mt-3">O QR da zona funciona sem entrar: registra como "Campo (aparelho compartilhado)". O celular lembra o crachá depois que você entra uma vez.</p>
+
+    <div class="rotulo-campo mt-4 mb-2">Crachás de demonstração</div>
+    <div class="d-grid gap-2">
+      {% for c in crachas %}
+      <form method="post" action="{{ url_for('acesso.entrar_cracha') }}">
+        <input type="hidden" name="cracha" value="{{ c.cracha }}">
+        <input type="hidden" name="perfil" value="{{ c.perfil }}">
+        <input type="hidden" name="proximo" value="{{ proximo }}">
+        <button class="cracha-demo">
+          <span><strong>{{ c.cracha }}</strong> · {{ c.nome }} <span class="text-secondary small">· {{ c.funcao }}</span></span>
+          <span class="perfil-tag {{ 'gestor' if c.perfil == 'gestor' }}">{{ 'Gestor' if c.perfil == 'gestor' else 'Funcionário' }}</span>
+        </button>
+      </form>
+      {% endfor %}
+    </div>
+    <p class="small text-secondary mt-3 mb-0">O QR da zona funciona sem entrar: registra como "Campo (aparelho compartilhado)". O aparelho lembra o crachá por 12 horas.</p>
+  </section>
 </div>
 {% endblock %}

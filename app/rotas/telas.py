@@ -13,6 +13,7 @@ from app.consultas import (
     listar_equipes,
     listar_problemas,
     listar_zonas,
+    montar_mapa,
     obter_problema,
 )
 from app.db import get_db
@@ -29,7 +30,9 @@ bp = Blueprint("telas", __name__, url_prefix="/telas")
 @bp.get("/fila")
 def fila():
     """Quadro em 3 colunas: Aberto, Em atendimento e Resolvido (os últimos 8)."""
-    problemas = listar_problemas(get_db(), status="todos")
+    filtros = {k: request.args.get(k, "") for k in ("prioridade", "equipe", "piso")}
+    db = get_db()
+    problemas = listar_problemas(db, status="todos", **filtros)
     colunas = {
         "aberto": [p for p in problemas if p["status"] == "aberto"],
         "em_atendimento": [p for p in problemas if p["status"] == "em_atendimento"],
@@ -38,7 +41,11 @@ def fila():
             key=lambda p: p["resolvido_em"] or "", reverse=True,
         )[:8],
     }
-    return render_template("fila.html", pagina="fila", colunas=colunas)
+    pisos = [r["piso"] for r in db.execute("SELECT DISTINCT piso, ordem_piso FROM zonas ORDER BY ordem_piso")]
+    return render_template(
+        "fila.html", pagina="fila", colunas=colunas, filtros=filtros,
+        equipes=listar_equipes(db), pisos=pisos, prioridades=PRIORIDADES,
+    )
 
 
 @bp.get("/problemas/<int:problema_id>")
@@ -62,7 +69,7 @@ def painel():
         por_equipe[p["equipe_nome"]] = por_equipe.get(p["equipe_nome"], 0) + 1
     return render_template(
         "painel.html", pagina="painel", d=indicadores(db),
-        zonas=listar_zonas(db), por_equipe=sorted(por_equipe.items(), key=lambda x: -x[1]),
+        zonas=montar_mapa(db)["zonas"], por_equipe=sorted(por_equipe.items(), key=lambda x: -x[1]),
         abertos=len(abertos), p1=sum(1 for p in abertos if p["prioridade"] == "P1"),
         alertas=listar_alertas(db, agora_utc()), ia=obter_modelo().relatorio,
     )

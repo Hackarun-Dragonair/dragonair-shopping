@@ -172,7 +172,7 @@
     const prob = z.problema_id
       ? `<a class="btn btn-sm btn-danger w-100 mb-2" href="/telas/problemas/${z.problema_id}">Ver problema aberto #${z.problema_id}</a>` : "";
     const gato = z.gato ? `<div class="alert alert-warning py-1 px-2 small mb-2">🐈‍⬛ O gato preto está aqui: é a zona esquecida há mais tempo.</div>` : "";
-    const repete = (z.reincidencia || []).length ? `<div class="small text-warning mb-2">🔁 Problema repetido: ${seguro(z.reincidencia.join(", "))}</div>` : "";
+    const repete = (z.reincidencia || []).length ? `<div class="small text-warning mb-2">Problema repetido: ${seguro(z.reincidencia.join(", "))}</div>` : "";
     $("inspetor").innerHTML = `
       <div class="d-flex justify-content-between align-items-start mb-1">
         <span class="badge estado-${z.estado}">${seguro(z.rotulo)}</span>
@@ -201,7 +201,7 @@
       abrir(codigo);
       $("msg-inspetor").innerHTML = r.espantou_gato
         ? "🐈‍⬛ Gato preto espantado! Conferência registrada."
-        : "✅ Conferência registrada (à distância).";
+        : "Conferência registrada (à distância).";
     } catch (e) {
       $("msg-inspetor").textContent = "Não deu certo: " + e.message;
     }

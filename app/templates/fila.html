@@ -1,54 +1,81 @@
-{# Fila em quadro: Aberto → Em atendimento → Resolvido. Urgentes primeiro. Toque para ver a linha do tempo. #}
+{# Fila de ocorrências: Aberta → Em atendimento → Resolvida. Urgentes primeiro, filtros por prioridade, equipe e piso. #}
 {% extends "base.html" %}
-{% block titulo %}Fila · Ronda Viva{% endblock %}
+{% from "_icones.html" import icone %}
+{% block titulo %}Fila de ocorrências · Ronda Viva{% endblock %}
 {% macro cartao(p) %}
 <a href="{{ url_for('telas.problema', problema_id=p.id) }}" class="cartao prio-borda-{{ p.prioridade }}">
   <div class="d-flex justify-content-between align-items-start gap-2">
-    <strong>{{ p.zona_nome }}</strong>
-    <span class="badge prio-{{ p.prioridade }}">{{ p.prioridade }}</span>
+    <div>
+      <div class="cartao-id">#{{ p.id }} · {{ p.quando }}</div>
+      <strong>{{ p.zona_nome }}</strong>
+    </div>
+    <span class="chip prio-{{ p.prioridade }}">{{ p.prioridade }}</span>
   </div>
-  <div class="small mt-1">{% if p.origem == 'camera' %}📹 {% elif p.origem == 'sensor' %}📟 {% endif %}{{ p.descricao }}</div>
-  <div class="small text-secondary mt-1">{{ p.categoria_nome }} · {{ p.equipe_nome }} · {{ p.quando }}</div>
-  <div class="mt-1">
-    {% if p.risco %}<span class="badge bg-danger">🚨 Avise a brigada</span>{% endif %}
-    {% if not p.confirmado and p.status != 'resolvido' %}<span class="badge text-bg-warning">aguarda confirmação</span>{% endif %}
+  <div class="cartao-texto">{{ p.descricao }}</div>
+  <div class="cartao-meta">
+    <span>{{ icone('equipe') }} {{ p.equipe_nome }}</span>
+    <span>{{ p.categoria_nome }}</span>
+    {% if p.risco %}<span class="meta-risco">{{ icone('sirene') }} Brigada</span>{% endif %}
+    {% if not p.confirmado and p.status != 'resolvido' %}<span class="meta-pendente">Aguarda gestor</span>{% endif %}
   </div>
 </a>
 {% endmacro %}
 {% block conteudo %}
 <div class="titulo-tela">
   <div>
-    <h1>Fila de problemas</h1>
-    <div class="small text-secondary">Urgentes primeiro. A IA sugere, o supervisor confirma.</div>
+    <h1>Fila de ocorrências</h1>
+    <div class="small text-secondary">Urgentes primeiro. A IA sugere a categoria e a prioridade; o gestor confirma.</div>
   </div>
   <div class="contadores">
-    <span class="contador estado-problema">Abertos: {{ colunas.aberto|length }}</span>
+    <span class="contador estado-problema">Abertas: {{ colunas.aberto|length }}</span>
     <span class="contador estado-atencao">Em atendimento: {{ colunas.em_atendimento|length }}</span>
   </div>
 </div>
 
+<form class="barra-filtros card mb-3" method="get">
+  <div class="card-body d-flex flex-wrap gap-2 align-items-end">
+    <div><label class="form-label small mb-1" for="f-prio">Prioridade</label>
+      <select id="f-prio" name="prioridade" class="form-select form-select-sm"><option value="">Todas</option>
+        {% for pr in prioridades %}<option {{ 'selected' if filtros.prioridade == pr }}>{{ pr }}</option>{% endfor %}</select></div>
+    <div><label class="form-label small mb-1" for="f-equipe">Equipe</label>
+      <select id="f-equipe" name="equipe" class="form-select form-select-sm"><option value="">Todas</option>
+        {% for e in equipes %}<option value="{{ e.codigo }}" {{ 'selected' if filtros.equipe == e.codigo }}>{{ e.nome }}</option>{% endfor %}</select></div>
+    <div><label class="form-label small mb-1" for="f-piso">Piso</label>
+      <select id="f-piso" name="piso" class="form-select form-select-sm"><option value="">Todos</option>
+        {% for pi in pisos %}<option {{ 'selected' if filtros.piso == pi }}>{{ pi }}</option>{% endfor %}</select></div>
+    <button class="btn btn-sm btn-primary">Filtrar</button>
+    {% if filtros.prioridade or filtros.equipe or filtros.piso %}<a href="{{ url_for('telas.fila') }}" class="btn btn-sm btn-outline-light">Limpar</a>{% endif %}
+  </div>
+</form>
+
 {% if not colunas.aberto and not colunas.em_atendimento %}
-  <div class="alert alert-secondary">Nenhum problema aberto. 🎉</div>
+  <div class="aviso aviso-ok">{{ icone('check') }} Nenhuma ocorrência aberta.</div>
 {% endif %}
 
 <div class="quadro">
   <section class="coluna coluna-aberto">
-    <div class="coluna-topo">Aberto <span class="badge bg-danger">{{ colunas.aberto|length }}</span></div>
+    <div class="coluna-topo">Abertas <span class="contagem">{{ colunas.aberto|length }}</span></div>
     <div class="coluna-corpo">
-      {% for p in colunas.aberto %}{{ cartao(p) }}{% else %}<div class="vazio">Nada aberto.</div>{% endfor %}
+      {% for p in colunas.aberto %}{{ cartao(p) }}{% else %}<div class="vazio">Nenhuma ocorrência aberta.</div>{% endfor %}
     </div>
   </section>
   <section class="coluna coluna-atendimento">
-    <div class="coluna-topo">Em atendimento <span class="badge text-bg-warning">{{ colunas.em_atendimento|length }}</span></div>
+    <div class="coluna-topo">Em atendimento <span class="contagem">{{ colunas.em_atendimento|length }}</span></div>
     <div class="coluna-corpo">
       {% for p in colunas.em_atendimento %}{{ cartao(p) }}{% else %}<div class="vazio">Ninguém em atendimento.</div>{% endfor %}
     </div>
   </section>
   <section class="coluna coluna-resolvido">
-    <div class="coluna-topo">Resolvidos (últimos) <span class="badge bg-success">{{ colunas.resolvido|length }}</span></div>
+    <div class="coluna-topo">Resolvidas (recentes) <span class="contagem">{{ colunas.resolvido|length }}</span></div>
     <div class="coluna-corpo">
       {% for p in colunas.resolvido %}{{ cartao(p) }}{% else %}<div class="vazio">Nada resolvido ainda.</div>{% endfor %}
     </div>
   </section>
 </div>
+{% endblock %}
+{% block scripts %}
+<script>
+  // A fila se atualiza sozinha a cada 15 s (se ninguém estiver mexendo nos filtros).
+  setInterval(() => { if (!document.hidden && !document.activeElement.closest("form")) location.reload(); }, 15000);
+</script>
 {% endblock %}

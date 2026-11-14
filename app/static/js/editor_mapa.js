@@ -174,7 +174,7 @@
       const r = await chamarApi(`/plantas/${encodeURIComponent(piso)}/layout`,
         { colunas: estado.colunas, linhas: estado.linhas, proporcao: estado.proporcao, celulas });
       layouts = r.pisos; alterado = false;
-      msg(`✅ Mapa do piso ${piso} salvo (${r.celulas} bloquinhos).`, "success");
+      msg(`Mapa do piso ${piso} salvo (${r.celulas} bloquinhos).`, "success");
     } catch (e) { msg("Não salvou: " + e.message, "danger"); }
   });
   $("ed-enviar").addEventListener("click", async () => {

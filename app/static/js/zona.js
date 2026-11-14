@@ -24,7 +24,13 @@
   $("botao-sugestao").addEventListener("click", async function () {
     const descricao = $("descricao").value.trim();
     if (!descricao) { $("descricao").focus(); return; }
-    const r = await chamarApi(`/z/${codigo}/triagem`, { descricao, perto_de: $("perto").value, origem: "qr" });
+    let r;
+    try {
+      r = await chamarApi(`/z/${codigo}/triagem`, { descricao, perto_de: $("perto").value, origem: "qr" });
+    } catch (erro) {
+      $("resultado").innerHTML = `<div class="aviso aviso-problema">${seguro(erro.message)}</div>`;
+      return;
+    }
     const s = r.sugestao;
     sugestaoIA = { categoria: s.categoria, prioridade: s.prioridade, equipe_id: String(r.equipe_id) };
 
@@ -36,15 +42,20 @@
     $("equipe").value = String(r.equipe_id);
 
     const pct = Math.round(s.confianca * 100);
-    $("confianca").textContent = `🤖 Sugestão da IA (confiança ${pct}%)` + (pct < 50 ? " · IA em dúvida, confira" : "") + ". Você pode mudar.";
+    $("confianca").textContent = `Sugestão da IA local · confiança ${pct}%` + (pct < 50 ? " · IA em dúvida, confira" : "") + ". Você pode mudar.";
     const alerta = $("alerta-risco");
-    if (s.risco) { alerta.textContent = "🚨 " + s.aviso; alerta.classList.remove("d-none"); }
+    if (s.risco) { alerta.textContent = s.aviso; alerta.classList.remove("d-none"); }
     else { alerta.classList.add("d-none"); }
     $("sugestao").classList.remove("d-none");
   });
 
   // 3) Registrar
   $("botao-registrar").addEventListener("click", async function () {
+    const botao = this;
+    if (botao.disabled) return;           // evita registrar duas vezes
+    botao.disabled = true;
+    botao.textContent = "Enviando…";
+    try {
     const escolha = { categoria: $("categoria").value, prioridade: $("prioridade").value, equipe_id: $("equipe").value };
     const mudou = Object.keys(escolha).some((k) => escolha[k] !== sugestaoIA[k]);
     const r = await chamarApi(`/z/${codigo}/problema`, {
@@ -55,7 +66,12 @@
     const aviso = r.aviso ? `<div class="alert alert-danger fw-bold">${seguro(r.aviso)}</div>` : "";
     $("sugestao").classList.add("d-none");
     $("resultado").innerHTML = aviso +
-      `<div class="alert alert-success">✅ Problema registrado e enviado para ${seguro(r.problema.equipe_nome)}.
+      `<div class="aviso aviso-ok">Ocorrência #${r.problema.id} registrada e enviada para ${seguro(r.problema.equipe_nome)}.
        <a href="/telas/problemas/${r.problema.id}">Ver linha do tempo</a></div>`;
+    } catch (erro) {
+      $("resultado").innerHTML = `<div class="aviso aviso-problema">${seguro(erro.message)}</div>`;
+      botao.disabled = false;
+      botao.textContent = "Tentar de novo";
+    }
   });
 })();

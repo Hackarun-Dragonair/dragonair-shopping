@@ -15,15 +15,18 @@
         };
       }
       botao.disabled = true;
-      const r = await chamarApi(`/problemas/${id}/${acao}`, dados);
-      if (r.aviso) sessionStorage.setItem("aviso", r.aviso);
-      location.reload();
+      try {
+        const r = await chamarApi(`/problemas/${id}/${acao}`, dados);
+        if (r.aviso) { try { sessionStorage.setItem("aviso", r.aviso); } catch (e) { /* sem storage */ } }
+        location.reload();
+      } catch (erro) {
+        document.getElementById("mensagem").innerHTML = `<div class="aviso aviso-problema">${seguro(erro.message)}</div>`;
+        botao.disabled = false;
+      }
     });
   });
   // Mostra o aviso da última ação (ex.: "prioridade mantida em P1")
-  const aviso = sessionStorage.getItem("aviso");
-  if (aviso) {
-    document.getElementById("mensagem").innerHTML = `<div class="alert alert-warning">${seguro(aviso)}</div>`;
-    sessionStorage.removeItem("aviso");
-  }
+  let aviso = null;
+  try { aviso = sessionStorage.getItem("aviso"); sessionStorage.removeItem("aviso"); } catch (e) { /* sem storage */ }
+  if (aviso) document.getElementById("mensagem").innerHTML = `<div class="aviso aviso-atencao">${seguro(aviso)}</div>`;
 })();

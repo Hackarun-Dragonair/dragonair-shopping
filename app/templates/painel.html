@@ -1,67 +1,95 @@
-{# Painel de gestão: indicadores por zona e equipe. Nunca por pessoa. #}
+{# Painel de gestão: indicadores por zona e por equipe. Nunca por pessoa. #}
 {% extends "base.html" %}
-{% block titulo %}Painel · Ronda Viva{% endblock %}
+{% from "_icones.html" import icone %}
+{% block titulo %}Painel de gestão · Ronda Viva{% endblock %}
 {% block conteudo %}
 <div class="titulo-tela">
   <div>
     <h1>Painel de gestão</h1>
-    <div class="small text-secondary">Por zona e por equipe. O sistema não avalia pessoas.</div>
+    <div class="small text-secondary">Indicadores por zona e por equipe. O sistema não avalia pessoas.</div>
   </div>
-  <a class="btn btn-sm btn-outline-light" href="{{ url_for('backlog.etiquetas_pdf') }}">🏷️ Etiquetas QR (PDF)</a>
+  <div class="d-flex gap-2">
+    <a class="btn btn-sm btn-outline-light" href="{{ url_for('planta.editor') }}">{{ icone('editar') }} Editar mapa</a>
+    <a class="btn btn-sm btn-primary" href="{{ url_for('backlog.etiquetas_pdf') }}">{{ icone('etiqueta') }} Etiquetas QR (PDF)</a>
+  </div>
 </div>
 
-<div class="row g-2">
-  <div class="col-6 col-lg-3"><div class="kpi kpi-ok">
-    <div class="numero-grande text-success">{{ d.zonas_no_prazo_pct }}%</div>
-    <div class="small text-secondary">zonas conferidas no prazo ({{ d.zonas_no_prazo }} de {{ d.total_zonas }})</div></div></div>
-  <div class="col-6 col-lg-3"><div class="kpi kpi-cinza">
+<div class="row g-3">
+  <div class="col-6 col-xl-3"><div class="kpi kpi-ok">
+    <div class="kpi-topo"><span>Zonas no prazo</span>{{ icone('ok') }}</div>
+    <div class="numero-grande">{{ d.zonas_no_prazo_pct }}%</div>
+    <div class="small text-secondary">{{ d.zonas_no_prazo }} de {{ d.total_zonas }} conferidas dentro do prazo</div></div></div>
+  <div class="col-6 col-xl-3"><div class="kpi kpi-cinza">
+    <div class="kpi-topo"><span>Sem conferência</span>{{ icone('relogio') }}</div>
     <div class="numero-grande">{{ d.zonas_cinza }}</div>
-    <div class="small text-secondary">zonas que ninguém conferiu</div></div></div>
-  <div class="col-6 col-lg-3"><div class="kpi kpi-tempo">
-    <div class="numero-grande text-warning">{{ d.tempo_medio_min if d.tempo_medio_min is not none else '—' }}{% if d.tempo_medio_min is not none %} min{% endif %}</div>
-    <div class="small text-secondary">tempo médio para resolver ({{ d.problemas_resolvidos }} resolvidos)</div></div></div>
-  <div class="col-6 col-lg-3"><div class="kpi kpi-ia">
-    <div class="numero-grande text-info">{{ (ia.acerto_categoria * 100)|round|int }}%</div>
-    <div class="small text-secondary">acerto da IA na categoria (teste cego)</div></div></div>
+    <div class="small text-secondary">zonas que ninguém conferiu no prazo</div></div></div>
+  <div class="col-6 col-xl-3"><div class="kpi kpi-tempo">
+    <div class="kpi-topo"><span>Tempo médio</span>{{ icone('mao') }}</div>
+    <div class="numero-grande">{{ d.tempo_medio_min if d.tempo_medio_min is not none else '—' }}<small>{% if d.tempo_medio_min is not none %} min{% endif %}</small></div>
+    <div class="small text-secondary">da abertura à solução · {{ d.problemas_resolvidos }} resolvidas</div></div></div>
+  <div class="col-6 col-xl-3"><div class="kpi kpi-ia">
+    <div class="kpi-topo"><span>Acerto da IA</span>{{ icone('ia') }}</div>
+    <div class="numero-grande">{{ (ia.acerto_categoria * 100)|round|int }}%</div>
+    <div class="small text-secondary">categoria no teste cego (n = {{ ia.teste }})</div></div></div>
 </div>
 
 <div class="row g-3 mt-1">
-  <div class="col-lg-7">
+  <div class="col-xl-8">
     <div class="card h-100"><div class="card-body">
-      <h2 class="h6">Situação das zonas</h2>
+      <div class="d-flex justify-content-between align-items-center mb-2">
+        <h2 class="h6 mb-0">Situação das zonas</h2>
+        <a href="{{ url_for('mapa.inicio') }}" class="small">Ver no mapa</a>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-sm tabela align-middle mb-0">
+          <thead><tr><th>Zona</th><th>Piso</th><th>Estado</th><th>Última conferência</th><th class="text-end">Prazo</th><th></th></tr></thead>
+          <tbody>
+          {% for z in zonas %}
+            <tr>
+              <td><a href="{{ url_for('zona.ver', codigo=z.codigo) }}" class="link-tabela">{{ z.nome }}</a>
+                {% if z.reincidencia %}<span class="tag-repetido" title="Problema repetido">{{ icone('repetido') }} repetido</span>{% endif %}</td>
+              <td>{{ z.piso }}</td>
+              <td><span class="chip estado-{{ z.estado }}">{{ z.rotulo }}</span></td>
+              <td class="text-secondary">{{ z.ha or 'nunca' }}</td>
+              <td class="text-end text-secondary">{{ z.prazo_minutos }} min</td>
+              <td class="text-end">{% if z.problema_id %}<a href="{{ url_for('telas.problema', problema_id=z.problema_id) }}" class="small">#{{ z.problema_id }}</a>{% endif %}</td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div></div>
+  </div>
+  <div class="col-xl-4 d-grid gap-3 align-content-start">
+    <div class="card"><div class="card-body">
+      <h2 class="h6">Distribuição</h2>
       {% set total = zonas|length or 1 %}
-      {% for estado, nome, cor in [('ok','OK','var(--ok)'),('atencao','Atenção','var(--atencao)'),('problema','Problema','var(--problema)'),('cinza','Ninguém conferiu','var(--cinza)')] %}
+      {% for estado, nome, cor in [('ok','OK','var(--ok)'),('atencao','Atenção','var(--atencao)'),('problema','Problema','var(--problema)'),('cinza','Sem conferência','var(--cinza)')] %}
         {% set n = zonas|selectattr('estado','equalto',estado)|list|length %}
-        <div class="d-flex justify-content-between small mt-2"><span>{{ nome }}</span><span>{{ n }}</span></div>
+        <div class="d-flex justify-content-between small mt-2"><span>{{ nome }}</span><span class="fw-semibold">{{ n }}</span></div>
         <div class="barra"><div style="width: {{ (100 * n / total)|round|int }}%; background: {{ cor }}"></div></div>
       {% endfor %}
-      {% if d.zonas_reincidentes %}
-      <div class="alert alert-warning py-2 small mt-3 mb-0">🔁 Problema repetido em: {{ d.zonas_reincidentes|join(', ') }}</div>
-      {% endif %}
     </div></div>
-  </div>
-  <div class="col-lg-5">
-    <div class="card h-100"><div class="card-body">
-      <h2 class="h6">Problemas abertos por equipe</h2>
-      <div class="small text-secondary mb-2">{{ abertos }} {{ 'aberto' if abertos == 1 else 'abertos' }}{% if p1 %} · <span class="text-danger fw-semibold">{{ p1 }} urgente(s) P1</span>{% endif %}</div>
+    <div class="card"><div class="card-body">
+      <h2 class="h6">Ocorrências abertas por equipe</h2>
+      <div class="small text-secondary mb-1">{{ abertos }} {{ 'aberta' if abertos == 1 else 'abertas' }}{% if p1 %} · <span class="text-danger fw-semibold">{{ p1 }} P1</span>{% endif %}</div>
       {% for equipe, n in por_equipe %}
-        <div class="d-flex justify-content-between small mt-2"><span>{{ equipe }}</span><span>{{ n }}</span></div>
-        <div class="barra"><div style="width: {{ (100 * n / (abertos or 1))|round|int }}%; background: var(--azul)"></div></div>
+        <div class="d-flex justify-content-between small mt-2"><span>{{ equipe }}</span><span class="fw-semibold">{{ n }}</span></div>
+        <div class="barra"><div style="width: {{ (100 * n / (abertos or 1))|round|int }}%; background: var(--ouro)"></div></div>
       {% else %}
-        <div class="vazio">Nenhum problema aberto. 🎉</div>
+        <div class="vazio">Nenhuma ocorrência aberta.</div>
       {% endfor %}
     </div></div>
+    {% if alertas.ok_divergente or alertas.semana_sem_achados %}
+    <div class="card"><div class="card-body">
+      <h2 class="h6">Alertas por zona</h2>
+      <ul class="lista-alertas">
+        {% for a in alertas.ok_divergente %}<li><strong>{{ a.nome }}</strong>: a última conferência foi OK, mas há ocorrência aberta. Conferir de novo.</li>{% endfor %}
+        {% for a in alertas.semana_sem_achados %}<li><strong>{{ a.nome }}</strong>: uma semana sem nenhum achado. Está tudo bem ou ninguém está olhando?</li>{% endfor %}
+      </ul>
+    </div></div>
+    {% endif %}
   </div>
 </div>
-
-{% if alertas.ok_divergente or alertas.semana_sem_achados %}
-<div class="card mt-3"><div class="card-body">
-  <h2 class="h6">Alertas por zona</h2>
-  <ul class="small mb-0">
-    {% for a in alertas.ok_divergente %}<li><strong>{{ a.nome }}</strong>: a última conferência foi OK, mas tem problema aberto lá. Vale conferir de novo.</li>{% endfor %}
-    {% for a in alertas.semana_sem_achados %}<li><strong>{{ a.nome }}</strong>: uma semana sem nenhum achado. Está tudo bem mesmo ou ninguém está olhando?</li>{% endfor %}
-  </ul>
-</div></div>
-{% endif %}
-<p class="small text-secondary mt-3">Dados fictícios de demonstração.</p>
+<p class="small text-secondary mt-3">Dados de demonstração.</p>
 {% endblock %}
