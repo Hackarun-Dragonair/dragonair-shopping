@@ -31,7 +31,7 @@
 
 **Não diga:** que o sistema "avisa" ou "chama" a brigada (ele só **pede** na tela para a pessoa avisar pelo rádio); números da IA (o teste é pequeno — deixe para as perguntas do pitch ao vivo).
 
-**Cola para a gravação** (em vez de ler o texto): banheiro? · folha / rádio · equipe, supervisor, cliente · site no ar · QR do Pix → mapa cinza · escreve → supervisor confirma · fumaça = urgente, chama a brigada · dono, sem apagar, custa pouco · banheiro? o mapa responde.
+**Cola para a gravação** (em vez de ler o texto): banheiro? · folha / rádio · equipe, supervisor, cliente · site no ar · QR do Pix → mapa cinza · escreve → supervisor confirma · fumaça = urgente, tela pede a brigada · dono, sem apagar, custa pouco · banheiro? o mapa responde.
 
 **3 dicas de entrega**
 1. **Olhar:** para a lente, não para a sua imagem. Depois da pergunta do começo, pare 1 s antes de "Ninguém sabe".
