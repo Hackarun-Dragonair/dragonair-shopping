@@ -10,7 +10,7 @@ Como decide:
      se a fala for curta, a cena final fica mais tempo na tela;
   3. acha as pausas da gravação e usa as maiores como troca de bloco do roteiro
      (problema, solução, IA, gestor, acerto, diferencial); dentro de cada bloco,
-     distribui as falas na proporção da voz guia e encosta cada legenda na pausa mais próxima.
+     escolhe em ordem as pausas que melhor batem com a proporção da voz guia (troca de frase).
 Só usa a biblioteca padrão do Python e o ffmpeg.
 """
 import json
@@ -106,28 +106,62 @@ for k in blocos[1:]:
           + ("" if melhor else " (sem pausa clara; usei a proporção)"))
 
 
-def encostar(t, pontos, raio=0.7):
-    perto = [p for p in pontos if abs(p - t) <= raio]
-    return min(perto, key=lambda p: abs(p - t)) if perto else t
-
-
-inicios_pausa = [a for a, _ in pausas]
-fins_pausa = [b for _, b in pausas]
 limites = blocos + [len(falas_g)]
 novas = []
 for n, k in enumerate(blocos):
     ult = limites[n + 1] - 1
-    ga, gb = falas_g[k]["inicio"], falas_g[ult]["fim"]
+    gb = falas_g[ult]["fim"]
     ha = inicio_bloco_h[k]
-    hb = (inicio_bloco_h[limites[n + 1]] - 0.3) if n + 1 < len(blocos) else h1
-    # fim real do bloco na voz: começo da pausa logo antes do próximo bloco
-    hb = encostar(hb, inicios_pausa, 1.5)
-    for i in range(k, ult + 1):
+    if n + 1 < len(blocos):
+        # fim real do bloco na voz: começo da pausa que termina onde o próximo bloco começa
+        prox = inicio_bloco_h[limites[n + 1]]
+        antes = [a for a, b in pausas if abs(b - prox) < 0.01]
+        hb = antes[0] if antes else prox - 0.3
+    else:
+        hb = h1
+    # Dentro do bloco: cada troca de frase vai para uma pausa da gravação. Escolhe, em ordem,
+    # o conjunto de pausas que fica mais perto da proporção da voz guia (programação dinâmica);
+    # pausas mais longas valem mais. Se não houver pausa boa, usa a proporção.
+    g0b = falas_g[k]["inicio"]
+    previstos = [ha + (falas_g[i]["inicio"] - g0b) * (hb - ha) / max(gb - g0b, 0.1) for i in range(k + 1, ult + 1)]
+    cand = [(a, b) for a, b in pausas if ha + 0.6 < b < hb]
+    SEM = 1.4  # custo de não usar pausa nenhuma numa troca
+
+    def custo(i, j):
+        a, b = cand[j]
+        return abs(b - previstos[i]) - 0.5 * min(b - a, 1.2)
+
+    memo = {}
+
+    def melhor(i, ultimo):
+        """Menor custo para as trocas i.. sabendo que a última pausa usada foi 'ultimo'."""
+        if i == len(previstos):
+            return 0.0, []
+        if (i, ultimo) in memo:
+            return memo[(i, ultimo)]
+        c, resto = melhor(i + 1, ultimo)
+        opcao = (SEM + c, [None] + resto)
+        for j in range(ultimo + 1, len(cand)):
+            c, resto = melhor(i + 1, j)
+            total_c = custo(i, j) + c
+            if total_c < opcao[0]:
+                opcao = (total_c, [j] + resto)
+        memo[(i, ultimo)] = opcao
+        return opcao
+
+    escolha = melhor(0, -1)[1]
+    comecos, fins_antes = [ha], []
+    for i, j in enumerate(escolha):
+        if j is None:
+            comecos.append(previstos[i])
+            fins_antes.append(previstos[i] - 0.2)
+        else:
+            fins_antes.append(cand[j][0])
+            comecos.append(cand[j][1])
+    fins_antes.append(hb)
+    for j, i in enumerate(range(k, ult + 1)):
         f = falas_g[i]
-        ini = ha + (f["inicio"] - ga) * (hb - ha) / (gb - ga)
-        fim = ha + (f["fim"] - ga) * (hb - ha) / (gb - ga)
-        ini = ha if i == k else encostar(ini, fins_pausa)
-        fim = hb if i == ult else encostar(fim, inicios_pausa)
+        ini, fim = comecos[j], fins_antes[j]
         novas.append(dict(texto=f["texto"], bloco=f["bloco"], inicio=round(ini, 3), fim=round(max(fim, ini + 0.6), 3)))
 for a, b in zip(novas, novas[1:]):  # legenda nunca passa por cima da seguinte
     a["fim"] = min(a["fim"], b["inicio"] - 0.05)
