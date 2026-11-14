@@ -1,77 +1,82 @@
-# Texto da locução — pitch de 90 s (Ronda Viva)
+# Texto da locução — pitch de 90 s (Ronda Viva) · versão 2
 
-Leia em voz alta, **no seu jeito de falar**, como quem conta para um amigo o que o sistema faz.
-Os tempos são da voz guia (`pitch-90s-voz-guia.mp4`): assista uma vez antes, para pegar o ritmo.
-Não precisa bater no segundo: o script `montar_com_voz.sh` encaixa a sua voz e acerta as legendas sozinho.
+Leia em voz alta, **no seu jeito de falar**, como quem mostra o sistema para um amigo.
+Os tempos são da voz guia (`pitch-90s-voz-guia.mp4`): assista uma vez antes para pegar o ritmo.
+Não precisa bater no segundo: o `montar_com_voz.sh` encaixa a sua voz e acerta as legendas sozinho.
 
 **Como ler as marcas**
 - `/` = respira curto (meio segundo).
-- `//` = pausa de troca de assunto (1 a 2 segundos). **Faça essas pausas**: é por elas que o script acha onde começa cada parte do vídeo.
+- `//` = pausa de troca de assunto (**cerca de 1 segundo**). **Faça essas pausas**: é por elas que o script acha onde começa cada parte do vídeo.
 - **Negrito** = palavra para dar ênfase.
-- Pode falar "pra" no lugar de "para" e "tá" no lugar de "está", se sair mais natural. Não troque o resto: a legenda segue este texto.
-- "P1" se fala **pê um**; "P3", **pê três**; "QR", **quê érre**; "IA", **i á**.
+- Pode falar "pra" no lugar de "para", se sair mais natural. Não troque o resto: a legenda segue este texto.
+- Pronúncia: "P1" = **pê um**; "P3" = **pê três**; "QR" = **quê érre**; "IA" = **i á**; "24%" = **vinte e quatro por cento**; "81%" = **oitenta e um por cento**.
 
-Duração total da fala: **cerca de 84 segundos** (o vídeo tem 88,6 s; a cartela final fica 4 s em silêncio).
-Ritmo: calmo, cerca de **2,6 palavras por segundo**. Se passar de 90 s, o script acelera no máximo 6%, sem cortar nada.
+**Ritmo:** calmo. 211 palavras em cerca de **88 segundos de fala** (no máximo 2,6 palavras por segundo em cada frase).
+O vídeo tem **89,6 s**. Se a sua fala passar de 90 s, o script acelera no máximo 6%, sem cortar nada.
 
 ---
 
-## [0:00–0:14] O problema
+## [0:00–0:12] O problema
 *Tom: pergunta de verdade, como quem já viu isso acontecer.*
 
 > Sábado, meio-dia, shopping lotado. /
-> Alguém conferiu o banheiro do segundo piso **na última hora**? /
-> Hoje, a resposta é uma folha de papel assinada **depois**. /
-> E os problemas se perdem no rádio e na troca de turno.
+> Alguém conferiu o banheiro **na última hora**? /
+> Hoje, a resposta é uma folha assinada **depois**. /
+> Se alguém escorrega ali, **ninguém sabe** quando foi conferido.
 
 `//`
 
-## [0:14–0:27] A solução
+## [0:12–0:24] A solução no dia a dia
 *Tom: firme, é a virada. Diga o nome com orgulho.*
 
-> Por isso criamos a **Ronda Viva**: mostra o que **ninguém conferiu** e registra que **cuidou**. /
-> Cada zona tem um QR. /
-> O funcionário aponta o celular e toca OK, Atenção ou Problema. /
-> **Sem instalar nada.**
+> Por isso criamos a **Ronda Viva**. /
+> Cada zona tem um QR: / o funcionário aponta o celular e toca OK, Atenção ou Problema. /
+> Tocou OK, / a zona fica **verde**.
 
 `//`
 
-## [0:28–0:46] Funcionalidades: IA e regra de risco
-*Tom: mostrando a tela para alguém do lado.*
+## [0:24–0:41] IA com senso crítico + regra de risco
+*Tom: contando o que aparece na tela, sem pressa.*
 
-> Aqui ele escreveu: cheiro de fumaça no quadro. /
-> A IA, treinada pela equipe, roda **sem internet** e sugere categoria e prioridade, /
-> e **avisa quando fica em dúvida**. /
-> Mas fumaça é risco: vira **P1**, e a tela manda avisar a brigada pelo rádio. /
+> Viu fumaça no quadro de luz e escreveu. /
+> A IA ficou **em dúvida**, só 24%, / e **perguntou**: Limpeza ou Elétrica? /
+> Ele escolheu **Elétrica**. /
+> Mas fumaça é risco: / vira **P1**, prioridade máxima, / e manda avisar a brigada. /
 > Essa regra fica **acima da IA**.
 
 `//`
 
-## [0:46–1:02] Funcionalidades: gestor, linha do tempo, mapa e painel
+## [0:42–0:59] Supervisor, linha do tempo, mapa e painel
 *Tom: tranquilo, um item por frase.*
 
-> No computador, o gestor confirma. /
-> Se tenta baixar para P3, o sistema **mantém P1**. /
-> E tudo fica numa linha do tempo que **não se apaga**. /
-> No mapa, **cinza** é a zona que ninguém conferiu no prazo. /
-> O painel mede por zona e equipe, **nunca por pessoa**.
+> Se o supervisor tenta baixar para P3, / o sistema **mantém P1**. /
+> Fica registrado: / a IA sugeriu Limpeza, / o supervisor confirmou Elétrica, / com **hora e nome**. /
+> No mapa, **cinza** é zona sem conferência no prazo. /
+> O painel mede por zona e equipe, / **nunca por pessoa**.
 
 `//`
 
-## [1:03–1:12] Acerto real da IA
-*Tom: honesto, sem exagero.*
+## [0:59–1:12] O que medimos da IA
+*Tom: honesto, sem exagero. Números devagar.*
 
-> E o acerto é real: no teste cego, os **seis** casos de risco viraram P1. /
-> Mas o teste é pequeno, então a IA **só sugere**.
+> Em 20 frases que a IA nunca viu, / palavras-chave pegavam **4 dos 6** riscos; / com a IA, **os 6**. /
+> Em frases reais, a categoria cai para **81%**. /
+> Por isso **uma pessoa confirma**.
 
 `//`
 
-## [1:14–1:25] Diferencial e fechamento
-*Tom: devagar no final. A última frase é o slogan: sorria ao falar.*
+## [1:13–1:20] Diferencial
+*Tom: devagar e claro. É a frase que a banca tem de lembrar.*
 
-> Folha e checklist mostram o que foi feito. /
-> A Ronda Viva mostra o que **ninguém conferiu** e **prova** que o shopping cuidou. //
-> Ronda Viva: mostra o que ninguém conferiu, / registra que cuidou.
+> Checklist cobra a **tarefa**. /
+> A Ronda Viva mostra o **lugar**: / a zona esquecida fica **cinza** antes da reclamação.
+
+`//`
+
+## [1:21–1:28] Próximo passo
+*Tom: confiante, olhando para frente. Termine e fique 1 segundo em silêncio.*
+
+> Próximo passo: / piloto de **30 dias** em sanitários e praça de alimentação, / com etiquetas e o celular da equipe.
 
 ---
 
@@ -79,32 +84,43 @@ Ritmo: calmo, cerca de **2,6 palavras por segundo**. Se passar de 90 s, o script
 
 | Tempo | Frase |
 |---|---|
-| 0:00,6–0:02,8 | Sábado, meio-dia, shopping lotado. |
-| 0:03,1–0:06,3 | Alguém conferiu o banheiro do segundo piso na última hora? |
-| 0:06,8–0:10,5 | Hoje, a resposta é uma folha de papel assinada depois. |
-| 0:10,8–0:13,8 | E os problemas se perdem no rádio e na troca de turno. |
-| 0:14,5–0:18,8 | Por isso criamos a Ronda Viva: mostra o que ninguém conferiu e registra que cuidou. |
-| 0:19,3–0:20,6 | Cada zona tem um QR. |
-| 0:20,8–0:25,5 | O funcionário aponta o celular e toca OK, Atenção ou Problema. |
-| 0:25,7–0:26,8 | Sem instalar nada. |
-| 0:28,6–0:31,4 | Aqui ele escreveu: cheiro de fumaça no quadro. |
-| 0:31,7–0:37,2 | A IA, treinada pela equipe, roda sem internet e sugere categoria e prioridade, |
-| 0:37,2–0:39,0 | e avisa quando fica em dúvida. |
-| 0:39,3–0:44,0 | Mas fumaça é risco: vira P1, e a tela manda avisar a brigada pelo rádio. |
-| 0:44,2–0:46,0 | Essa regra fica acima da IA. |
-| 0:46,9–0:49,0 | No computador, o gestor confirma. |
-| 0:49,2–0:52,4 | Se tenta baixar para P3, o sistema mantém P1. |
-| 0:52,6–0:55,0 | E tudo fica numa linha do tempo que não se apaga. |
-| 0:55,4–0:58,6 | No mapa, cinza é a zona que ninguém conferiu no prazo. |
-| 0:58,9–1:02,3 | O painel mede por zona e equipe, nunca por pessoa. |
-| 1:03,4–1:08,2 | E o acerto é real: no teste cego, os seis casos de risco viraram P1. |
-| 1:08,4–1:11,5 | Mas o teste é pequeno, então a IA só sugere. |
-| 1:13,8–1:16,5 | Folha e checklist mostram o que foi feito. |
-| 1:16,7–1:20,4 | A Ronda Viva mostra o que ninguém conferiu e prova que o shopping cuidou. |
-| 1:21,0–1:24,4 | Ronda Viva: mostra o que ninguém conferiu, registra que cuidou. |
+| 0:00,6–0:02,4 | Sábado, meio-dia, shopping lotado. |
+| 0:02,7–0:05,0 | Alguém conferiu o banheiro na última hora? |
+| 0:05,4–0:08,2 | Hoje, a resposta é uma folha assinada depois. |
+| 0:08,5–0:12,0 | Se alguém escorrega ali, ninguém sabe quando foi conferido. |
+| 0:12,7–0:14,8 | Por isso criamos a Ronda Viva. |
+| 0:15,1–0:16,8 | Cada zona tem um QR: |
+| 0:17,0–0:21,0 | o funcionário aponta o celular e toca OK, Atenção ou Problema. |
+| 0:21,3–0:23,6 | Tocou OK, a zona fica verde. |
+| 0:24,3–0:27,1 | Viu fumaça no quadro de luz e escreveu. |
+| 0:27,4–0:32,3 | A IA ficou em dúvida, só 24%, e perguntou: Limpeza ou Elétrica? |
+| 0:32,5–0:33,6 | Ele escolheu Elétrica. |
+| 0:33,9–0:38,7 | Mas fumaça é risco: vira P1, prioridade máxima, e manda avisar a brigada. |
+| 0:38,9–0:41,3 | Essa regra fica acima da IA. |
+| 0:42,0–0:45,9 | Se o supervisor tenta baixar para P3, o sistema mantém P1. |
+| 0:46,3–0:51,3 | Fica registrado: a IA sugeriu Limpeza, o supervisor confirmou Elétrica, com hora e nome. |
+| 0:51,6–0:54,9 | No mapa, cinza é zona sem conferência no prazo. |
+| 0:55,1–0:58,9 | O painel mede por zona e equipe, nunca por pessoa. |
+| 0:59,7–1:04,8 | Em 20 frases que a IA nunca viu, palavras-chave pegavam 4 dos 6 riscos; |
+| 1:05,1–1:06,9 | com a IA, os 6. |
+| 1:07,2–1:10,4 | Em frases reais, a categoria cai para 81%. |
+| 1:10,6–1:12,4 | Por isso uma pessoa confirma. |
+| 1:13,2–1:14,5 | Checklist cobra a tarefa. |
+| 1:14,8–1:20,2 | A Ronda Viva mostra o lugar: a zona esquecida fica cinza antes da reclamação. |
+| 1:20,9–1:25,3 | Próximo passo: piloto de 30 dias em sanitários e praça de alimentação, |
+| 1:25,5–1:28,1 | com etiquetas e o celular da equipe. |
 
-221 palavras. O texto vem de `roteiro_video.py` (fonte única: legenda, voz guia e este arquivo).
-Se mudar uma frase lá, mude aqui também e rode de novo o `fazer_video.sh`.
+O texto vem de `roteiro_video.py` (fonte única: legenda, voz guia, montagem e este arquivo).
+Se mudar uma frase lá, mude aqui também e rode de novo o `fazer_video.sh --sem-gravar`.
 
-## O que NÃO falar (do roteiro oficial)
-- "A IA acerta 100%." · "Chama os bombeiros sozinho." · "Funciona offline no celular." · "Já testamos no shopping."
+## De onde vêm os números (para responder à banca)
+- **24%**: confiança que a tela mostra para "cheiro de fumaça no quadro" (a IA ficou entre Limpeza e Elétrica).
+  O funcionário digitou "no quadro"; a fala diz "quadro de luz" só para explicar onde ele estava.
+- **4 dos 6 / os 6**: teste cego, n = 20 frases escritas pela equipe e nunca vistas no treino; recall de P1:
+  só palavras-chave 67% (4 de 6), modelo + regra 100% (6 de 6). Fonte: `docs/evidencias/modelo/resumo.md`.
+- **81%**: categoria em 16 frases reais do jeito que o campo escreve (rótulos sugeridos por IA, ainda a revisar). Mesmo arquivo.
+- **Piloto de 30 dias**: FAQ da banca (perguntas 14 e 15).
+
+## O que NÃO falar
+- "A IA acerta 100%." · "Chama os bombeiros sozinho." · "Funciona offline no celular." · "Roda sem internet."
+- "Prova que o shopping cuidou." · "Já testamos no shopping."

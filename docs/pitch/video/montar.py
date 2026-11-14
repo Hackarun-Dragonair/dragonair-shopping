@@ -206,8 +206,8 @@ def render_gancho(nome, dur):
         f, x = entra(i, t0, dx)
         filtros.append(f)
         xs[i] = x
-    filtros.append(f"[0:v][c1]overlay={xs[1]}:0[o1];[o1][c2]overlay={xs[2]}:0[o2];"
-                   f"[o2][c3]overlay={xs[3]}:0[o3];[o3][c4]overlay={xs[4]}:0,format=yuv420p[v]")
+    filtros.append(f"[0:v][c1]overlay={xs[1]}:y=0[o1];[o1][c2]overlay={xs[2]}:y=0[o2];"
+                   f"[o2][c3]overlay={xs[3]}:y=0[o3];[o3][c4]overlay={xs[4]}:y=0,format=yuv420p[v]")
     saida = CENAS / f"{nome}.mp4"
     ffmpeg("-i", fundo, *camada("gancho-painel"), *camada("gancho-rotulo"), *camada("gancho-linha1"),
            *camada("gancho-linha2"), "-filter_complex", ";".join(filtros), "-map", "[v]", "-t", f"{dur:.3f}",
@@ -259,11 +259,11 @@ def cena(nome):
         f = "fundo-cel-qr"
         return render_trechos(nome, [
             trecho("cel", m(c, "zona_ok") - 0.6, m(c, "zona_ok") + 2.6, fundo=f,
-                   zoom=[(0, 1.0, 1120, 1080), (1.0, 1.0, 1120, 1080), (2.2, 1.5, *botoes)]),
+                   zoom=[(0, 1.0, 1120, 1080), (1.0, 1.0, 1120, 1080), (2.2, 1.7, *botoes)]),
             trecho("cel", m(c, "toque_ok") - 0.4, m(c, "ok_registrado") + 1.0, fundo=f, em=T["s4"] - 0.35,
-                   zoom=fixo(1.5, aviso, de=(1.5, botoes), entra=0.6)),
+                   zoom=fixo(1.7, aviso, de=(1.7, botoes), entra=0.6)),
             trecho("cel", m(c, "mapa_cel") - 0.1, m(c, "mapa_cel") + 2.8, fundo=f, em=T["s4"] + 1.0,
-                   zoom=fixo(2.1, zona_mapa, de=(1.3, centro_cel(c["mapa_cel"]["svg"])), entra=0.8)),
+                   zoom=fixo(2.3, zona_mapa, de=(1.4, centro_cel(c["mapa_cel"]["svg"])), entra=0.8)),
         ], ini, d)
     if nome == "cel_problema":
         sug, ele = c["sugestao"], c["toque_eletrica"]
@@ -272,30 +272,30 @@ def cena(nome):
         texto = centro_cel([58, 420, 664, 330])
         return render_trechos(nome, [
             trecho("cel", m(c, "comeca_digitar") - 0.2, m(c, "digitou") + 0.4, fundo="fundo-cel-passo1",
-                   zoom=fixo(1.55, texto)),
+                   zoom=fixo(1.7, texto)),
             trecho("cel", m(c, "digitou") + 0.4, m(c, "toque_sugestao") + 0.4, 1.3, fundo="fundo-cel-passo1",
-                   zoom=fixo(1.55, texto)),
+                   zoom=fixo(1.7, texto)),
             trecho("cel", m(c, "sugestao") - 0.3, m(c, "toque_eletrica") - 0.45, fundo="fundo-cel-passo2",
-                   em=T["i2"] - 0.3, zoom=fixo(1.6, duvida, de=(1.3, duvida), entra=0.6)),
+                   em=T["i2"] - 0.3, zoom=fixo(1.85, duvida, de=(1.5, duvida), entra=0.6)),
             trecho("cel", m(c, "toque_eletrica") - 0.45, m(c, "toque_eletrica") + 1.2, fundo="fundo-cel-passo3",
-                   em=T["i3"] - 0.45, zoom=fixo(1.6, duvida)),
+                   em=T["i3"] - 0.45, zoom=fixo(1.85, duvida)),
             trecho("cel", m(c, "toque_eletrica") + 1.2, m(c, "toque_registrar") - 0.1, fundo="fundo-cel-passo4",
-                   em=T["i4"] - 0.2, zoom=fixo(1.5, risco, de=(1.6, duvida), entra=0.7)),
+                   em=T["i4"] - 0.2, zoom=fixo(1.75, risco, de=(1.85, duvida), entra=0.7)),
             trecho("cel", m(c, "toque_registrar") - 0.1, m(c, "registrado") + 2.0, fundo="fundo-cel-passo4",
-                   em=T["i5"] - 0.3, zoom=fixo(1.5, centro_cel(c["registrado"]["resultado"]), de=(1.5, risco))),
+                   em=T["i5"] - 0.3, zoom=fixo(1.75, centro_cel(c["registrado"]["resultado"]), de=(1.75, risco))),
         ], ini, d)
     if nome == "gestor":
         prio = centro_pc(p["escolheu_p3"]["prioridade"], 420, 60)
-        aviso = centro_pc(p["mantida"]["aviso"], 120, -120)
-        perm = centro_pc(p["mantida"]["permanente"], -350, 260)
+        aviso = centro_pc(p["mantida"]["aviso"], 80, -60)
+        perm = centro_pc(p["mantida"]["permanente"], -250, 220)
         linha = centro_pc(p["mantida"]["linha"], 0, 40)
         mantem = T["g1"] + 0.55 * (E["g1"] - T["g1"])  # "...o sistema mantém P1"
         return render_trechos(nome, [
             trecho("pc", m(p, "escolheu_p3") - 0.6, m(p, "clicou_confirmar") + 0.25, 1.6, zoom=fixo(1.7, prio)),
             trecho("pc", m(p, "mantida") - 0.05, m(p, "mantida") + 1.8, em=mantem,
-                   zoom=fixo(1.75, aviso, de=(1.45, aviso), entra=0.5)),
+                   zoom=fixo(2.1, aviso, de=(1.7, aviso), entra=0.5)),
             trecho("pc", m(p, "mantida") + 1.8, m(p, "linha_tempo") + 1.6, em=T["g2"] - 0.2,
-                   zoom=[(0, 1.9, *perm), (1.7, 1.9, *perm), (2.6, 1.5, *linha)]),
+                   zoom=[(0, 2.2, *perm), (1.7, 2.2, *perm), (2.6, 1.6, *linha)]),
         ], ini, d)
     if nome == "mapa":
         cinzas = [centro_pc(cx) for cx in p["mapa_caixas"]["cinzas"]]
@@ -303,7 +303,7 @@ def cena(nome):
         my = sum(y for _, y in cinzas) / len(cinzas)
         return render_trechos(nome, [
             trecho("pc", m(p, "mapa") + 0.2, m(p, "mapa") + 4.8,
-                   zoom=[(0, 1.3, 1300, 980), (d, 1.5, mx, my)]),
+                   zoom=[(0, 1.4, 1300, 980), (d, 1.7, mx, my)]),
         ], ini, d)
     if nome == "painel":
         cab = p["painel"]["cabecalho"]  # "Indicadores por zona e por equipe. O sistema não avalia pessoas."
@@ -314,7 +314,7 @@ def cena(nome):
     if nome == "ia":
         tab = p["ia"]["tabela"]
         tabela = centro_pc(tab, 0, 150)
-        campo = centro_pc(p["ia_campo"]["campo"], 0, 120)
+        campo = centro_pc(p["ia_campo"]["campo"], 0, 380)
         return render_trechos(nome, [
             trecho("pc", m(p, "ia") + 0.1, m(p, "ia_regras") + 1.6, zoom=fixo(1.65, tabela)),
             trecho("pc", m(p, "ia_regras") + 1.6, m(p, "ia_modelo") + 1.0, em=T["a2"] - 0.8, zoom=fixo(1.65, tabela)),
