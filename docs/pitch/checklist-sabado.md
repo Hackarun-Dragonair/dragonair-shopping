@@ -17,14 +17,12 @@
 | **8h** | Chegar, ligar o notebook, abrir o site do Render para acordar, rodar `python -m pytest -q` | Testes passando e site respondendo |
 | **8h15–9h15** | **Teste de usabilidade com 3 pessoas de fora**, seguindo [`../missao-2/teste-usabilidade.md`](../missao-2/teste-usabilidade.md): mesmo texto para todos, 4 tarefas, cronômetro, **sem anotar nome** | 3 folhas preenchidas + prints (sem rosto, sem nome) |
 | **9h15–9h35** | Passar o resultado para a tabela "Resumo" do mesmo arquivo. Corrigir **1 coisa** que travou (commit `fix:`) ou anotar o que seria corrigido | Tabela preenchida com dados reais; prints em `docs/evidencias/` |
-| **até 11h30** | **Enviar a Missão 2** (prazo 12h; mandar antes para sobrar margem) com o texto de [`../ENTREGA.md`](../ENTREGA.md). Tirar print do envio → `docs/evidencias/` | Print do comprovante salvo |
 | **10h** | Lanche. Conferir se a organização mudou algo nas instruções (aviso de sexta à noite: **sábado não tem missão especial**; salas abertas das 8h às 13h; instruções finais e mentoria do vídeo e do pitch de 5 min) | Equipe sabe se mudou algo |
-| **10h30–11h15** | **Mentoria** do vídeo de 90 s e do pitch final de 5 min. Anotar o que pedirem e ajustar o vídeo. Em paralelo, alguém que **não** escreveu o código segue o README "Como executar" do zero | Anotações da mentoria |
+| **após o lanche (~10h30, 30 min)** | **Mentoria** do vídeo de 90 s e do pitch final de 5 min. Anotar o que pedirem e ajustar o vídeo. Em paralelo, alguém que **não** escreveu o código segue o README "Como executar" do zero | Anotações da mentoria |
 | **11h** | **Código congelado.** Depois disso, nada de mudança no código; só texto | `main` com tudo e testes passando |
-| **11h–11h45** | **Vídeo de 90 s**: já existe uma versão montada (ver [`video/README.md`](video/README.md)). Gravar a voz no celular ([`video/GRAVAR-VOZ.md`](video/GRAVAR-VOZ.md), 5 min) e rodar `docs/pitch/video/montar_com_voz.sh voz.m4a`. Se não der, enviar a versão com voz guia. Subir (YouTube não listado ou Drive com link aberto) | Link do vídeo abrindo em aba anônima |
-| **11h45** | Conferir o checklist de [`../ENTREGA.md`](../ENTREGA.md) e colar o link do vídeo | Todos os links abrem |
-| **12h** | **Entrega final**: repositório + instruções + documentação + evidências + vídeo. Print do envio | Print do comprovante salvo |
-| **12h–13h** | **Enviar o vídeo de 90 s + resumo** ([`../RESUMO.md`](../RESUMO.md)), a última entrega do dia (13h) | Print do envio |
+| **10h45–11h30** | **Gravar o vídeo de até 90 s** com um integrante falando para a câmera (sem IA): [`video-90s.md`](video-90s.md). Subir (YouTube não listado ou Drive aberto) | Link abrindo numa aba anônima |
+| **até 11h45** | **Entrega final completa** (os 6 itens de [`../ENTREGA.md`](../ENTREGA.md), com vídeo e [`../RESUMO.pdf`](../RESUMO.pdf)). Prazo **12h sem prorrogação**: não deixar para o último minuto. Print do envio → `docs/evidencias/` | Print do comprovante salvo |
+| **16h** | **Check-in no Capim Dourado Shopping** (todos, com o QR de identificação; recebe pulseira) | Todos com pulseira |
 | **17h** | **Final no Capim Dourado (só as 7 melhores equipes): pitch de 5 min.** Demo ao vivo pelo notebook com `SEXTA13=1 python wsgi.py`; Render como reserva. Roteiro: [`pitch-5min.md`](pitch-5min.md) | Demo ensaiada uma vez antes |
 
 ## O que conferir antes de cada envio

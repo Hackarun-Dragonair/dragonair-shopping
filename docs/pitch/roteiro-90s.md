@@ -1,6 +1,8 @@
 # Roteiro do pitch — 90 segundos
 
-**Regra oficial:** vídeo de 1min15 a 2min, mostrando **problema, solução, principais funcionalidades e diferencial**.
+> ⚠️ **Substituído (sábado 14/11):** a organização proibiu vídeo produzido com IA e pede até 90 s gravado por um integrante. Use [`video-90s.md`](video-90s.md). Este roteiro fica só como histórico/ensaio.
+
+**Regra antiga:** vídeo de 1min15 a 2min, mostrando **problema, solução, principais funcionalidades e diferencial**.
 **Nossa meta:** 90 s (sobra folga para os dois lados).
 **Fala:** 217 palavras. Ensaie com cronômetro. Se passar de 95 s, corte a frase marcada com (corte 1), depois a (corte 2). Não acelere a fala.
 

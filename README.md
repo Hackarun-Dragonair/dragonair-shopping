@@ -123,6 +123,24 @@ Botão **Entrar com crachá** (no celular: **Entrar**, no menu de baixo).
 
 ---
 
+## Arquitetura e tecnologias
+
+```
+Celular do funcionário ──┐                       ┌── SQLite (zonas, ocorrências, linha do tempo
+(lê o QR da zona)        │   HTTP (site)          │    com bloqueio de alterar/apagar)
+                         ├──▶  Flask (Python) ────┤
+Computador do gestor ────┘    telas HTML + API   ├── IA local (scikit-learn): sugere categoria
+(fila, mapa, painel)          JSON               │    e prioridade; regra fixa de risco acima dela
+                                                  └── etiquetas QR em PDF (segno)
+```
+
+- **Servidor:** Python + **Flask** (`app/`). As telas são HTML (Jinja) com **Bootstrap local** e **JavaScript puro**; as ações das telas chamam a API JSON do próprio servidor.
+- **Banco:** **SQLite** (`app/db.py`). A linha do tempo (`eventos`) só recebe registros novos: gatilhos do banco impedem alterar ou apagar.
+- **IA:** modelo próprio com **scikit-learn** (`app/modelo.py`): TF-IDF de pedaços de 3 a 5 letras + regressão logística, treinado com frases fictícias em `data/`. Roda dentro do servidor, sem API paga. A **regra de risco** (`app/dominio.py`) fica acima dela: fumaça, fogo, gás, choque ou pessoa presa → P1 e "Avise a brigada pelo rádio".
+- **Funcionamento:** QR da zona → tela da zona (OK / Atenção / Problema) → sugestão da IA → registro → fila do gestor (Aberto → Em atendimento → Resolvido) → linha do tempo; o mapa e o painel recalculam o estado das zonas (cinza = ninguém conferiu no prazo).
+- **Qualidade:** **pytest** (78 testes em `tests/`), **GitHub Actions** roda os testes em todo pull request; publicação no **Render** (`render.yaml`).
+- **Responsividade:** as mesmas telas funcionam no celular, tablet e computador (`docs/evidencias/responsividade/`).
+
 ## Telas
 
 | Tela | Endereço | Quem |

@@ -11,7 +11,7 @@ Horários de sábado: [`pitch/checklist-sabado.md`](pitch/checklist-sabado.md).
 | Site da demo | https://ronda-viva-0ek7.onrender.com (1º acesso: cerca de 1 min) |
 | Versão da Missão 2 | tag `v-missao2-entrega` → https://github.com/Hackarun-Dragonair/dragonair-shopping/tree/v-missao2-entrega (pontos de segurança anteriores: `v-missao2-final`, `v-missao2-estavel`) |
 | Instruções de execução | https://github.com/Hackarun-Dragonair/dragonair-shopping#como-executar |
-| Resumo de 1 página | https://github.com/Hackarun-Dragonair/dragonair-shopping/blob/main/docs/RESUMO.md |
+| Resumo de 1 página | https://github.com/Hackarun-Dragonair/dragonair-shopping/blob/main/docs/RESUMO.pdf (PDF) · [texto](https://github.com/Hackarun-Dragonair/dragonair-shopping/blob/main/docs/RESUMO.md) |
 | Evidências (índice) | https://github.com/Hackarun-Dragonair/dragonair-shopping/blob/main/docs/evidencias/README.md |
 | Avaliação da IA | https://github.com/Hackarun-Dragonair/dragonair-shopping/blob/main/docs/evidencias/modelo/resumo.md |
 | QA ponta a ponta (bugs e correções) | https://github.com/Hackarun-Dragonair/dragonair-shopping/blob/main/docs/evidencias/qa/README.md |
@@ -21,26 +21,26 @@ Horários de sábado: [`pitch/checklist-sabado.md`](pitch/checklist-sabado.md).
 | Missão 1 | https://github.com/Hackarun-Dragonair/dragonair-shopping/blob/main/docs/missao-1/ENTREGA-1.md |
 | Vídeo do pitch | `<LINK DO VÍDEO>` |
 
-## Checklist — entrega final (até 12h)
-Mínimo pedido pelo regulamento:
-- [ ] **Link do repositório** (acima)
-- [ ] **Código versionado**: `main` com a versão final, testes verdes no GitHub
-- [ ] **Instruções de execução**: README "Como executar" seguido do zero por alguém que não escreveu o código
-- [ ] **Documentação**: README, `RESUMO.md`, `contrato.md`, `IA.md`
-- [ ] **Evidências das missões**: `docs/evidencias/` com o índice atualizado (inclui o print do envio da Missão 2)
-- [ ] **Vídeo** de 1min15 a 2min, link aberto (testar numa aba anônima)
-- [ ] Orientações da Missão 3 coladas em `docs/desafio.md` e cada item atendido
+## Checklist — entrega final (até **12h, sem prorrogação**)
+Os 6 itens pedidos pela organização (instruções de sábado, copiadas em [`desafio.md`](desafio.md)):
+- [ ] **1. MVP funcional:** site no ar + `main` com a versão final (testes verdes)
+- [ ] **2. Repositório:** link acima, público e acessível (testar numa aba anônima)
+- [ ] **3. Documentação técnica:** README — seções **"Arquitetura e tecnologias"** e "Como executar" —, `contrato.md`, `IA.md`
+- [ ] **4. Instruções de execução:** README "Como executar" (instalar, configurar, executar)
+- [ ] **5. Vídeo de até 90 s**, gravado por **um integrante** (só ele aparece), **sem IA** — guia em [`pitch/video-90s.md`](pitch/video-90s.md); link aberto
+- [ ] **6. Resumo de 1 página** nos 8 tópicos pedidos: [`RESUMO.md`](RESUMO.md) e **[`RESUMO.pdf`](RESUMO.pdf)** (1 página)
 - [ ] Nada de planta do shopping, nome de loja real, dado pessoal ou chave no repositório e no vídeo
+- [ ] Depois: **check-in no shopping a partir das 16h** (todos, com o QR de identificação) — evento às 17h
 
 ## Só humanos podem fazer
 A IA não pode (e não deve) fazer estas tarefas:
 1. **Teste de usabilidade com 3 pessoas de fora** e o preenchimento do resultado (só dados reais).
 2. **Revisar os rótulos** de `data/teste_campo.csv` (duas pessoas da equipe), para o número do teste de campo virar oficial.
 3. **Testar no celular de verdade** (Android e iPhone) e anotar o modelo do aparelho em `docs/evidencias/responsividade/README.md`.
-4. **Ler as orientações da Missão 3** às 10h e colar em `docs/desafio.md`.
+4. **Oficina de vídeo e pitch** depois do lanche das 10h: anotar o que pedirem.
 5. **Aprovar e juntar os ramos no `main`** (OK do Arthur) e conferir o site no Render depois.
-6. **Gravar a voz e as telas do vídeo**, montar e subir; conferir que o link abre.
-7. **Enviar as entregas** (Missão 2 e entrega final até **12h**; vídeo de 90 s + resumo **entre 12h e 13h**) e **tirar print** de cada envio.
+6. **Gravar o vídeo de até 90 s** (um integrante, sem IA — [`pitch/video-90s.md`](pitch/video-90s.md)), subir e conferir que o link abre.
+7. **Enviar a entrega final até 12h** (sem prorrogação), com vídeo e resumo juntos, e **tirar print** do envio.
 8. Seguir o README do zero (alguém que não escreveu o código).
 9. Apresentar e responder a banca.
 
@@ -102,17 +102,17 @@ Documentação:
 Evidências das missões: docs/evidencias/README.md (índice por missão)
 - Missão 1: docs/missao-1/ENTREGA-1.md
 - Missão 2: QA com correções, responsividade, avaliação da IA, teste de usabilidade   ← tire "teste de usabilidade" se ele não foi feito de verdade
-- Missão 3: <COLAR ORIENTAÇÕES DA MISSÃO 3> (o que foi pedido e onde está atendido)
+- Entrega final (instruções de sábado): MVP no ar, repositório, documentação técnica (README: Arquitetura e tecnologias), instruções de execução, vídeo de até 90 s e resumo de 1 página (docs/RESUMO.pdf)
 
 Tecnologia: Python, Flask, SQLite, Bootstrap local, JavaScript, scikit-learn (modelo próprio, sem internet), pytest. Tecnologia sorteada: Responsividade.
 Dados, zonas e pessoas da demo são fictícios. O mapa é um desenho da equipe, não a planta do shopping.
 ```
 
-## Texto para colar — vídeo + resumo (13h)
+## Texto para colar — vídeo + resumo (se o formulário pedir separado; tudo até 12h)
 
 ```text
 Equipe Dragonair — Desafio 09 — Ronda Viva
 Vídeo do pitch: <LINK DO VÍDEO>
-Resumo: https://github.com/Hackarun-Dragonair/dragonair-shopping/blob/main/docs/RESUMO.md
+Resumo (1 página, PDF): https://github.com/Hackarun-Dragonair/dragonair-shopping/blob/main/docs/RESUMO.pdf
 ```
-Se pedirem o resumo como texto, copie o conteúdo de `docs/RESUMO.md`.
+Se pedirem arquivo, anexe `docs/RESUMO.pdf`; se pedirem texto, copie `docs/RESUMO.md`.

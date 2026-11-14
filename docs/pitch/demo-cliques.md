@@ -64,7 +64,7 @@ Deixe o projeto **instalado e testado no notebook antes de sábado 8h** (`python
 - **Voz separada da tela:** grave cada linha da tabela do roteiro como um áudio separado, em sala fechada, celular a um palmo da boca. Assim dá para regravar só o trecho que errou.
 - **Montagem:** CapCut ou Canva. Legenda automática (a banca pode assistir sem som). Música bem baixa, da biblioteca do próprio editor.
 - **Conferir antes de enviar:**
-  - [ ] duração entre 1min15 e 2min (meta 90 s);
+  - [ ] (vídeo: ver `video-90s.md` — até 90 s, gravado por um integrante, sem IA);
   - [ ] áudio audível e legenda certa;
   - [ ] nada da planta do shopping, nenhum logo do shopping;
   - [ ] nenhum nome ou rosto de pessoa real (crachás OTTO, LIA, RITA e CAIO são fictícios);

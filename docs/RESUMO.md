@@ -1,61 +1,41 @@
-# Ronda Viva — resumo
-
+# Ronda Viva — resumo para os avaliadores
 **Equipe Dragonair · HackaRun 2026 · Desafio 09: Eficiência operacional e infraestrutura**
-*"Mostra o que ninguém conferiu. Registra que cuidou."*
 
-## O problema
-A administração do shopping não sabe em que condição cada ambiente está agora, nem quando foi conferido pela última vez. A ronda vive numa folha de papel que qualquer um assina depois. Os problemas chegam soltos pelo rádio, sem prioridade nem dono, e se perdem na troca de turno. Quando algo dá errado, não há registro confiável do que foi feito.
+**1. Nome do projeto**
+Ronda Viva — *"Mostra o que ninguém conferiu. Registra que cuidou."*
 
-## A solução
-Um site responsivo (celular, tablet e computador, sem instalar nada) para a ronda operacional:
-- cada zona tem um **QR**; o funcionário aponta o celular e toca **OK, Atenção ou Problema**;
-- uma **IA própria, sem internet**, sugere a categoria e a prioridade do problema; o gestor confirma;
-- o **mapa fica cinza** onde ninguém conferiu no prazo;
-- cada ocorrência tem uma **linha do tempo que não se apaga**.
+**2. Problema identificado**
+- A administração não sabe em que estado cada área do shopping está agora, nem quando foi conferida pela última vez.
+- A ronda vive numa folha de papel que qualquer um assina depois; os problemas chegam soltos pelo rádio, sem prioridade nem dono, e se perdem na troca de turno.
+- Quando algo dá errado, não há registro confiável do que foi feito.
 
-## Como funciona
-1. **Funcionário (celular):** lê o QR da zona. Não precisa entrar com crachá. Toca OK, Atenção ou Problema. No Problema, escreve do seu jeito ou toca um botão pronto ("Vaso entupido", "Quadro aberto"...).
-2. **IA:** sugere categoria (Hidráulica, Elétrica, Climatização, Limpeza, Segurança, Estrutura), prioridade (P1 a P4) e equipe. Mostra a confiança; quando fica entre duas categorias, pergunta "É mais X ou Y?" (sem segunda opção e abaixo de 50%, avisa "IA em dúvida, confira"). Esse aviso aparece na maioria das vezes: a pessoa confere sempre e pode mudar antes de registrar.
-3. **Regra de risco acima da IA:** fumaça, fogo, gás, choque ou pessoa presa → **P1** e "Avise a brigada pelo rádio". Ninguém rebaixa (nem a IA, nem o gestor). O sistema não chama ninguém sozinho.
-4. **Gestor (computador):** entra com crachá, confirma ou corrige a sugestão. A ocorrência vai para a **fila** (Aberto → Em atendimento → Resolvido) da equipe certa. A fila se atualiza sozinha a cada 5 s.
-5. **Linha do tempo:** registro, sugestão da IA, aviso de risco, quem assumiu, confirmação e solução, cada um com hora. O banco bloqueia apagar ou alterar esses registros. Vira um dossiê para imprimir.
-6. **Mapa e painel:** o mapa mostra o estado de cada zona e atualiza sozinho a cada 5 s. O painel mostra % de zonas no prazo, zonas sem conferência, tempo médio de solução, reincidência e o acerto da IA. Tudo por zona e equipe, **nunca por pessoa**.
+**3. Público-alvo**
+- **Equipe de campo** (limpeza, manutenção, segurança): registra a ronda pelo celular.
+- **Supervisores e gestão de operações**: acompanham, priorizam e cobram por zona e equipe.
+- **Frequentadores e lojistas**: ambientes conferidos e problemas resolvidos mais rápido.
 
-Também existe: editor de mapa (o gestor envia uma imagem de fundo e pinta bloquinhos por zona), etiquetas QR em PDF, alertas por zona, e o Easter Egg da sexta-feira 13 (um gato preto se esconde na zona mais esquecida).
+**4. Solução proposta**
+Cada zona do shopping tem um **QR**. O funcionário aponta o celular e toca **OK, Atenção ou Problema**. O problema, escrito do jeito dele, recebe uma **sugestão de categoria e prioridade** de uma IA própria; o gestor confirma. O **mapa fica cinza** onde ninguém conferiu no prazo, e cada ocorrência tem uma **linha do tempo que não se apaga**.
 
-## Diferencial
-- **Mostra o lugar, não só a tarefa.** Folha e rádio não mostram nada; app de checklist cobra a tarefa atrasada. A Ronda Viva mostra **onde** ninguém olhou: a zona fica cinza no mapa antes de o cliente reclamar, e o problema escrito do jeito do funcionário vira fila com prioridade.
-- **IA que funciona sem internet e foi medida com honestidade**, com uma regra de segurança que ela não consegue desfazer.
-- **Registro que não se apaga:** o shopping consegue mostrar que cuidou.
+**5. Descrição do produto (MVP)**
+- **Tela do QR (celular, sem instalar nada):** OK / Atenção / Problema em poucos toques; botões prontos ("vaso entupido", "quadro aberto").
+- **IA local:** sugere categoria, prioridade e equipe; quando fica entre duas opções, pergunta "É mais X ou Y?".
+- **Regra de segurança acima da IA:** fumaça, fogo, gás, choque ou pessoa presa → prioridade máxima (P1) e "Avise a brigada pelo rádio". Ninguém rebaixa.
+- **Perfis:** funcionário (ronda, assumir, resolver) e gestor (confirmar, painel, editar mapa, imprimir etiquetas QR).
+- **Fila** Aberto → Em atendimento → Resolvido, atualizando sozinha; **mapa** por piso com formas de shopping; **painel** com zonas no prazo, tempo de solução e reincidência — **por zona e equipe, nunca por pessoa**.
+- **Demo online:** https://ronda-viva-0ek7.onrender.com (crachás fictícios: OTTO = gestor, RITA = funcionária).
 
-## Uso crítico de IA
-**Na solução:** modelo feito pela equipe com scikit-learn (TF-IDF de pedaços de 3 a 5 letras + regressão logística), treinado com 145 frases fictícias. Roda dentro do servidor, sem API paga.
+**6. Tecnologias utilizadas**
+Python, Flask, SQLite, HTML/CSS (Bootstrap local), JavaScript, scikit-learn (IA), segno (QR), pytest (78 testes automáticos), GitHub Actions, Render. Site responsivo: celular, tablet e computador.
 
-**Como medimos** (`python -m app.avaliar` → `docs/evidencias/modelo/resumo.md`):
+**7. Diferencial e inovação**
+- **Mostra o lugar, não só a tarefa:** a zona esquecida fica cinza no mapa antes de o cliente reclamar.
+- **IA usada com senso crítico:** só sugere, mostra a dúvida, e a segurança fica numa regra fixa que ela não desfaz. Medida com honestidade: no teste cego (20 frases), palavras-chave pegavam 4 de 6 riscos; com a IA, 6 de 6. Com frases reais o acerto de categoria cai para 81% — por isso uma pessoa sempre confirma.
+- **Registro que não se apaga:** o banco bloqueia alterar ou apagar a linha do tempo.
 
-| Teste | n | Categoria | Prioridade | Recall de P1 |
-|---|---|---|---|---|
-| Teste cego (rótulos humanos, sem IA) — só regras de palavras | 20 | 90% | 40% | 67% (4 de 6) |
-| Teste cego — **modelo + regra dura (o que o sistema mostra)** | 20 | **100%** | **95%** | **100% (6 de 6)** |
-| Teste de campo (frases reais, rótulos ainda a revisar) | 16 | 81% | 62% | 100% (1 de 1) |
+**8. Viabilidade e aplicação no shopping**
+- Custo baixo: etiquetas impressas e o celular que a equipe já tem; sem API paga, sem aparelho novo.
+- Piloto sugerido: **30 dias** nos sanitários e na praça de alimentação, medindo zonas no prazo e tempo de solução.
+- Próximos passos: revisar as palavras de risco com a brigada, cadastro de aparelhos autorizado pelo gestor, testar a IA com relatos reais.
 
-"Recall de P1" = dos casos que eram P1 de verdade, quantos o sistema marcou como P1.
-
-**Limite (sendo honestos):** o teste cego é pequeno (20 frases) e foi escrito pela mesma equipe do treino. O 100% mostra que o modelo aprendeu o nosso jeito de escrever, não que vai acertar 100% no shopping. Com frases reais o acerto cai (81% e 62%), e esses rótulos ainda precisam de revisão humana. No teste de campo, o modelo sozinho deu P2 para "sensor de fumaça piscando"; foi a regra dura que garantiu o P1. O teste cego também serviu para escolher entre duas versões do modelo, e algumas frases dele parecem com as do treino: por isso o número mais perto do real é o do campo (81% e 62%, rótulos a revisar). A confiança costuma ficar abaixo de 50% (16 de 20 frases no teste cego, 13 de 16 no campo; média 37%), então o aviso de dúvida aparece quase sempre. O maior ganho da IA é na **prioridade**: 95% contra 40% das palavras-chave no teste cego, 62% contra 12% no campo. Próximos passos: validação cruzada, um teste escrito por pessoas de fora e calibrar a confiança. Por isso a IA só sugere e o gestor confirma.
-
-**No desenvolvimento:** Claude, Cursor e Gemini ajudaram em ideias, código, telas, testes e documentos. Tudo declarado e revisado pela equipe em `docs/IA.md`.
-
-## Tecnologia
-Python 3.11+ · Flask · Jinja2 · SQLite · Bootstrap 5 (local, sem internet) · JavaScript puro · scikit-learn · segno (QR) · pytest (78 testes) · GitHub Actions (testes em todo PR) · Render (link público).
-Tecnologia sorteada: **Responsividade** — testada em 6 larguras, de 375 px a 1920 px (`docs/evidencias/responsividade/`).
-
-## Links
-- **Repositório:** https://github.com/Hackarun-Dragonair/dragonair-shopping (versão da Missão 2: tag `v-missao2-entrega`)
-- **Demo online:** https://ronda-viva-0ek7.onrender.com (grátis: o 1º acesso leva cerca de 1 min; dados de exemplo voltam a cada reinício)
-- **Como executar:** `README.md`, seção "Como executar"
-- **Evidências:** `docs/evidencias/` · **Uso de IA:** `docs/IA.md`
-- **Prova de que o QR das etiquetas abre a zona certa:** [`docs/evidencias/qr/`](evidencias/qr/README.md)
-- **Crachás da demo (fictícios):** OTTO e LIA = Gestor; RITA e CAIO = Funcionário. O QR funciona sem entrar.
-
-## Equipe
-**Dragonair** — HackaRun 2026, UniCatólica. Todos os dados, zonas e usuários da demo são fictícios. O mapa é um desenho da equipe, não a planta do shopping.
+**Links:** repositório https://github.com/Hackarun-Dragonair/dragonair-shopping · como executar: `README.md` · uso de IA declarado: `docs/IA.md` · evidências: `docs/evidencias/`
