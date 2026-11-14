@@ -33,11 +33,15 @@ if [ ! -f "$TRAB/fontes/Montserrat-800.ttf" ]; then
   done
 fi
 
-echo "== QR da etiqueta (aponta para a zona de demonstração)"
-"$PY_APP" -c "import segno; segno.make('https://ronda-viva-0ek7.onrender.com/z/area-tecnica-l2', error='m').save('$TRAB/qr.svg', scale=10, border=0, dark='#2c241b', xmldecl=False)"
+echo "== QR da etiqueta (zona de demonstração) e da demo online (cartela final)"
+"$PY_APP" -c "
+import segno
+segno.make('https://ronda-viva-0ek7.onrender.com/z/sanitario-piso1', error='m').save('$TRAB/qr-zona.svg', scale=10, border=0, dark='#2c241b', xmldecl=False)
+segno.make('https://ronda-viva-0ek7.onrender.com', error='m').save('$TRAB/qr-demo.svg', scale=10, border=0, dark='#2c241b', xmldecl=False)
+"
 
 echo "== cartelas"
-"$PY_PLAYWRIGHT" "$AQUI/render_cartelas.py" "$TRAB" "$TRAB/qr.svg"
+"$PY_PLAYWRIGHT" "$AQUI/render_cartelas.py" "$TRAB" "$TRAB/qr-zona.svg" "$TRAB/qr-demo.svg"
 
 if [ "${1:-}" != "--sem-gravar" ]; then
   echo "== gravação das telas (app real, banco novo com dados fictícios, porta $PORTA)"
@@ -50,7 +54,7 @@ if [ "${1:-}" != "--sem-gravar" ]; then
 fi
 
 echo "== voz guia (Piper, offline)"
-"$PY_PIPER" "$AQUI/voz_guia.py" "$VOZ_PIPER" "$TRAB/voz" 1.2
+"$PY_PIPER" "$AQUI/voz_guia.py" "$VOZ_PIPER" "$TRAB/voz" 0.9
 ffmpeg -y -loglevel error -i "$TRAB/voz/voz-guia.wav" -af "highpass=f=70,loudnorm=I=-16:TP=-1.5:LRA=11,aresample=48000" \
   -ar 48000 "$TRAB/voz/voz-guia-tratada.wav"
 
@@ -58,9 +62,9 @@ echo "== montagem"
 python3 "$AQUI/montar.py" "$TRAB" "$TRAB/voz/tempos.json" "$TRAB/voz/voz-guia-tratada.wav" "$VIDEO_DIR/pitch-90s-voz-guia.mp4"
 python3 "$AQUI/montar.py" "$TRAB" "$TRAB/voz/tempos.json" silencio "$VIDEO_DIR/pitch-90s-sem-voz.mp4"
 
-echo "== quadros para revisão (um a cada 3 s)"
+echo "== quadros para revisão (um por segundo, em 640x360)"
 rm -rf "$TRAB/revisao" && mkdir -p "$TRAB/revisao"
-ffmpeg -loglevel error -i "$VIDEO_DIR/pitch-90s-voz-guia.mp4" -vf "fps=1/3" "$TRAB/revisao/q_%02d.png"
+ffmpeg -loglevel error -i "$VIDEO_DIR/pitch-90s-voz-guia.mp4" -vf "fps=1,scale=640:360" "$TRAB/revisao/q_%03d.png"
 for v in "$VIDEO_DIR"/pitch-90s-*.mp4; do
   echo "$(basename "$v"): $(ffprobe -v error -show_entries format=duration -of csv=p=0 "$v") s, $(du -h "$v" | cut -f1)"
 done

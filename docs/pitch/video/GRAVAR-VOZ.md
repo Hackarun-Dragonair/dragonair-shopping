@@ -21,15 +21,16 @@ e roda **um comando**. O resto é automático.
 - Assista uma vez o `pitch-90s-voz-guia.mp4` para pegar o ritmo (não precisa imitar a voz).
 - Toque em gravar, espere **2 segundos em silêncio** e comece.
 - Leia o texto **inteiro de uma vez**, no seu jeito de falar, com calma.
-  - `/` = respira curto. `//` = pausa de 1 a 2 segundos entre as partes. **Faça as pausas `//`**:
+  - `/` = respira curto. `//` = pausa de cerca de 1 segundo entre as partes. **Faça as pausas `//`**:
     é por elas que o computador acha onde começa cada parte do vídeo.
   - Errou uma palavra? Pare, respire e **comece de novo a frase** (ou a gravação toda). Não corte no celular.
 - No fim, fique **2 segundos em silêncio** e pare.
 - **Faça 3 tentativas** (cada uma em um arquivo). A terceira costuma ser a melhor.
 
-**Meta de tempo:** a fala inteira com cerca de **80 a 88 segundos**.
-Se ficar um pouco mais longa, o script acelera até 6% sem cortar nada; se ficar curta, a cena final fica mais tempo.
-Se passar muito de 95 s, fale um pouco mais rápido nas partes do meio (não no slogan do final).
+**Meta de tempo:** a fala inteira com cerca de **85 a 88 segundos** (o texto tem 211 palavras; calmo, sem correr).
+Se ficar um pouco mais longa, o script acelera até 6% sem cortar nada; se ficar curta, as cenas se ajustam
+à sua fala e a cartela final fica mais um pouco. Se passar muito de 95 s, encurte as pausas `/`
+(não as `//`) e fale um pouco mais rápido nas partes do meio, nunca nos números e no próximo passo.
 
 ## 4. Escolha a melhor (30 s)
 Ouça as 3 com fone. Escolha a que tem: nenhuma palavra engolida, sem barulho alto no fundo,
