@@ -31,6 +31,14 @@ def test_problema_inexistente(client):
     assert client.get("/telas/problemas/9999").status_code == 404
 
 
+def test_qr_errado_mostra_pagina_no_navegador(client):
+    navegador = client.get("/z/zona-que-nao-existe", headers={"Accept": "text/html"})
+    assert navegador.status_code == 404
+    assert "Não achamos esta página" in navegador.get_data(as_text=True)
+    api = client.get("/z/zona-que-nao-existe", headers={"Accept": "application/json"})
+    assert api.status_code == 404 and api.get_json() == {"erro": "nao_encontrado"}
+
+
 def test_api_continua_em_json(client):
     assert client.get("/mapa").is_json
     assert client.get("/fila").is_json

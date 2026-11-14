@@ -5,12 +5,13 @@ from __future__ import annotations
 import os
 from pathlib import Path
 
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, render_template, request
 from werkzeug.middleware.proxy_fix import ProxyFix
 
 from app.db import banco_vazio, fechar_db, get_db, init_db
 from app.modelo import obter_modelo
 from app.rotas import registrar
+from app.rotas.comum import quer_json
 from app.seed import semear
 
 
@@ -64,6 +65,9 @@ def create_app(config: dict | None = None) -> Flask:
 
     @app.errorhandler(404)
     def nao_encontrado(_erro):
+        # Navegador (QR errado, link velho) vê uma página; a API continua em JSON.
+        if "text/html" in request.headers.get("Accept", "") and not quer_json():
+            return render_template("nao_encontrado.html"), 404
         return jsonify(erro="nao_encontrado"), 404
 
     return app

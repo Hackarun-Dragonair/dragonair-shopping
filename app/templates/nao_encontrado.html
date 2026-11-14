@@ -1,0 +1,14 @@
+{# Página para endereço errado (ex.: QR de zona que não existe). A API continua respondendo em JSON. #}
+{% extends "base.html" %}
+{% from "_icones.html" import icone %}
+{% block titulo %}Não encontrado · Ronda Viva{% endblock %}
+{% block conteudo %}
+<div class="mx-auto tela-campo">
+  <div class="card mt-3"><div class="card-body">
+    <div class="rotulo-campo">Endereço não encontrado</div>
+    <h1 class="h4 mt-1">Não achamos esta página</h1>
+    <p class="text-secondary">Se você leu o QR de uma zona, a etiqueta pode estar velha ou com outro código. Avise o gestor e use a lista de zonas no mapa.</p>
+    <a href="{{ url_for('mapa.inicio') }}" class="btn btn-primary w-100">{{ icone('mapa') }} Ir para o mapa das zonas</a>
+  </div></div>
+</div>
+{% endblock %}
