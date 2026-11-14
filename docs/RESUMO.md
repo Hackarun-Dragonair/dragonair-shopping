@@ -1,41 +1,44 @@
-# Ronda Viva — resumo para os avaliadores
-**Equipe Dragonair · HackaRun 2026 · Desafio 09: Eficiência operacional e infraestrutura**
+# Ronda Viva · Equipe Dragonair · Desafio 09
 
 **1. Nome do projeto**
-Ronda Viva — *"Mostra o que ninguém conferiu. Registra que cuidou."*
+Ronda Viva: mostra a área que ninguém conferiu.
 
 **2. Problema identificado**
-- A administração não sabe em que estado cada área do shopping está agora, nem quando foi conferida pela última vez.
-- A ronda vive numa folha de papel que qualquer um assina depois; os problemas chegam soltos pelo rádio, sem prioridade nem dono, e se perdem na troca de turno.
-- Quando algo dá errado, não há registro confiável do que foi feito.
+- A gestão não sabe como cada área está agora, nem quando foi vista.
+- A ronda fica no papel, que pode ser assinado depois.
+- Problemas chegam pelo rádio, sem prioridade nem dono, e se perdem na troca de turno.
 
 **3. Público-alvo**
-- **Equipe de campo** (limpeza, manutenção, segurança): registra a ronda pelo celular.
-- **Supervisores e gestão de operações**: acompanham, priorizam e cobram por zona e equipe.
-- **Frequentadores e lojistas**: ambientes conferidos e problemas resolvidos mais rápido.
+- Equipe de campo: limpeza, manutenção, segurança.
+- Supervisores e gestão de operações.
+- Beneficiados: clientes e lojistas.
 
 **4. Solução proposta**
-Cada zona do shopping tem um **QR**. O funcionário aponta o celular e toca **OK, Atenção ou Problema**. O problema, escrito do jeito dele, recebe uma **sugestão de categoria e prioridade** de uma IA própria; o gestor confirma. O **mapa fica cinza** onde ninguém conferiu no prazo, e cada ocorrência tem uma **linha do tempo que não se apaga**.
+- Cada área tem uma etiqueta QR.
+- O funcionário lê com o celular e marca OK, Atenção ou Problema.
+- Área sem conferência no prazo fica cinza no mapa.
+- Cada problema vira chamado com dono e histórico, que passa de um turno para o outro sem se perder.
 
 **5. Descrição do produto (MVP)**
-- **Tela do QR (celular, sem instalar nada):** OK / Atenção / Problema em poucos toques; botões prontos ("vaso entupido", "quadro aberto").
-- **IA local:** sugere categoria, prioridade e equipe; quando fica entre duas opções, pergunta "É mais X ou Y?".
-- **Regra de segurança acima da IA:** fumaça, fogo, gás, choque ou pessoa presa → prioridade máxima (P1) e "Avise a brigada pelo rádio". Ninguém rebaixa.
-- **Perfis:** funcionário (ronda, assumir, resolver) e gestor (confirmar, painel, editar mapa, imprimir etiquetas QR).
-- **Fila** Aberto → Em atendimento → Resolvido, atualizando sozinha; **mapa** por piso com formas de shopping; **painel** com zonas no prazo, tempo de solução e reincidência — **por zona e equipe, nunca por pessoa**.
-- **Demo online:** https://ronda-viva-0ek7.onrender.com (crachás fictícios: OTTO = gestor, RITA = funcionária).
+- Abre no celular, sem instalar aplicativo.
+- IA própria sugere tipo e urgência; o gestor confirma. Na dúvida, mostra duas opções.
+- Fumaça, fogo, gás, choque ou pessoa presa: urgência máxima e a tela pede para avisar a brigada. Ninguém rebaixa.
+- Chamados: aberto, em atendimento, resolvido.
+- Mapa por andar e etiquetas para imprimir.
+- Painel por área e equipe, nunca por pessoa.
 
 **6. Tecnologias utilizadas**
-Python, Flask, SQLite, HTML/CSS (Bootstrap local), JavaScript, scikit-learn (IA), segno (QR), pytest (78 testes automáticos), GitHub Actions, Render. Site responsivo: celular, tablet e computador.
+Python, Flask, SQLite, HTML, CSS, JavaScript e scikit-learn (IA). 78 testes automáticos.
 
 **7. Diferencial e inovação**
-- **Mostra o lugar, não só a tarefa:** a zona esquecida fica cinza no mapa antes de o cliente reclamar.
-- **IA usada com senso crítico:** só sugere, mostra a dúvida, e a segurança fica numa regra fixa que ela não desfaz. Medida com honestidade: no teste cego (20 frases), palavras-chave pegavam 4 de 6 riscos; com a IA, 6 de 6. Com frases reais o acerto de categoria cai para 81% — por isso uma pessoa sempre confirma.
-- **Registro que não se apaga:** o banco bloqueia alterar ou apagar a linha do tempo.
+- Acompanha o lugar, não só a tarefa.
+- A IA só sugere; a pessoa decide e a regra de segurança vem antes.
+- Em 20 frases de teste, palavras-chave acharam 4 de 6 casos graves; com a IA, 6 de 6.
+- O histórico fica registrado: o sistema não deixa apagar.
 
 **8. Viabilidade e aplicação no shopping**
-- Custo baixo: etiquetas impressas e o celular que a equipe já tem; sem API paga, sem aparelho novo.
-- Piloto sugerido: **30 dias** nos sanitários e na praça de alimentação, medindo zonas no prazo e tempo de solução.
-- Próximos passos: revisar as palavras de risco com a brigada, cadastro de aparelhos autorizado pelo gestor, testar a IA com relatos reais.
+- Custo baixo: etiquetas de papel e celulares que já existem. Sem pagar por uso de IA.
+- Piloto de 30 dias em banheiros e praça de alimentação, medindo áreas em dia e tempo de solução.
+- Depois: revisar palavras de risco com a brigada.
 
-**Links:** repositório https://github.com/Hackarun-Dragonair/dragonair-shopping · como executar: `README.md` · uso de IA declarado: `docs/IA.md` · evidências: `docs/evidencias/`
+Repositório: Hackarun-Dragonair/dragonair-shopping

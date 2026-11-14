@@ -12,16 +12,42 @@
 5. **Mostrar o app?** Não é obrigatório. Se quiser, aponte a câmera para o celular rodando o app por uns 10 s (é gravação de verdade, não IA).
 6. **Enviar:** subir no YouTube (não listado) ou Google Drive (link aberto) e testar o link numa aba anônima.
 
-## O que falar (as 5 perguntas da organização)
+## Roteiro falado completo (revisado pela banca — base para treinar; na gravação, fale com as suas palavras)
+
+> Uma pessoa, olhando para a lente. Ritmo calmo (~2,3–2,4 palavras por segundo). **195 palavras ≈ 81 s (≈ 85 s com as pausas).**
+> `/` = pausa curta; `//` = pausa maior (troca de assunto).
+
+| Tempo | Bloco | Fala | Palavras |
+|---|---|---|---|
+| 0–8 s | Gancho | "Quando foi a última vez que alguém conferiu o banheiro do segundo piso do shopping? / *(1 s olhando para a câmera)* Ninguém sabe. //" | 17 |
+| 8–17 s | Problema | "A ronda é uma folha que qualquer um assina depois, / e o aviso pelo rádio se perde na troca de turno. //" | 21 |
+| 17–27 s | Quem é afetado | "Quem perde é a equipe de limpeza e manutenção, / o supervisor, que não consegue cobrar, / e o cliente, que vê o problema primeiro. //" | 23 |
+| 27–48 s | Solução | "Criamos a Ronda Viva, um site que já está no ar. / Cada área ganha um QR code, igual ao do Pix. / O funcionário aponta o celular, sem instalar nada, e toca: tudo certo, atenção ou problema. / No mapa do supervisor, a área esquecida fica cinza, / antes de o cliente reclamar. //" | 50 |
+| 48–67 s | Produto | "Se tem problema, a pessoa escreve do jeito dela. / Uma inteligência artificial feita por nós sugere a urgência, o pedido vai para a equipe certa, / e o supervisor confirma. / Fumaça, fogo, gás, alguém preso? / Vira urgente, a tela pede para chamar a brigada de incêndio, / e ninguém desfaz isso. //" | 47 |
+| 67–80 s | Como ajuda | "Cada problema tem dono e fica registrado, sem poder apagar: / nada se perde na troca de turno. / E custa pouco: etiqueta impressa e o celular que a equipe já tem. //" | 30 |
+| 80–85 s | Fechamento | "Ronda Viva: mostra o que ninguém conferiu e registra quem cuidou. / Equipe Dragonair." *(sorria, 1 s em silêncio)* | 13 |
+
+**Se o ensaio passar de 85 s**, corte nesta ordem (≈ 5 s): "sem instalar nada" · "antes de o cliente reclamar" · "de limpeza e manutenção" · "feita por nós".
+
+**Não diga:** que o sistema "avisa" ou "chama" a brigada (ele só **pede** na tela para a pessoa avisar pelo rádio); números da IA (o teste é pequeno — deixe para as perguntas do pitch ao vivo).
+
+**Cola para a gravação** (em vez de ler o texto): banheiro? · folha / rádio · equipe, supervisor, cliente · site no ar · QR do Pix → mapa cinza · escreve → supervisor confirma · fumaça = urgente, chama a brigada · dono, sem apagar, custa pouco · registra quem cuidou.
+
+**3 dicas de entrega**
+1. **Olhar:** para a lente, não para a sua imagem. Depois da pergunta do começo, pare 1 s antes de "Ninguém sabe".
+2. **Gesto e voz:** mãos visíveis na altura do peito; conte nos dedos os três afetados e as três opções (tudo certo, atenção, problema). Mais devagar em "a área esquecida fica cinza" — é a frase que a banca precisa lembrar.
+3. **Cenário:** fundo liso e arrumado, luz de janela de frente, celular na horizontal à altura dos olhos, ~1 m, do peito para cima. Cômodo sem eco; ventilador e notificações desligados. Opcional: segurar uma etiqueta QR impressa no bloco "Solução".
+
+## O que falar (as 5 perguntas da organização) — versão em tópicos
 
 | Tempo | Pergunta | Tópicos para lembrar (fale do seu jeito) |
 |---|---|---|
 | 0–15 s | **Qual é o problema?** | Shopping grande, muitas áreas · ninguém sabe quando cada banheiro/corredor foi conferido · a ronda é uma folha que qualquer um assina depois · problema chega solto pelo rádio e se perde na troca de turno |
 | 15–25 s | **Quem é afetado?** | A equipe de limpeza e manutenção · o supervisor, que não consegue cobrar nem priorizar · e o cliente, que encontra o problema antes da equipe |
 | 25–45 s | **Qual é a solução?** | Um QR em cada área · o funcionário aponta o celular e toca: tudo OK, atenção ou problema · sem instalar nada · o mapa do shopping fica cinza onde ninguém conferiu no prazo |
-| 45–70 s | **O que é o produto?** | Ronda Viva: site que roda no celular e no computador · quando tem problema, a pessoa escreve do jeito dela e uma inteligência artificial sugere a prioridade · se for fumaça, fogo, gás ou alguém preso, vira prioridade máxima e manda avisar a brigada, e ninguém consegue rebaixar · o supervisor vê a fila e cada ocorrência fica registrada com hora e nome, sem poder apagar |
+| 45–70 s | **O que é o produto?** | Ronda Viva: site que roda no celular e no computador · quando tem problema, a pessoa escreve do jeito dela e uma inteligência artificial sugere a urgência; o supervisor confirma · se for fumaça, fogo, gás ou alguém preso, vira urgente e a tela pede para chamar a brigada; ninguém desfaz isso · o supervisor vê a fila e cada ocorrência fica registrada com hora e nome, sem poder apagar |
 | 70–85 s | **Como ajuda?** | O gestor vê na hora o que ficou para trás, antes do cliente reclamar · problema vai direto para a equipe certa · fica o histórico de quem cuidou · custo baixo: etiquetas impressas e o celular que a equipe já tem |
-| 85–90 s | Fechamento | "Ronda Viva: mostra o que ninguém conferiu e registra que cuidou. Equipe Dragonair." |
+| 85–90 s | Fechamento | "Ronda Viva: mostra o que ninguém conferiu e registra quem cuidou. Equipe Dragonair." |
 
 **Evite:** termos técnicos (Flask, SQLite, TF-IDF, P1 sem explicar), números demais, gastar mais de 20 s só no problema.
 

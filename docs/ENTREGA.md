@@ -11,7 +11,7 @@ Horários de sábado: [`pitch/checklist-sabado.md`](pitch/checklist-sabado.md).
 | Site da demo | https://ronda-viva-0ek7.onrender.com (1º acesso: cerca de 1 min) |
 | Versão da Missão 2 | tag `v-missao2-entrega` → https://github.com/Hackarun-Dragonair/dragonair-shopping/tree/v-missao2-entrega (pontos de segurança anteriores: `v-missao2-final`, `v-missao2-estavel`) |
 | Instruções de execução | https://github.com/Hackarun-Dragonair/dragonair-shopping#como-executar |
-| Resumo de 1 página | https://github.com/Hackarun-Dragonair/dragonair-shopping/blob/main/docs/RESUMO.pdf (PDF) · [texto](https://github.com/Hackarun-Dragonair/dragonair-shopping/blob/main/docs/RESUMO.md) |
+| Resumo de 1 página | https://github.com/Hackarun-Dragonair/dragonair-shopping/blob/main/docs/RESUMO.pdf (PDF; a equipe copia à mão) · [texto](https://github.com/Hackarun-Dragonair/dragonair-shopping/blob/main/docs/RESUMO.md) · [versão detalhada](https://github.com/Hackarun-Dragonair/dragonair-shopping/blob/main/docs/RESUMO-detalhado.md) |
 | Evidências (índice) | https://github.com/Hackarun-Dragonair/dragonair-shopping/blob/main/docs/evidencias/README.md |
 | Avaliação da IA | https://github.com/Hackarun-Dragonair/dragonair-shopping/blob/main/docs/evidencias/modelo/resumo.md |
 | QA ponta a ponta (bugs e correções) | https://github.com/Hackarun-Dragonair/dragonair-shopping/blob/main/docs/evidencias/qa/README.md |
