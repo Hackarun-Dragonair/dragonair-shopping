@@ -11,45 +11,72 @@
   const $ = (id) => document.getElementById(id);
 
   // ---------- Desenho de cada piso (coordenadas inventadas) ----------
+  // Desenho fictício feito do zero pela equipe; não copia a planta do shopping (dado sensível).
+  // Shopping genérico e inventado: fachada curva, átrio redondo, âncoras nas pontas, praça em leque.
+  // Cada forma pode ser retângulo {x,y,w,h}, polígono {pts} ou caminho SVG {d}.
+  // lx/ly = onde fica o nome; gx/gy = onde o gato senta; curto = nome menor mostrado no celular.
   // Zonas que não estiverem aqui são posicionadas sozinhas numa grade.
   const PLANTA = {
     "Térreo": {
-      casca: "M80,90 L920,90 L920,470 L620,470 L620,540 L380,540 L380,470 L80,470 Z",
+      casca: "M95,150 L160,85 L520,75 L700,92 L900,105 L945,170 L940,420 L880,480 Q500,615 120,480 L60,410 L58,215 Z",
       deco: [
-        { x: 110, y: 120, w: 170, h: 110, t: "Lojas" }, { x: 300, y: 120, w: 170, h: 110, t: "Lojas" },
-        { x: 490, y: 120, w: 170, h: 110, t: "Lojas" }, { x: 110, y: 330, w: 250, h: 110, t: "Loja âncora" },
-        { x: 110, y: 250, w: 760, h: 60, t: "Corredor térreo" },
-      ],
-      zonas: { "entrada-principal": { x: 400, y: 440, w: 200, h: 90 }, "doca-1": { x: 700, y: 120, w: 190, h: 190 } },
-    },
-    "L1": {
-      casca: "M60,80 L940,80 L940,540 L560,540 L520,580 L480,540 L60,540 Z",
-      deco: [
-        { x: 90, y: 310, w: 150, h: 90, t: "Lojas" }, { x: 255, y: 310, w: 150, h: 90, t: "Lojas" },
-        { x: 420, y: 310, w: 150, h: 90, t: "Lojas" }, { x: 600, y: 420, w: 130, h: 100, t: "Lojas" },
-        { x: 90, y: 420, w: 300, h: 100, t: "Loja âncora" },
+        { pts: "72,222 106,163 168,100 285,108 312,250 262,395 75,402", t: "Âncora Oeste", lx: 185, ly: 250 },
+        { pts: "752,262 848,278 928,262 925,412 872,465 768,448 735,352", t: "Âncora Leste", lx: 840, ly: 365 },
+        { pts: "330,110 480,96 492,205 352,232", t: "Lojas" },
+        { pts: "508,96 690,104 702,222 600,232 512,206", t: "Lojas" },
+        { pts: "325,300 418,335 412,428 300,432 280,395", t: "Lojas" },
+        { pts: "585,335 690,305 712,355 735,432 598,430", t: "Lojas" },
+        { d: "M430,305 a70,70 0 1,0 140,0 a70,70 0 1,0 -140,0", t: "Átrio", lx: 500, ly: 305 },
+        { pts: "445,388 555,388 548,428 452,428", t: "Elevadores" },
       ],
       zonas: {
-        "corredor-norte": { x: 90, y: 110, w: 610, h: 70 },
-        "praca-a": { x: 90, y: 195, w: 300, h: 100 },
-        "praca-b": { x: 400, y: 195, w: 300, h: 100 },
-        "escada-norte": { x: 600, y: 310, w: 100, h: 90 },
-        "sanitario-piso1": { x: 730, y: 110, w: 180, h: 150 },
-        "banheiro-l1-sul": { x: 750, y: 380, w: 160, h: 140 },
+        "entrada-principal": { pts: "362,440 638,440 668,518 590,533 500,538 410,533 332,518", lx: 500, ly: 488, curto: "Entrada" },
+        "doca-1": { pts: "715,100 895,112 932,175 928,245 845,262 728,240", lx: 825, ly: 180 },
+      },
+    },
+    "L1": {
+      casca: "M70,150 L135,82 L700,72 L870,70 L935,130 L945,300 Q960,470 840,540 L600,560 L520,592 L440,560 L150,545 L62,470 Z",
+      deco: [
+        { pts: "85,232 190,222 158,300 122,362 80,378", t: "Lojas", lx: 128, ly: 295 },
+        { d: "M330,520 A70,70 0 0,1 470,520 Z", t: "Átrio", lx: 400, ly: 500 },
+        { pts: "740,480 868,474 848,506 812,526 748,524", t: "Lojas" },
+      ],
+      zonas: {
+        "corredor-norte": { pts: "120,118 690,95 706,160 470,192 128,205", lx: 400, ly: 152, curto: "Corredor norte" },
+        // praça de alimentação em leque, aberta em volta do átrio
+        "praca-a": { pts: "118,480 133,420 161,365 200,317 249,278 305,251 365,237 390,441 373,445 358,452 344,463 333,476 325,492 321,509",
+          lx: 272, ly: 388, curto: "Praça A" },
+        "praca-b": { pts: "435,237 495,251 551,278 600,317 639,365 667,420 682,480 479,509 475,492 467,476 456,463 442,452 427,445 410,441",
+          lx: 528, ly: 388, curto: "Praça B" },
+        "sanitario-piso1": { pts: "716,90 858,80 925,135 930,208 815,222 728,205", lx: 822, ly: 160, gx: 870, gy: 128, curto: "Sanitário 1" },
+        "escada-norte": { pts: "708,238 920,226 925,318 860,334 722,338 690,290", lx: 805, ly: 296, gx: 895, gy: 262, curto: "Escada norte" },
+        "banheiro-l1-sul": { pts: "712,352 925,342 915,415 880,440 860,462 722,466 696,410", lx: 800, ly: 405, gx: 905, gy: 378, curto: "Banheiro sul" },
       },
     },
     "L2": {
-      casca: "M140,110 L860,110 L860,500 L140,500 Z",
+      casca: "M150,125 L600,98 L815,118 Q905,240 875,420 L785,512 L300,528 L165,455 L118,265 Z",
       deco: [
-        { x: 170, y: 290, w: 200, h: 180, t: "Lojas" }, { x: 390, y: 290, w: 200, h: 180, t: "Lojas" },
-        { x: 170, y: 140, w: 420, h: 120, t: "Corredor L2" },
+        { pts: "172,148 420,130 440,300 330,350 175,328", t: "Cinema", lx: 300, ly: 240 },
+        { pts: "450,122 582,110 588,232 470,240", t: "Lojas" },
+        { pts: "195,358 335,372 400,470 300,510 180,450", t: "Lojas" },
+        { d: "M460,330 a70,70 0 1,0 140,0 a70,70 0 1,0 -140,0", t: "Vão do átrio", lx: 530, ly: 330 },
+        { pts: "430,425 580,420 570,478 440,482", t: "Elevadores" },
       ],
-      zonas: { "banheiro-l2-norte": { x: 620, y: 140, w: 210, h: 150 }, "area-tecnica-l2": { x: 620, y: 310, w: 210, h: 160 } },
+      zonas: {
+        "banheiro-l2-norte": { pts: "598,112 798,130 850,215 772,272 622,252", lx: 724, ly: 205, gx: 785, gy: 172, curto: "Banheiro norte" },
+        "area-tecnica-l2": { pts: "690,318 865,300 862,405 780,492 640,470 652,380", lx: 760, ly: 400, curto: "Área técnica" },
+      },
     },
     "Estacionamento": {
-      casca: "M100,100 L900,100 L900,520 L100,520 Z",
+      casca: "M100,135 L180,92 L880,100 L932,180 L912,500 L822,540 L140,532 L80,452 Z",
       vagas: true,
-      zonas: { "estacionamento-g1": { x: 300, y: 220, w: 400, h: 180 } },
+      deco: [
+        { d: "M790,222 Q925,300 815,410 L775,392 Q840,305 762,248 Z", t: "Rampa", lx: 834, ly: 312 },
+        { pts: "104,262 208,245 212,338 110,352", t: "Elevadores", lx: 158, ly: 300 },
+      ],
+      zonas: {
+        "estacionamento-g1": { pts: "265,218 715,208 778,305 728,405 282,412 222,318", lx: 500, ly: 312 },
+      },
     },
   };
 
