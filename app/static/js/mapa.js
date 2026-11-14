@@ -12,70 +12,151 @@
 
   // ---------- Desenho de cada piso (coordenadas inventadas) ----------
   // Desenho fictício feito do zero pela equipe; não copia a planta do shopping (dado sensível).
-  // Shopping genérico e inventado: fachada curva, átrio redondo, âncoras nas pontas, praça em leque.
+  // Shopping genérico e inventado: corredores, dezenas de lojas sem nome, átrio redondo,
+  // âncoras nas pontas, praça de alimentação em leque, cinema e garagem com vagas.
+  // As lojas NÃO são desenhadas uma a uma: pequenas funções repetem blocos em fila, em anel ou em leque.
   // Cada forma pode ser retângulo {x,y,w,h}, polígono {pts} ou caminho SVG {d}.
   // lx/ly = onde fica o nome; gx/gy = onde o gato senta; curto = nome menor mostrado no celular.
   // Zonas que não estiverem aqui são posicionadas sozinhas numa grade.
+  const rad = (g) => (g * Math.PI) / 180;
+  const um = (n) => Math.round(n * 10) / 10;           // 1 casa decimal: SVG mais leve
+  const pt = (x, y) => `${um(x)},${um(y)}`;
+
+  // n lojas iguais em fila a partir de (x0,y0); "angulo" gira a fila (0 = para a direita)
+  function fileira(x0, y0, n, larg, alt, passo, angulo = 0) {
+    const c = Math.cos(rad(angulo)), s = Math.sin(rad(angulo)), lista = [];
+    for (let i = 0; i < n; i++) {
+      const ox = x0 + i * passo * c, oy = y0 + i * passo * s;
+      const cantos = [[0, 0], [larg, 0], [larg, alt], [0, alt]].map(([a, b]) => pt(ox + a * c - b * s, oy + a * s + b * c));
+      lista.push({ pts: cantos.join(" ") });
+    }
+    return lista;
+  }
+  // Corredor reto [x0,y0,x1,y1,largura] vira uma faixa clara
+  function rua([x0, y0, x1, y1, w]) {
+    const a = Math.atan2(y1 - y0, x1 - x0), nx = (-Math.sin(a) * w) / 2, ny = (Math.cos(a) * w) / 2;
+    return { pts: [pt(x0 + nx, y0 + ny), pt(x1 + nx, y1 + ny), pt(x1 - nx, y1 - ny), pt(x0 - nx, y0 - ny)].join(" ") };
+  }
+  // Lojas de um lado do corredor (lado 1 ou -1), de "ini" até "fim" (distâncias das pontas)
+  function margem([x0, y0, x1, y1, w], lado, alt, ini = 0, fim = 0, larg = 26, passo = 30) {
+    const a = Math.atan2(y1 - y0, x1 - x0), c = Math.cos(a), s = Math.sin(a);
+    const n = Math.floor((Math.hypot(x1 - x0, y1 - y0) - ini - fim - larg) / passo) + 1;
+    const d = lado > 0 ? w / 2 + 3 : -(w / 2 + 3 + alt);
+    return fileira(x0 + c * ini - s * d, y0 + s * ini + c * d, n, larg, alt, passo, (a * 180) / Math.PI);
+  }
+  // Fatia de anel entre os raios ri e re, do ângulo a0 ao a1 (0° = direita, 90° = para baixo)
+  function setor(cx, cy, ri, re, a0, a1) {
+    const p = (r, g) => pt(cx + r * Math.cos(rad(g)), cy + r * Math.sin(rad(g)));
+    const grande = a1 - a0 > 180 ? 1 : 0;
+    const fora = `M${p(re, a0)} A${re},${re} 0 ${grande},1 ${p(re, a1)}`;
+    return ri > 0 ? `${fora} L${p(ri, a1)} A${ri},${ri} 0 ${grande},0 ${p(ri, a0)} Z` : `${fora} L${pt(cx, cy)} Z`;
+  }
+  // n boxes lado a lado num anel ou leque (átrio redondo, praça de alimentação)
+  function leque(cx, cy, ri, re, n, a0, a1, folga = 1.6) {
+    const passo = (a1 - a0) / n;
+    return Array.from({ length: n }, (_, i) => ({ d: setor(cx, cy, ri, re, a0 + i * passo + folga / 2, a0 + (i + 1) * passo - folga / 2) }));
+  }
+  // Vagas de garagem: n riscos inclinados a partir de (x0,y0)
+  function vagas(x0, y0, n, passo, alt, incl) {
+    return Array.from({ length: n }, (_, i) => [x0 + i * passo, y0, x0 + i * passo + incl, y0 + alt]);
+  }
+
+  // Térreo: corredor principal leste-oeste, corredor norte, dois corredores em diagonal até a entrada
+  const T = {
+    principal: [210, 280, 790, 280, 34], norte: [215, 170, 700, 170, 20], entrada: [500, 297, 500, 442, 34],
+    diagOeste: [235, 297, 440, 442, 24], diagLeste: [765, 297, 560, 442, 24], ligacao: [500, 178, 500, 264, 22],
+  };
+  // L1: faixa do corredor norte, corredor da praça e corredor leste
+  const L1 = { norte: [122, 149, 690, 139, 60], praca: [128, 236, 690, 228, 16], leste: [676, 236, 676, 470, 22] };
+  // L2: corredor principal, corredor das lojas e a borda oeste (só para alinhar lojas)
+  const L2 = { principal: [128, 300, 640, 300, 28], lojas: [415, 200, 600, 192, 18], borda: [148, 322, 190, 470, 0] };
+
   const PLANTA = {
     "Térreo": {
       casca: "M95,150 L160,85 L520,75 L700,92 L900,105 L945,170 L940,420 L880,480 Q500,615 120,480 L60,410 L58,215 Z",
+      ruas: Object.values(T),
+      lojas: [
+        ...margem(T.norte, -1, 44),                       // fachada norte
+        ...margem(T.norte, 1, 74, 0, 335), ...margem(T.norte, 1, 74, 425),
+        ...leque(500, 280, 64, 92, 4, 18, 72), ...leque(500, 280, 64, 92, 4, 108, 162),   // anel do átrio
+        ...leque(500, 280, 64, 92, 4, 198, 252), ...leque(500, 280, 64, 92, 4, 288, 342),
+        ...margem(T.diagOeste, -1, 40, 34, 8), ...margem(T.diagOeste, 1, 40, 22, 70),          // diagonais
+        ...margem(T.diagLeste, 1, 40, 34, 8), ...margem(T.diagLeste, -1, 40, 22, 70),
+        ...fileira(150, 440, 4, 26, 34, 30, 14), ...fileira(712, 474, 3, 26, 34, 30, -14),        // perto da fachada sul
+      ],
       deco: [
-        { pts: "72,222 106,163 168,100 285,108 312,250 262,395 75,402", t: "Âncora Oeste", lx: 185, ly: 250 },
-        { pts: "752,262 848,278 928,262 925,412 872,465 768,448 735,352", t: "Âncora Leste", lx: 840, ly: 365 },
-        { pts: "330,110 480,96 492,205 352,232", t: "Lojas" },
-        { pts: "508,96 678,103 688,222 600,232 512,206", t: "Lojas" },
-        { pts: "325,300 418,335 412,428 300,432 280,395", t: "Lojas" },
-        { pts: "585,335 690,305 712,355 735,432 598,430", t: "Lojas" },
-        { d: "M430,305 a70,70 0 1,0 140,0 a70,70 0 1,0 -140,0", t: "Átrio", lx: 500, ly: 305 },
-        { pts: "445,388 555,388 548,428 452,428", t: "Elevadores" },
+        { pts: "70,222 104,160 165,100 205,100 205,400 75,404", t: "Âncora Oeste", lx: 140, ly: 260 },
+        { pts: "800,270 930,270 928,412 872,466 800,452", t: "Âncora Leste", lx: 862, ly: 360 },
+        { d: setor(500, 280, 0, 56, 0, 359.9), t: "Eventos", lx: 500, ly: 280 },
+      ],
+      icones: [
+        { x: 368, y: 190, w: 24, h: 24, t: "WC" }, { x: 368, y: 222, w: 24, h: 24, t: "ESC" },
+        { x: 610, y: 190, w: 24, h: 24, t: "WC" }, { x: 610, y: 222, w: 24, h: 24, t: "ESC" },
       ],
       zonas: {
         "entrada-principal": { pts: "362,440 638,440 668,518 590,533 500,538 410,533 332,518", lx: 500, ly: 488, curto: "Entrada" },
-        "doca-1": { pts: "702,100 895,112 932,175 928,245 845,262 714,240", lx: 820, ly: 180 },
+        "doca-1": { pts: "712,104 895,112 932,175 928,245 845,258 712,240", lx: 820, ly: 180 },
       },
     },
     "L1": {
       casca: "M70,150 L135,82 L700,72 L870,70 L935,130 L945,300 Q960,470 840,540 L600,560 L520,592 L440,560 L150,545 L62,470 Z",
-      deco: [
-        { pts: "85,232 190,222 158,300 122,362 80,378", t: "Lojas", lx: 128, ly: 295 },
-        { d: "M330,520 A70,70 0 0,1 470,520 Z", t: "Átrio", lx: 400, ly: 500 },
-        { pts: "740,480 868,474 848,506 812,526 748,524", t: "Lojas" },
+      ruas: [L1.praca, L1.leste],
+      lojas: [
+        ...margem(L1.norte, -1, 24, 30), ...margem(L1.norte, 1, 40, 10),
+        ...leque(420, 486, 204, 240, 20, 180, 360),       // boxes da praça de alimentação, em leque
+        ...fileira(190, 494, 6, 26, 36, 30), ...fileira(476, 494, 6, 26, 36, 30),
       ],
+      deco: [
+        { pts: "72,236 172,236 176,476 66,476", t: "Âncora Oeste", lx: 122, ly: 356 },
+        { pts: "706,480 878,472 846,512 806,534 706,540", t: "Âncora Leste", lx: 784, ly: 506 },
+        { d: setor(420, 486, 0, 52, 180, 360), t: "Átrio", lx: 420, ly: 466 },
+      ],
+      icones: [{ x: 398, y: 496, w: 22, h: 22, t: "ESC" }, { x: 424, y: 496, w: 22, h: 22, t: "WC" }],
       zonas: {
-        "corredor-norte": { pts: "120,118 690,95 706,160 470,192 128,205", lx: 400, ly: 152, curto: "Corredor norte" },
-        // praça de alimentação em leque, aberta em volta do átrio
-        "praca-a": { pts: "118,480 133,420 161,365 200,317 249,278 305,251 365,237 390,441 373,445 358,452 344,463 333,476 325,492 321,509",
-          lx: 272, ly: 388, curto: "Praça A" },
-        "praca-b": { pts: "435,237 495,251 551,278 600,317 639,365 667,420 682,480 479,509 475,492 467,476 456,463 442,452 427,445 410,441",
-          lx: 528, ly: 388, curto: "Praça B" },
+        "corredor-norte": { pts: "120,119 690,109 692,169 122,179", lx: 405, ly: 144, curto: "Corredor norte" },
+        // praça de alimentação: as mesas em leque, cercadas pelos boxes
+        "praca-a": { d: setor(420, 486, 60, 196, 180, 270), lx: 322, ly: 398, gx: 300, gy: 330, curto: "Praça A" },
+        "praca-b": { d: setor(420, 486, 60, 196, 270, 360), lx: 510, ly: 398, gx: 560, gy: 340, curto: "Praça B" },
         "sanitario-piso1": { pts: "716,90 858,80 925,135 930,208 815,222 728,205", lx: 822, ly: 160, gx: 870, gy: 128, curto: "Sanitário 1" },
-        "escada-norte": { pts: "708,238 920,226 925,318 860,334 722,338 690,290", lx: 805, ly: 296, gx: 895, gy: 262, curto: "Escada norte" },
+        "escada-norte": { pts: "708,238 920,226 925,318 860,334 722,338 692,290", lx: 805, ly: 296, gx: 895, gy: 262, curto: "Escada norte" },
         "banheiro-l1-sul": { pts: "712,352 925,342 915,415 880,440 860,462 722,466 696,410", lx: 800, ly: 405, gx: 905, gy: 378, curto: "Banheiro sul" },
       },
     },
     "L2": {
       casca: "M150,125 L600,98 L815,118 Q905,240 875,420 L785,512 L300,528 L165,455 L118,265 Z",
-      deco: [
-        { pts: "172,148 420,130 440,300 330,350 175,328", t: "Cinema", lx: 300, ly: 240 },
-        { pts: "450,122 582,110 588,232 470,240", t: "Lojas" },
-        { pts: "195,358 335,372 400,470 300,510 180,450", t: "Lojas" },
-        { d: "M460,330 a70,70 0 1,0 140,0 a70,70 0 1,0 -140,0", t: "Vão do átrio", lx: 530, ly: 330 },
-        { pts: "430,425 580,420 570,478 440,482", t: "Elevadores" },
+      ruas: [L2.principal, L2.lojas],
+      lojas: [
+        ...fileira(175, 150, 6, 34, 52, 38),               // salas do cinema
+        ...margem(L2.lojas, -1, 60), ...margem(L2.lojas, 1, 62),
+        ...leque(390, 515, 150, 188, 18, 196, 344),        // restaurantes do espaço gourmet, em leque
+        ...margem(L2.borda, -1, 40, 0, 30), ...fileira(640, 330, 4, 26, 40, 32, 90),
       ],
+      deco: [
+        { pts: "150,142 405,126 405,276 125,276", t: "Cinema", lx: 265, ly: 244 },
+        { d: setor(390, 515, 40, 140, 196, 344), t: "Espaço gourmet", lx: 390, ly: 440 },
+      ],
+      icones: [{ x: 368, y: 486, w: 22, h: 22, t: "ESC" }, { x: 394, y: 486, w: 22, h: 22, t: "WC" }],
       zonas: {
-        "banheiro-l2-norte": { pts: "598,112 798,130 850,215 772,272 622,252", lx: 724, ly: 205, gx: 785, gy: 172, curto: "Banheiro norte" },
-        "area-tecnica-l2": { pts: "690,318 865,300 862,405 780,492 640,470 652,380", lx: 760, ly: 400, curto: "Área técnica" },
+        "banheiro-l2-norte": { pts: "608,112 798,130 850,215 772,272 622,252", lx: 724, ly: 205, gx: 785, gy: 172, curto: "Banheiro norte" },
+        "area-tecnica-l2": { pts: "690,318 865,300 862,405 780,492 676,470 682,380", lx: 770, ly: 400, curto: "Área técnica" },
       },
     },
     "Estacionamento": {
       casca: "M100,135 L180,92 L880,100 L932,180 L912,500 L822,540 L140,532 L80,452 Z",
-      vagas: true,
+      ruas: [[200, 197, 790, 197, 20], [200, 418, 790, 418, 20], [215, 197, 215, 418, 20]],
+      linhas: [
+        ...vagas(200, 116, 21, 28, 34, 10), ...vagas(200, 152, 21, 28, 34, 10),    // duas fileiras em cima
+        ...vagas(190, 430, 21, 28, 34, -10), ...vagas(190, 466, 21, 28, 34, -10),  // duas fileiras embaixo
+        [200, 151, 788, 151], [190, 465, 778, 465],                               // meio-fio entre as fileiras
+      ],
       deco: [
         { d: "M790,222 Q925,300 815,410 L775,392 Q840,305 762,248 Z", t: "Rampa", lx: 834, ly: 312 },
-        { pts: "104,262 208,245 212,338 110,352", t: "Elevadores", lx: 158, ly: 300 },
+        { pts: "104,262 196,250 198,338 110,352", t: "Elevadores", lx: 152, ly: 300 },
       ],
+      icones: [{ x: 822, y: 130, w: 34, h: 22, t: "Saída" }, { x: 806, y: 448, w: 40, h: 22, t: "Entrada" },
+        ...[0, 1, 2, 3, 4, 5].flatMap((i) => [{ x: 222 + i * 112, y: 147, w: 8, h: 8, t: "" }, { x: 212 + i * 112, y: 461, w: 8, h: 8, t: "" }])],  // pilares
       zonas: {
-        "estacionamento-g1": { pts: "265,218 715,208 778,305 728,405 282,412 222,318", lx: 500, ly: 312 },
+        "estacionamento-g1": { pts: "265,218 715,208 760,305 728,398 282,398 232,318", lx: 500, ly: 306 },
       },
     },
   };
@@ -195,18 +276,21 @@
     if (pequeno) svg.classList.add("mapa-pequeno");
     const { base, pos } = desenhoDoPiso(pisoAtual, daquele);
     svg.appendChild(el("path", { d: base.casca, class: "casca" }));
-    if (base.vagas) {
-      // vagas inclinadas, como num estacionamento de verdade
-      for (let x = 140; x < 860; x += 38) {
-        svg.appendChild(el("line", { x1: x, y1: 125, x2: x + 18, y2: 190, class: "vaga" }));
-        svg.appendChild(el("line", { x1: x + 18, y1: 430, x2: x, y2: 495, class: "vaga" }));
-      }
-    }
+    // Fundo (só enfeite, não reage ao toque): corredores claros, lojas bege, vagas, áreas grandes e ícones
+    const fundo = el("g", { class: "fundo-desenho" });
+    (base.ruas || []).forEach((r) => fundo.appendChild(forma(rua(r), { class: "corredor" })));
+    (base.lojas || []).forEach((l) => fundo.appendChild(forma(l, { class: "loja" })));
+    (base.linhas || []).forEach(([x1, y1, x2, y2]) => fundo.appendChild(el("line", { x1, y1, x2, y2, class: "vaga" })));
     (base.deco || []).forEach((d) => {
-      svg.appendChild(forma(d, { class: "deco" }));
+      fundo.appendChild(forma(d, { class: "deco" }));
       const [tx, ty] = centro(d);
-      svg.appendChild(el("text", { x: tx, y: ty, class: "deco-texto" }, d.t));
+      fundo.appendChild(el("text", { x: tx, y: ty, class: "deco-texto" }, d.t));
     });
+    (base.icones || []).forEach((i) => {
+      fundo.appendChild(forma(i, { class: "icone" }));
+      fundo.appendChild(el("text", { x: i.x + i.w / 2, y: i.y + i.h / 2 + 0.5, class: "icone-texto" }, i.t));
+    });
+    svg.appendChild(fundo);
     daquele.forEach((z) => {
       const p = pos[z.codigo];
       const r = forma(p, {
