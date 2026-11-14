@@ -47,7 +47,7 @@ Fumaça, fogo, choque ou pessoa presa → **P1** + "Avise a brigada pelo rádio"
 ## As 5 perguntas mais prováveis
 1. **"Qual o diferencial?"** — Mostra o que **não** aconteceu: a zona cinza é onde ninguém olhou. Folha de papel e checklist só mostram o que foi feito.
 2. **"A IA acerta quanto?"** — No teste cego de 20 frases, 100% na categoria e todos os 6 casos de risco. Com frases reais, 81%. O teste é pequeno, então ela só sugere e o gestor confirma.
-3. **"E se a IA errar?"** — A pessoa corrige na hora, o gestor confirma, e a correção fica na linha do tempo. Abaixo de 50% de confiança, a tela pergunta "É mais X ou Y?" com dois botões quando ela fica entre duas categorias; sem segunda opção, avisa "IA em dúvida, confira".
+3. **"E se a IA errar?"** — A pessoa corrige na hora, o gestor confirma, e a correção fica na linha do tempo. Abaixo de 50% de confiança, a tela pergunta "É mais X ou Y?" com dois botões quando ela fica entre duas categorias; sem segunda opção, avisa "IA em dúvida, confira". Isso acontece na maioria das vezes, então a pessoa sempre confere.
 4. **"Vocês vigiam o funcionário?"** — Não. Tudo é por zona e equipe, nunca por pessoa. Os nomes da demo são inventados.
 5. **"Funciona sem internet?"** — Sim, num notebook com rede local: a IA está dentro do sistema. Só o celular precisa estar na mesma rede (pode ser o hotspot).
 
