@@ -28,7 +28,7 @@ A banca pode perguntar para **qualquer** integrante. Leia isto 2 vezes e treine 
 | `docs/` | Documentos, evidências e declaração de uso de IA |
 
 **Se a banca pedir para apontar no código:**
-- **Palavras de risco (viram P1):** `app/dominio.py`, lista `_RISCO` (fumaça, fogo, incêndio, choque, pessoa presa). A função `garantir_prioridade` impede baixar.
+- **Palavras de risco (viram P1):** `app/dominio.py`, lista `_RISCO` (fumaça, fogo, incêndio, gás, choque, pessoa presa). A função `garantir_prioridade` impede baixar.
 - **Bloqueio de alterar/apagar a linha do tempo:** `app/db.py`, função `instalar_triggers`. É uma trava dentro do banco: se alguém tentar alterar ou apagar um registro da tabela `eventos`, o banco recusa.
 
 ## Como a IA funciona (comparação do dia a dia)

@@ -28,7 +28,7 @@ frase,categoria,prioridade
 
 | prioridade | quando usar |
 |---|---|
-| `P1` | risco para pessoas: fumaça, fogo, choque, pessoa presa, fio exposto |
+| `P1` | risco para pessoas: fumaça, fogo, gás, choque, pessoa presa, fio exposto |
 | `P2` | atrapalha muito ou pode machucar: vazamento, piso molhado, escada parada |
 | `P3` | incomoda mas dá para esperar: lâmpada queimada, ar fraco |
 | `P4` | detalhe: sabonete acabando, mesa bamba |

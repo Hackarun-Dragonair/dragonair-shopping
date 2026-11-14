@@ -1,6 +1,6 @@
 """Regras da ronda que não dependem de banco nem de HTTP.
 
-A prioridade de risco (fumaça, fogo, choque, pessoa presa) sai daqui,
+A prioridade de risco (fumaça, fogo, gás, choque, pessoa presa) sai daqui,
 antes do modelo. O modelo pode sugerir; esta camada não deixa rebaixar.
 """
 
@@ -31,10 +31,11 @@ _ACENTOS = str.maketrans(
     "aaaaaeeeeiiiiooooouuuuc",
 )
 
-# Casos combinados pela equipe (gás incluído no sábado 14/11, depois da banca simulada).
+# Casos combinados pela equipe (gás incluído no sábado 14/11, depois da banca simulada;
+# "sem gás"/"com gás" de refrigerante e água não contam).
 # Faísca e alagamento sobem a prioridade pelas regras abaixo, sem o aviso de brigada.
 _RISCO = re.compile(
-    r"\bfumaca\b|\bfogo\b|\bincendio\b|\bgas\b|\bchoque\b|\beletrocut"
+    r"\bfumaca\b|\bfogo\b|\bincendio\b|(?<!sem )(?<!com )\bgas\b|\bchoque\b|\beletrocut"
     r"|\bpessoa presa\b|\bgente presa\b|\balguem preso\b"
     r"|\bpreso no elevador\b|\bpresa no elevador\b"
 )

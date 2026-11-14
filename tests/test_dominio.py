@@ -32,6 +32,8 @@ def test_piso_molhado_nao_e_risco_de_brigada():
     assert not detectar_risco("piso molhado sem placa")
     assert not detectar_risco("fogão da lanchonete sujo")
     assert not detectar_risco("gasto de papel toalha alto")  # "gas" só como palavra inteira
+    assert not detectar_risco("refrigerante sem gás na máquina")  # bebida, não vazamento
+    assert not detectar_risco("água com gás acabou")
 
 
 def test_risco_nao_rebaixa_mesmo_se_o_modelo_disser_p4():
