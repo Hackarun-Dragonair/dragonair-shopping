@@ -1,0 +1,17 @@
+frase,categoria_esperada,categoria_prevista,prioridade_esperada,prioridade_prevista,acertou_categoria,acertou_prioridade,acertou
+Camera da doca 2 ta com a tela toda preta no monitor e caiu o sinal.,seguranca,seguranca,P2,P2,sim,sim,sim
+Painel digital do estacionamento apago o visor e nao mostra os numero.,eletrica,eletrica,P3,P2,sim,nao,nao
+Fita de led da sanca ta com metade dos ponto queimado e a outra metade piscando.,eletrica,eletrica,P4,P3,sim,nao,nao
+Camera do corredor do cinema fico girando sem parar e nao obedece comando.,seguranca,eletrica,P3,P2,nao,nao,nao
+Tomada do totem desligo sozinha e paro de mandar energia pro aparelho.,eletrica,eletrica,P3,P3,sim,sim,sim
+Tomada perto dos sofa paro de carrega e ta sem corrente eletrica.,eletrica,eletrica,P3,P3,sim,sim,sim
+Camera 41 ta sem sinal de imagem e aparece como desconectada no sistema.,seguranca,seguranca,P2,P2,sim,sim,sim
+Sensor de fumaca ta com a luzinha piscando rapido e dando erro no painel.,seguranca,eletrica,P1,P1,nao,sim,nao
+Luz do espelho do banheiro queimo e nao liga de jeito nenhum.,eletrica,eletrica,P3,P3,sim,sim,sim
+Camera 02 fico offline do nada e nao manda mais sinal pro gravador.,seguranca,seguranca,P2,P2,sim,sim,sim
+Painel de senha apago o visor e saiu da rede do sistema.,eletrica,eletrica,P3,P2,sim,nao,nao
+Luz de balizamento do degrau apago uma fileira inteira de led.,eletrica,eletrica,P2,P2,sim,sim,sim
+Camera 11 ta com a imagem chuviscando muito e falhando o video.,seguranca,seguranca,P3,P2,sim,nao,nao
+Refletor da area externa nao acendeu e ta com erro de alimentacao.,eletrica,eletrica,P3,P3,sim,sim,sim
+Painel informativo travo numa tela branca e perdeu o sinal.,eletrica,seguranca,P3,P2,nao,nao,nao
+Camera 50 caiu o sinal de rede e fico totalmente fora do ar.,seguranca,seguranca,P2,P2,sim,sim,sim

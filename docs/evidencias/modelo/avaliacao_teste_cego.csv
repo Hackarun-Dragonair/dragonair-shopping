@@ -1,0 +1,21 @@
+frase,categoria_esperada,categoria_prevista,prioridade_esperada,prioridade_prevista,acertou_categoria,acertou_prioridade,acertou
+agua caindo do forro do banheiro,hidraulica,hidraulica,P2,P2,sim,sim,sim
+privada entupida outra vez,hidraulica,hidraulica,P2,P2,sim,sim,sim
+torneira jorrando sem parar,hidraulica,hidraulica,P2,P2,sim,sim,sim
+mall escuro sem nenhuma luz,eletrica,eletrica,P2,P2,sim,sim,sim
+tomada estalando e soltando faisca na doca,eletrica,eletrica,P1,P1,sim,sim,sim
+disjuntor desarmou de novo,eletrica,eletrica,P2,P2,sim,sim,sim
+ar condicionado nao liga na praca,climatizacao,climatizacao,P2,P3,sim,nao,nao
+grelha do ar sem sair vento,climatizacao,climatizacao,P3,P3,sim,sim,sim
+duto de climatizacao solto,climatizacao,climatizacao,P2,P2,sim,sim,sim
+chao molhado perto da praca sem aviso,limpeza,limpeza,P2,P2,sim,sim,sim
+lixeira da praca cheia demais,limpeza,limpeza,P3,P3,sim,sim,sim
+sanitario fedendo muito,limpeza,limpeza,P3,P3,sim,sim,sim
+emergencia com a porta travada,seguranca,seguranca,P1,P1,sim,sim,sim
+extintor ausente no pilar,seguranca,seguranca,P1,P1,sim,sim,sim
+doca ficou aberta a noite toda,seguranca,seguranca,P2,P2,sim,sim,sim
+pedaco do forro pendurado,estrutura,estrutura,P1,P1,sim,sim,sim
+piso da entrada afundado,estrutura,estrutura,P2,P2,sim,sim,sim
+corrimao da escada bambo,estrutura,estrutura,P2,P2,sim,sim,sim
+vi fumaca perto da praca de alimentacao,seguranca,seguranca,P1,P1,sim,sim,sim
+pessoa presa dentro do elevador,seguranca,seguranca,P1,P1,sim,sim,sim

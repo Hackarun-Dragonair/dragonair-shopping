@@ -71,4 +71,12 @@ def painel():
 @bp.get("/sobre-a-ia")
 def sobre_ia():
     modelo = obter_modelo()
-    return render_template("sobre_ia.html", pagina="ia", fonte=modelo.fonte, r=asdict(modelo.relatorio))
+    # Números calculados no boot (teste cego). Nomes das categorias para a matriz de confusão.
+    nomes = dict(CATEGORIAS)
+    return render_template(
+        "sobre_ia.html",
+        pagina="ia",
+        fonte=modelo.fonte,
+        r=asdict(modelo.relatorio),
+        nomes=nomes,
+    )
