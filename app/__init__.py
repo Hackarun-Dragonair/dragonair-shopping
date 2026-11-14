@@ -65,6 +65,11 @@ def create_app(config: dict | None = None) -> Flask:
         resposta.headers["Access-Control-Allow-Methods"] = "GET, POST, OPTIONS"
         return resposta
 
+    @app.errorhandler(413)
+    def grande_demais(_erro):
+        # Arquivo acima do limite: responde em JSON para a tela mostrar a mensagem certa.
+        return jsonify(erro="arquivo_grande", mensagem="Imagem maior que 8 MB."), 413
+
     @app.errorhandler(404)
     def nao_encontrado(_erro):
         # Navegador (QR errado, link velho) vê uma página; a API continua em JSON.

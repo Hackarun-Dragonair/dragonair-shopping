@@ -43,6 +43,7 @@ def test_recusa_envio_grande_demais(client):
     resp = client.post("/plantas/L1/imagem", data={"arquivo": (io.BytesIO(grande), "planta.png")},
                        content_type="multipart/form-data")
     assert resp.status_code == 413
+    assert resp.get_json()["mensagem"] == "Imagem maior que 8 MB."
 
 
 def test_rejeita_zona_de_outro_piso_e_grade_invalida(client):

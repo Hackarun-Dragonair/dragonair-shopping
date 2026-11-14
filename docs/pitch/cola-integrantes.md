@@ -49,7 +49,7 @@ Fumaça, fogo, choque ou pessoa presa → **P1** + "Avise a brigada pelo rádio"
 - O sistema **não chama ninguém sozinho**: quem decide é a brigada.
 
 ## As 5 perguntas mais prováveis
-1. **"Qual o diferencial?"** — Mostra o que **não** aconteceu: a zona cinza é onde ninguém olhou. Folha de papel e checklist só mostram o que foi feito.
+1. **"Qual o diferencial?"** — Mostra o **lugar**, não só a tarefa: a zona fica cinza no mapa onde ninguém olhou, antes de o cliente reclamar. Folha e rádio não mostram nada; app de checklist cobra a tarefa atrasada, mas não mostra o mapa nem transforma o relato do funcionário em fila com prioridade.
 2. **"A IA acerta quanto?"** — No teste cego de 20 frases, 100% na categoria e todos os 6 casos de risco. Com frases reais, 81%. O teste é pequeno, então ela só sugere e o gestor confirma.
 3. **"E se a IA errar?"** — A pessoa corrige na hora, o gestor confirma, e a correção fica na linha do tempo. Abaixo de 50% de confiança, a tela pergunta "É mais X ou Y?" com dois botões quando ela fica entre duas categorias; sem segunda opção, avisa "IA em dúvida, confira". Isso acontece na maioria das vezes, então a pessoa sempre confere.
 4. **"Vocês vigiam o funcionário?"** — Não. Tudo é por zona e equipe, nunca por pessoa. Os nomes da demo são inventados.
