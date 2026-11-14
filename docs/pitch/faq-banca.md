@@ -46,13 +46,13 @@ Pode virar, e é de propósito. Fumaça na praça de alimentação pode ser inc�
 Não totalmente: um QR fixo pode ser fotografado. Ele **registra** a conferência com hora e torna a ronda visível. QR com código que muda sozinho está no roadmap.
 
 **11. Qualquer cliente pode ler o QR e registrar algo falso?**
-Hoje, sim: o QR funciona sem entrar, para o aparelho compartilhado da equipe. O registro aparece como "Campo (sem crachá)" e o gestor confirma antes de tratar. Para produção, a API já tem celular autorizado + crachá (`/dispositivos` e `/crachas/entrar`); faltaria exigir isso na tela.
+Hoje, sim: o QR funciona sem entrar, para o aparelho compartilhado da equipe. O registro aparece como "Campo (sem crachá)" e o gestor confirma antes de tratar. A API tem o começo de um "celular autorizado + crachá" (`/dispositivos` e `/crachas/entrar`), **mas o cadastro do aparelho ainda é aberto no protótipo**: qualquer pessoa consegue cadastrar o próprio celular. Em produção, só o gestor autorizaria aparelhos, e a tela passaria a exigir isso.
 
 **12. O login não tem senha?**
 No protótipo, não: os crachás OTTO, LIA, RITA e CAIO são fictícios, para a banca testar. O que existe de verdade é a separação de perfis: funcionário não abre o painel nem o editor, e só o gestor confirma a sugestão da IA. Em produção: senha ou crachá físico + celular autorizado.
 
 **13. Vocês vigiam funcionários? E dados pessoais?**
-Não. Os indicadores são só por **zona e equipe**, nunca por pessoa. Todos os nomes da demo são inventados. A planta do shopping não está no sistema nem no repositório: o mapa é um desenho nosso em blocos. O editor aceita uma imagem de fundo, mas ela fica só no servidor, fora do Git.
+Não. Os indicadores são só por **zona e equipe**, nunca por pessoa. Todos os nomes da demo são inventados. A planta do shopping não está no sistema nem no repositório: o mapa é um desenho nosso em blocos. O editor aceita uma imagem de fundo, que fica só no servidor, fora do Git. (Ver também a pergunta 21.)
 
 ## Viabilidade e custo
 
@@ -61,6 +61,26 @@ O QR substitui a folha de papel que já existe, e não exige hardware novo: QR i
 
 **15. Quanto custa?**
 O protótipo custou R$ 0 (bibliotecas gratuitas, hospedagem grátis). Em produção: hospedagem simples e impressão das etiquetas. Não há custo de IA por uso. Retorno financeiro não medimos; não prometemos número que não medimos.
+
+## Perguntas mais duras (banca simulada, 14/11)
+
+**16. Esse 100% vale o quê?**
+Vale pouco sozinho. O teste cego é pequeno (20 frases), foi escrito pela própria equipe, tem frases parecidas com as do treino e também foi usado para escolher entre duas versões do modelo. Ele mostra que a IA aprendeu o nosso jeito de escrever. O número mais perto do real é o do campo: **81% na categoria e 62% na prioridade** (rótulos ainda a revisar). Próximo passo: validação cruzada e um teste escrito por pessoas de fora.
+
+**17. A IA disse "Limpeza" para fumaça, com 24%. Para que serve?**
+Com 24% ela mesma avisa que está em dúvida e pergunta "Limpeza ou Elétrica?": a pessoa decide com um toque, e o erro fica na linha do tempo. A confiança costuma ficar abaixo de 50% (16 de 20 frases no teste cego, 13 de 16 no campo). O maior valor da IA está na **prioridade**: 95% contra 40% das palavras-chave no teste cego, 62% contra 12% no campo. E fumaça vira P1 de qualquer jeito: a regra de risco fica acima da IA.
+
+**18. Meu app de checklist já mostra tarefa atrasada. Qual a diferença?**
+A visão é pelo **lugar**, no mapa: a zona esquecida fica cinza, mesmo sem tarefa cadastrada para ela. O problema entra em texto livre e vira fila com prioridade e equipe. Risco nunca é rebaixado. Não precisa instalar nada e não tem API paga. Não dizemos que somos os únicos com horário; dizemos que somos simples de adotar.
+
+**19. A linha do tempo não se apaga, mas a demo volta ao início?**
+As duas coisas são verdade. O banco tem um bloqueio (`app/db.py`, função `instalar_triggers`) que impede alterar ou apagar a linha do tempo pelo sistema. A demo usa `SEED_ON_START=1` **de propósito**: a cada início, o banco volta aos dados de exemplo, para a banca sempre ver o mesmo cenário. Em produção: `SEED_ON_START=0` e cópia de segurança (backup) do banco.
+
+**20. Cheiro de gás: o que acontece?**
+Hoje, a regra de risco cobre **fumaça, fogo, choque e pessoa presa**. Gás ainda depende da IA. Rodamos o modelo: "cheiro de gás no restaurante" sai como Limpeza P2 (26%, com a pergunta "Limpeza ou Elétrica?") e "vazamento de gás na cozinha" sai como Segurança P2. Não aparece o aviso da brigada. Incluir gás na regra de risco é uma decisão da equipe e muda o contrato; seria a primeira coisa do piloto, junto com a brigada do shopping.
+
+**21. A planta enviada no editor fica pública?**
+Sim: a imagem de fundo é mostrada a quem abre o mapa, sem login. Por isso a equipe **não usa a planta real** do shopping, só um desenho nosso. Em produção, a imagem ficaria só para quem entrou com crachá.
 
 ## Bônus: o que é de verdade e o que é simulado?
 

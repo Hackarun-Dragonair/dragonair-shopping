@@ -27,6 +27,10 @@ A banca pode perguntar para **qualquer** integrante. Leia isto 2 vezes e treine 
 | `tests/` | 77 testes automáticos que conferem se tudo continua funcionando |
 | `docs/` | Documentos, evidências e declaração de uso de IA |
 
+**Se a banca pedir para apontar no código:**
+- **Palavras de risco (viram P1):** `app/dominio.py`, lista `_RISCO` (fumaça, fogo, incêndio, choque, pessoa presa). A função `garantir_prioridade` impede baixar.
+- **Bloqueio de alterar/apagar a linha do tempo:** `app/db.py`, função `instalar_triggers`. É uma trava dentro do banco: se alguém tentar alterar ou apagar um registro da tabela `eventos`, o banco recusa.
+
 ## Como a IA funciona (comparação do dia a dia)
 - **Pedaços de letras (TF-IDF):** a IA não lê a palavra inteira. Ela quebra em pedacinhos de 3 a 5 letras. "vazando" vira "vaz", "aza", "zan", "and"... Por isso ela entende "vazano" (com erro de digitação): os pedaços são quase os mesmos. Pedaços que aparecem em todas as frases (como "do", "no") contam pouco; pedaços raros e típicos contam mais.
 - **Regressão logística:** é como uma **balança com pesos**. Cada pedaço puxa um pouco para uma categoria: "vaz" puxa para Hidráulica, "lamp" para Elétrica. Ela soma tudo e a categoria mais pesada ganha. A **confiança** é o quanto ela ganhou com folga.
