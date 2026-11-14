@@ -18,4 +18,5 @@ Ex.: `m1_12-2130_quadro-ideias.png`, `m2_13-2040_teste-cadastro-falhou.png`, `m2
 | qa/ (README.md + 10 prints) | 2 | QA ponta a ponta (13/11, 22h): 7 bugs achados e corrigidos em 8 commits `fix:`, prints do PC (1366 px) e do celular (390 px) |
 | m2_13-2240_gato-sexta13-no-mapa.png / -celular.png | 2 | Easter Egg: gato preto na zona esquecida há mais tempo (print real do dia 13/11, 22h32) |
 | m2_13-2240_gato-espantado.png | 2 | Conferir a zona espanta o gato: "Gato preto espantado!" |
+| qr/ (README.md + m2_13-2242_etiquetas-qr.png) | 2 | QR das etiquetas lido da imagem do PDF (local e Render): 11 zonas → URL certa → HTTP 200 sem login |
 | | | |
