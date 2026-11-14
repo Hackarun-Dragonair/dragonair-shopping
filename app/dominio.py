@@ -32,10 +32,11 @@ _ACENTOS = str.maketrans(
 )
 
 # Casos combinados pela equipe (gás incluído no sábado 14/11, depois da banca simulada;
-# "sem gás"/"com gás" de refrigerante e água não contam).
+# só "água com gás", "refri sem gás" e "refrigerante sem gás" não contam;
+# qualquer outro "gás", até "cozinha com gás vazando", aciona a brigada).
 # Faísca e alagamento sobem a prioridade pelas regras abaixo, sem o aviso de brigada.
 _RISCO = re.compile(
-    r"\bfumaca\b|\bfogo\b|\bincendio\b|(?<!sem )(?<!com )\bgas\b|\bchoque\b|\beletrocut"
+    r"\bfumaca\b|\bfogo\b|\bincendio\b|(?<!agua com )(?<!refri sem )(?<!refrigerante sem )\bgas\b|\bchoque\b|\beletrocut"
     r"|\bpessoa presa\b|\bgente presa\b|\balguem preso\b"
     r"|\bpreso no elevador\b|\bpresa no elevador\b"
 )

@@ -24,6 +24,9 @@ def test_palavras_de_risco_disparam_o_aviso():
         "incêndio no corredor",
         "cheiro de gás no restaurante",
         "vazamento de gas na cozinha",
+        "cozinha com gás vazando",
+        "botijão com gás vazando",
+        "fogão sem gás e cheiro forte",
     ):
         assert detectar_risco(frase)
 
