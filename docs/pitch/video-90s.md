@@ -14,7 +14,7 @@
 
 ## Roteiro falado completo (revisado pela banca — base para treinar; na gravação, fale com as suas palavras)
 
-> Uma pessoa, olhando para a lente. Ritmo calmo (~2,3–2,4 palavras por segundo). **195 palavras ≈ 81 s (≈ 85 s com as pausas).**
+> Uma pessoa, olhando para a lente. Ritmo calmo (~2,3–2,4 palavras por segundo). **189 palavras ≈ 80 s (≈ 84 s com as pausas).**
 > `/` = pausa curta; `//` = pausa maior (troca de assunto).
 
 | Tempo | Bloco | Fala | Palavras |
@@ -22,20 +22,20 @@
 | 0–8 s | Gancho | "Quando foi a última vez que alguém conferiu o banheiro do segundo piso do shopping? / *(1 s olhando para a câmera)* Ninguém sabe. //" | 17 |
 | 8–17 s | Problema | "A ronda é uma folha que qualquer um assina depois, / e o aviso pelo rádio se perde na troca de turno. //" | 21 |
 | 17–27 s | Quem é afetado | "Quem perde é a equipe de limpeza e manutenção, / o supervisor, que não consegue cobrar, / e o cliente, que vê o problema primeiro. //" | 23 |
-| 27–48 s | Solução | "Criamos a Ronda Viva, um site que já está no ar. / Cada área ganha um QR code, igual ao do Pix. / O funcionário aponta o celular, sem instalar nada, e toca: tudo certo, atenção ou problema. / No mapa do supervisor, a área esquecida fica cinza, / antes de o cliente reclamar. //" | 50 |
-| 48–67 s | Produto | "Se tem problema, a pessoa escreve do jeito dela. / Uma inteligência artificial feita por nós sugere a urgência, o pedido vai para a equipe certa, / e o supervisor confirma. / Fumaça, fogo, gás, alguém preso? / Vira urgente, a tela pede para chamar a brigada de incêndio, / e ninguém desfaz isso. //" | 47 |
-| 67–80 s | Como ajuda | "Cada problema tem dono e fica registrado, sem poder apagar: / nada se perde na troca de turno. / E custa pouco: etiqueta impressa e o celular que a equipe já tem. //" | 30 |
-| 80–85 s | Fechamento | "Ronda Viva: mostra o que ninguém conferiu e registra quem cuidou. / Equipe Dragonair." *(sorria, 1 s em silêncio)* | 13 |
+| 27–47 s | Solução | "Criamos a Ronda Viva, um site que já está no ar. / Cada área ganha um QR code, igual ao do Pix. / O funcionário aponta o celular e toca: tudo certo, atenção ou problema. / No mapa do supervisor, a área que ninguém conferiu no prazo fica cinza. //" | 46 |
+| 47–65 s | Produto | "Se tem problema, a pessoa escreve do jeito dela. / Nossa inteligência artificial sugere a urgência, o sistema indica a equipe, / e o supervisor confirma. / Fumaça, fogo, gás, alguém preso? / Vira urgente, a tela pede pra chamar a brigada de incêndio, / e ninguém desfaz isso. //" | 44 |
+| 65–77 s | Como ajuda | "Cada problema tem dono e fica registrado, sem poder apagar: / nada se perde na troca de turno. / Custa pouco: etiqueta impressa e o celular da equipe. //" | 26 |
+| 77–84 s | Fechamento | "Banheiro do segundo piso? / Agora o mapa responde. / Ronda Viva, equipe Dragonair." *(sorria, 1 s em silêncio)* | 12 |
 
-**Se o ensaio passar de 85 s**, corte nesta ordem (≈ 5 s): "sem instalar nada" · "antes de o cliente reclamar" · "de limpeza e manutenção" · "feita por nós".
+**Se o ensaio passar de 85 s**, corte nesta ordem: "de limpeza e manutenção" · "do jeito dela".
 
 **Não diga:** que o sistema "avisa" ou "chama" a brigada (ele só **pede** na tela para a pessoa avisar pelo rádio); números da IA (o teste é pequeno — deixe para as perguntas do pitch ao vivo).
 
-**Cola para a gravação** (em vez de ler o texto): banheiro? · folha / rádio · equipe, supervisor, cliente · site no ar · QR do Pix → mapa cinza · escreve → supervisor confirma · fumaça = urgente, chama a brigada · dono, sem apagar, custa pouco · registra quem cuidou.
+**Cola para a gravação** (em vez de ler o texto): banheiro? · folha / rádio · equipe, supervisor, cliente · site no ar · QR do Pix → mapa cinza · escreve → supervisor confirma · fumaça = urgente, chama a brigada · dono, sem apagar, custa pouco · banheiro? o mapa responde.
 
 **3 dicas de entrega**
 1. **Olhar:** para a lente, não para a sua imagem. Depois da pergunta do começo, pare 1 s antes de "Ninguém sabe".
-2. **Gesto e voz:** mãos visíveis na altura do peito; conte nos dedos os três afetados e as três opções (tudo certo, atenção, problema). Mais devagar em "a área esquecida fica cinza" — é a frase que a banca precisa lembrar.
+2. **Gesto e voz:** mãos visíveis na altura do peito; conte nos dedos os três afetados e as três opções (tudo certo, atenção, problema). Mais devagar em "fica cinza" — é a frase que a banca precisa lembrar.
 3. **Cenário:** fundo liso e arrumado, luz de janela de frente, celular na horizontal à altura dos olhos, ~1 m, do peito para cima. Cômodo sem eco; ventilador e notificações desligados. Opcional: segurar uma etiqueta QR impressa no bloco "Solução".
 
 ## O que falar (as 5 perguntas da organização) — versão em tópicos
