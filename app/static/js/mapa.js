@@ -271,5 +271,19 @@
   }
 
   carregar().then(ajustar).catch(() => { caixa.innerHTML = '<div class="p-3 text-secondary">Não consegui carregar o mapa. Use a lista abaixo.</div>'; });
-  setInterval(() => { if (!document.hidden && !arrasto) carregar().then(() => { if (selecionada) abrir(selecionada); }); }, 5000);  // definição: ≤ 5 s
+  // Quadro ao lado do mapa (computador grande): busca a mesma página e troca só esse pedaço
+  async function atualizarLateral() {
+    const lateral = document.querySelector(".lateral-mapa");
+    if (!lateral || getComputedStyle(lateral).display === "none") return;
+    try {
+      const resposta = await fetch(location.pathname, { headers: { Accept: "text/html" } });
+      const nova = new DOMParser().parseFromString(await resposta.text(), "text/html").querySelector(".lateral-mapa");
+      if (nova) lateral.innerHTML = nova.innerHTML;
+    } catch (e) { /* sem rede: mantém o que já está na tela */ }
+  }
+  setInterval(() => {
+    if (document.hidden || arrasto) return;
+    carregar().then(() => { if (selecionada) abrir(selecionada); });
+    atualizarLateral();
+  }, 5000);  // definição: ≤ 5 s
 })();
