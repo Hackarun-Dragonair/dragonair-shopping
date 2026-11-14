@@ -42,7 +42,7 @@
       </div>
       <div class="table-responsive">
         <table class="table table-sm tabela align-middle mb-0">
-          <thead><tr><th>Zona</th><th>Piso</th><th>Estado</th><th>Última conferência</th><th class="text-end">Prazo</th><th></th></tr></thead>
+          <thead><tr><th>Zona</th><th>Piso</th><th>Estado</th><th class="d-none d-sm-table-cell">Última conferência</th><th class="text-end d-none d-sm-table-cell">Prazo</th><th></th></tr></thead>
           <tbody>
           {% for z in zonas %}
             <tr>
@@ -50,8 +50,8 @@
                 {% if z.reincidencia %}<span class="tag-repetido" title="Problema repetido">{{ icone('repetido') }} repetido</span>{% endif %}</td>
               <td>{{ z.piso }}</td>
               <td><span class="chip estado-{{ z.estado }}">{{ z.rotulo }}</span></td>
-              <td class="text-secondary">{{ z.ha or 'nunca' }}</td>
-              <td class="text-end text-secondary">{{ z.prazo_minutos }} min</td>
+              <td class="text-secondary d-none d-sm-table-cell">{{ z.ha or 'nunca' }}</td>
+              <td class="text-end text-secondary d-none d-sm-table-cell">{{ z.prazo_minutos }} min</td>
               <td class="text-end">{% if z.problema_id %}<a href="{{ url_for('telas.problema', problema_id=z.problema_id) }}" class="small">#{{ z.problema_id }}</a>{% endif %}</td>
             </tr>
           {% endfor %}
