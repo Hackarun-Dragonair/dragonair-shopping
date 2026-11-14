@@ -4,7 +4,7 @@
 
 ## Sexta 13/11 (até 22h, presencial)
 - [x] Easter Egg sexta-feira 13 no produto (PR #29)
-- [ ] **21h30** · Print do 🐈‍⬛ no mapa + "Gato espantado" → `docs/evidencias/` (só hoje é dia 13!) — Arthur
+- [x] **21h30** · Print do 🐈‍⬛ no mapa + "Gato espantado" → `docs/evidencias/` (só hoje é dia 13!) — Arthur
 - [ ] **21h** · Frases novas da IA em `data/treino.csv` + rodar testes — Pedro
 - [ ] **21h30** · Telas testadas no celular, prints de celular/tablet/PC → `docs/evidencias/` — Mateus
 - [ ] **22h** · Teste de usabilidade com 3 pessoas de fora → `docs/missao-2/teste-usabilidade.md` — todos
