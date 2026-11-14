@@ -12,7 +12,7 @@
 
 ## Sábado 14/11 (8h às 13h, presencial)
 - [ ] **9h30** · Bugs corrigidos (commits começando com `fix:`) e `python -m pytest -q` passando — Paulo
-- [ ] **9h45** · **Missão 2 entregue**: protótipo + evidências de testes e correções (regulamento: 10h) — Arthur
+- [ ] **até 12h** · **Missão 2 entregue**: protótipo + evidências de testes e correções — Arthur
 - [ ] **10h** · Ler as orientações da Missão 3 e colar em `docs/desafio.md`
 - [ ] **10h45** · README "Como executar" testado por alguém que **não** escreveu o código — Mateus
 - [ ] **10h45** · `docs/IA.md` e evidências atualizados — Arthur
@@ -23,5 +23,5 @@
 - [ ] **17h** · Final no Capim Dourado Shopping (praça de alimentação). Demo com `SEXTA13=1 python wsgi.py`
 
 ## ⚠️ Prazos que não batem (perguntar à organização)
-- Missão 2: regulamento diz **sábado 10h**; o recado de sexta não cita. → Entregar 9h45.
+- Missão 2: confirmado pelo Arthur no sábado: prazo **12h** (junto com a entrega final). Vídeo de 90 s: **entre 12h e 13h**.
 - Vídeo do pitch: Manual diz **sábado 13h**; o recado de sexta não cita. → Gravar antes das 12h.

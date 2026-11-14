@@ -40,13 +40,13 @@ A IA não pode (e não deve) fazer estas tarefas:
 4. **Ler as orientações da Missão 3** às 10h e colar em `docs/desafio.md`.
 5. **Aprovar e juntar os ramos no `main`** (OK do Arthur) e conferir o site no Render depois.
 6. **Gravar a voz e as telas do vídeo**, montar e subir; conferir que o link abre.
-7. **Enviar as entregas** (Missão 2 às 9h45, final às 12h, vídeo + resumo às 13h) e **tirar print** de cada envio.
+7. **Enviar as entregas** (Missão 2 e entrega final até **12h**; vídeo de 90 s + resumo **entre 12h e 13h**) e **tirar print** de cada envio.
 8. Seguir o README do zero (alguém que não escreveu o código).
 9. Apresentar e responder a banca.
 
 ---
 
-## Texto para colar — Missão 2 (enviar até 9h45)
+## Texto para colar — Missão 2 (enviar até 12h)
 
 ```text
 Equipe Dragonair — HackaRun 2026 — Desafio 09 (Eficiência operacional e infraestrutura)

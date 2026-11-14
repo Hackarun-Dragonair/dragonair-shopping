@@ -33,6 +33,7 @@ Navegador: Playwright num ambiente separado (não entra no `requirements.txt`), 
 - Respostas curtas e explicações simples para a equipe.
 
 ## Prazos
-- **Missão 2:** sábado **9h45**.
+- **Missão 2 e entrega final:** sábado **12h** (confirmado pelo Arthur).
+- **Vídeo de 90 s + resumo:** entre **12h e 13h**.
 - **Entrega final:** sábado **12h**.
 - **Vídeo:** antes das 12h.
