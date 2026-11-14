@@ -1,32 +1,27 @@
 # Passagem de bastão para outra sessão de IA (Claude)
 
 > Para continuar o trabalho com outra conta/sessão. Leia junto com `AGENTS.md`, `docs/CHECKLIST-ENTREGA.md` e `docs/IA.md`.
-> Atualizado: sexta 13/11, ~22h30.
+> Atualizado: sexta 13/11, 23h20. Regra da noite: commit + push a cada passo pequeno; este arquivo é atualizado depois de cada passo.
 
-## Estado agora
-- **No ar:** https://ronda-viva-0ek7.onrender.com (Render grátis; cada merge no `main` publica sozinho; dorme após 15 min).
-- **Já no `main` (= `origin/main`, commit `90f295a`), 64 testes passando:**
-  - Backend do Paulo (PR #30), front novo (PR #31), Easter Egg sexta-13, 80 frases do Pedro.
-  - **Login por crachá** (antigo ramo `login-perfis`): Gestor (ADM) = supervisor/coordenação → painel, editar mapa, etiquetas PDF, confirmar IA. Funcionário = encarregado/manutenção → ronda, assumir, resolver. QR (`/z/<codigo>`) funciona sem entrar ("Campo"). Crachás demo: OTTO e LIA (gestor), RITA e CAIO (funcionário).
-  - **Editor de mapa** (`/telas/mapa/editar`): o gestor envia uma imagem de fundo por piso e pinta bloquinhos por zona. A imagem fica só em `instance/` (fora do Git).
-  - **Teste cego limpo** (20 frases da equipe) + `data/teste_campo.csv` (16 do Pedro, rótulos a revisar) + `app/avaliar.py` → `docs/evidencias/modelo/` (acurácia, recall de P1, matriz, regras × modelo × modelo+regra), também na tela "Sobre a IA".
-  - Design profissional (ramo `design-pro`), mapa atualizando a cada 5 s, "Não enviado: sem conexão" na tela da zona.
-- **Ramo `qa-fixes` (pronto, NÃO juntado; esperando o OK do Arthur), 67 testes passando:**
-  - 8 commits `fix:` do QA ponta a ponta (PC 1366 px + celular 390 px). Lista e prints em `docs/evidencias/qa/`.
-  - 1 commit `style:` com o visual bronze/bege a partir de uma referência em HTML do Arthur: cabeçalho branco + faixa dourada de abas, barra branca embaixo no celular, mapa com cartão "Pavimento" e painel lateral (indicadores + ocorrências ativas) em telas ≥ 1200 px.
-  - **Da referência NÃO entrou:** desenho/coordenadas e nomes de lojas reais (planta é dado sensível) e fonte/ícones/CSS de CDN (a demo precisa rodar sem internet).
-  - Registro em `docs/IA.md` e `docs/evidencias/README.md` (vão no mesmo ramo).
+## Estado agora (sexta 13/11, 23h20)
+- **No ar:** https://ronda-viva-0ek7.onrender.com (Render grátis; cada push no `main` publica sozinho; dorme após 15 min).
+- **`main` = `origin/main`:** QA + visual bronze/bege (ramo `qa-fixes`, aprovado pelo revisor e publicado; conferido no Render às 22h54). Tag de segurança: `v-missao2-estavel` (c153cdd). Se algo quebrar: `git revert` ou voltar para a tag.
+- **Ramo `noite/integracao` (no GitHub, 16 commits sobre o main, 73 testes passando) — AGUARDANDO REVISOR:**
+  - `fix:` faixa de abas sem fresta; quadro "Indicadores/Ocorrências ativas" do mapa atualiza a cada 5 s; tela da zona ignora nova sugestão durante envio (achados do 1º revisor).
+  - `feat:` pergunta de desempate "É mais X ou Y?" quando a IA fica em dúvida (frase da demo "cheiro de fumaça no quadro" → Limpeza ou Elétrica, continua P1).
+  - `fix:` fila atualiza a cada 5 s mantendo a rolagem.
+  - `test:` + `docs:` QR de verdade: 11/11 etiquetas do Render lidas por imagem → zona certa → HTTP 200 sem login (`docs/evidencias/qr/`). `fix:` QR sem filete branco (lê melhor impresso).
+  - `docs:` README testado do zero, `docs/RESUMO.md`, `docs/ENTREGA.md` (textos prontos), `docs/pitch/` (roteiro 90 s, cliques da demo, FAQ, cola, checklist de sábado), IA.md e índice de evidências.
+- Ramos de origem (já incorporados na integração, podem ser apagados depois): `noite/ajustes-revisor`, `noite/desempate-fila`, `noite/qr-real`, `noite/docs-pitch`, `qa-fixes`.
 
-## Pendências (ordem de prioridade)
-1. **Arthur dar OK → juntar `qa-fixes` no `main` e enviar** (rodar `.venv/bin/python -m pytest -q` antes; esperado 67 passed). Depois conferir o site no Render.
-2. **Teste de usabilidade real com 3 pessoas de fora** → preencher `docs/missao-2/teste-usabilidade.md` (o roteiro está pronto; o QA automático **não** substitui, regra 6.5).
-3. **Prints** que faltam no checklist: gato 🐈‍⬛ no mapa (só vale no dia 13!) e telas no celular de verdade → `docs/evidencias/`.
-4. **README** "Como executar" testado por quem não escreveu o código; `docs/IA.md` final.
-5. Fila recarrega a cada 15 s (o mapa já usa 5 s). Baixar para 5 s se der tempo.
-6. Selo "IA local · X ms" e top-2 na sugestão (cortar se atrasar).
-7. Passagem de turno por template (cortar).
+## Próximo passo exato
+1. Revisor revisa `git diff main..noite/integracao` (testes + navegador 1366/390 px + regras).
+2. Se aprovado: `git checkout main && git merge --ff-only noite/integracao`, rodar `.venv/bin/python -m pytest -q` (73 passed), `git push origin main`, esperar o Render (procurar "pergunta-desempate" no HTML de `/z/area-tecnica-l2`) e conferir /saude, /, /z/sanitario-piso1.
+3. Criar a tag `v-missao2-final` no commit publicado e dar push (é a versão citada na entrega da Missão 2; atualizar `docs/ENTREGA.md` se o nome mudar).
+4. Às 6h: escrever `docs/RELATORIO-NOITE.md` (feito / falhou / sobrou) e push.
 
-**Cortar:** modo pico, CSV por contrato, "Minha ronda", LLM, câmera/sensores, modo escuro e filtros de status no mapa (vistos na referência HTML; não entram depois do congelamento das 22h).
+## O que só humanos fazem no sábado
+Teste de usabilidade com 3 pessoas (`docs/missao-2/teste-usabilidade.md`), gravar o vídeo de 90 s (`docs/pitch/roteiro-90s.md`), enviar Missão 2 até 9h45 e entrega final até 12h (`docs/ENTREGA.md`), colar orientações da Missão 3 às 10h em `docs/desafio.md`, preencher nomes de quem fala no roteiro.
 
 ## Como refazer o QA
 Servidor de teste com banco separado (não mexe em `instance/`):
