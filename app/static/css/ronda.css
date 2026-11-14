@@ -123,8 +123,8 @@ a { color: var(--ouro); }
 /* Celular: o mapa inteiro fica ~3x menor, então as letras do desenho crescem para continuar legíveis */
 .mapa-pequeno .zona-texto { font-size: 28px; stroke-width: 5px; }
 .mapa-pequeno .zona-sub { font-size: 22px; }
-.mapa-pequeno .deco-texto { font-size: 20px; }
-.mapa-pequeno .gato-svg { font-size: 44px; }
+.mapa-pequeno .deco-texto { font-size: 17px; }
+.mapa-pequeno .gato-svg { font-size: 36px; }
 
 /* Painel que abre ao tocar numa zona */
 .inspetor { position: absolute; top: 12px; right: 12px; z-index: 6; width: 300px; max-width: calc(100% - 24px); background: #fffffffa;
