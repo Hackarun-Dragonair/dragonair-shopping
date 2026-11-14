@@ -21,7 +21,7 @@ INICIO = 0.6
 
 # Segundo em que cada bloco começa a ser falado (segue a tabela do roteiro-90s.md).
 # Se o bloco anterior passar do tempo, o seguinte começa logo depois dele.
-ANCORAS = {"problema": 0.6, "solucao": 15.0, "ia": 29.4, "gestor": 46.2, "acerto": 63.0, "diferencial": 74.2}
+ANCORAS = {"problema": 0.6, "solucao": 14.5, "ia": 28.6, "gestor": 46.9, "acerto": 63.4, "diferencial": 73.8}
 
 # Duração final do vídeo, em segundos.
 DURACAO = 88.6
@@ -40,25 +40,25 @@ FALAS = [
          tts="O funcionário aponta o celular e toca ô quê, Atenção ou Problema."),
     dict(bloco="solucao", pausa=0.5, texto="Sem instalar nada."),
     # 0:30 IA + regra de risco
-    dict(bloco="ia", pausa=0.3, texto="Ele escreveu: cheiro de fumaça no quadro."),
-    dict(bloco="ia", pausa=0.05, texto="Nossa IA, treinada pela equipe e sem internet, sugere categoria e prioridade,",
-         tts="Nossa i á, treinada pela equipe e sem internet, sugere categoria e prioridade,"),
-    dict(bloco="ia", pausa=0.35, texto="e avisa quando está em dúvida."),
-    dict(bloco="ia", pausa=0.2, texto="Mas fumaça é risco: P1 e avise a brigada pelo rádio.",
-         tts="Mas fumaça é risco: pê um, e avise a brigada pelo rádio."),
+    dict(bloco="ia", pausa=0.3, texto="Aqui ele escreveu: cheiro de fumaça no quadro."),
+    dict(bloco="ia", pausa=0.05, texto="A IA, treinada pela equipe, roda sem internet e sugere categoria e prioridade,",
+         tts="A i á, treinada pela equipe, roda sem internet e sugere categoria e prioridade,"),
+    dict(bloco="ia", pausa=0.35, texto="e avisa quando fica em dúvida."),
+    dict(bloco="ia", pausa=0.2, texto="Mas fumaça é risco: vira P1, e a tela manda avisar a brigada pelo rádio.",
+         tts="Mas fumaça é risco: vira pê um, e a tela manda avisar a brigada pelo rádio."),
     dict(bloco="ia", pausa=0.55, texto="Essa regra fica acima da IA.", tts="Essa regra fica acima da i á."),
     # 0:45 Gestor, linha do tempo, mapa, painel
     dict(bloco="gestor", pausa=0.2, texto="No computador, o gestor confirma."),
-    dict(bloco="gestor", pausa=0.05, texto="Se tenta baixar para P3, o sistema mantém P1,",
-         tts="Se tenta baixar para pê três, o sistema mantém pê um,"),
-    dict(bloco="gestor", pausa=0.4, texto="e tudo entra numa linha do tempo que não se apaga."),
+    dict(bloco="gestor", pausa=0.2, texto="Se tenta baixar para P3, o sistema mantém P1.",
+         tts="Se tenta baixar para pê três, o sistema mantém pê um."),
+    dict(bloco="gestor", pausa=0.4, texto="E tudo fica numa linha do tempo que não se apaga."),
     dict(bloco="gestor", pausa=0.35, texto="No mapa, cinza é a zona que ninguém conferiu no prazo."),
     dict(bloco="gestor", pausa=0.5, texto="O painel mede por zona e equipe, nunca por pessoa."),
     # 1:05 Acerto real
-    dict(bloco="acerto", pausa=0.2, texto="Mostramos o acerto real: no teste cego, os seis casos de risco viraram P1.",
-         tts="Mostramos o acerto real: no teste cego, os seis casos de risco viraram pê um."),
-    dict(bloco="acerto", pausa=0.6, texto="Mas o teste é pequeno, por isso a IA só sugere.",
-         tts="Mas o teste é pequeno, por isso a i á só sugere."),
+    dict(bloco="acerto", pausa=0.2, texto="E o acerto é real: no teste cego, os seis casos de risco viraram P1.",
+         tts="E o acerto é real: no teste cego, os seis casos de risco viraram pê um."),
+    dict(bloco="acerto", pausa=0.6, texto="Mas o teste é pequeno, então a IA só sugere.",
+         tts="Mas o teste é pequeno, então a i á só sugere."),
     # 1:15 Diferencial + fechamento
     dict(bloco="diferencial", pausa=0.2, texto="Folha e checklist mostram o que foi feito.",
          tts="Folha e chéque-lista mostram o que foi feito."),

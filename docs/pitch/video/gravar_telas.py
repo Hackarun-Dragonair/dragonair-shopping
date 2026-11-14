@@ -162,11 +162,13 @@ async def rolar_ate(page, seletor, topo=90, duracao=0.9):
     y = await page.evaluate(f"""(t) => {{ const e = document.querySelector({json.dumps(seletor)});
         return e.getBoundingClientRect().top + scrollY - t; }}""", topo)
     y0 = await page.evaluate("scrollY")
-    passos = max(10, int(duracao * 60))
-    for i in range(1, passos + 1):
-        s = i / passos
+    comeco = time.time()
+    while True:  # cada passo leva o tempo que levar; a posição segue o relógio
+        s = min(1.0, (time.time() - comeco) / duracao)
         await page.evaluate(f"scrollTo(0, {y0 + (y - y0) * s * s * (3 - 2 * s)})")
-        await asyncio.sleep(duracao / passos)
+        if s >= 1.0:
+            break
+        await asyncio.sleep(0.01)
 
 
 async def tocar(page, seletor):
@@ -191,8 +193,8 @@ async def celular(nav):
     await page.tap("#botao-problema")
     g.marcar("toque_problema")
     await page.wait_for_selector(".atalho")
-    await asyncio.sleep(0.5)
-    await rolar_ate(page, "#painel-problema", topo=70, duracao=1.0)
+    await asyncio.sleep(1.2)  # o próprio app rola até o formulário
+    await rolar_ate(page, "#painel-problema", topo=70, duracao=0.6)
     g.marcar("painel_problema")
     await asyncio.sleep(1.0)
     await page.tap("#descricao")
@@ -275,6 +277,7 @@ async def computador(nav, href):
     cinzas = page.locator("svg .zona.z-cinza")
     n = await cinzas.count()
     print("  zonas cinza no mapa:", n)
+    g.marcar("mapa_caixas", svg=await g.caixa("svg.mapa-svg"), cinzas=[await g.caixa(f"svg .zona.z-cinza >> nth={i}") for i in range(n)])
     alvos = [await cinzas.nth(i).bounding_box() for i in range(min(n, 3))]
     for b in alvos:
         if b:
@@ -286,7 +289,7 @@ async def computador(nav, href):
     await page.goto(BASE + "/telas/painel")
     await page.wait_for_load_state("networkidle")
     await asyncio.sleep(0.6)
-    g.marcar("painel")
+    g.marcar("painel", topo=await g.caixa("main .row >> nth=0"))
     await mover(page, 760, 300, 1.4)
     await asyncio.sleep(2.0)
     await page.mouse.wheel(0, 0)
@@ -302,7 +305,7 @@ async def computador(nav, href):
     g.marcar("ia_p1")
     await asyncio.sleep(2.5)
     await ir_ate(page, "text=Modelo + regra dura >> nth=-1", 1.2)
-    g.marcar("ia_tabela")
+    g.marcar("ia_tabela", tabela=await g.caixa("table >> nth=0"))
     await asyncio.sleep(3.5)
     marcas = await g.parar()
     await ctx.close()
