@@ -62,8 +62,9 @@ Fluxo principal implementado:
 QR da zona → OK / Atenção / Problema → IA própria (sem internet) sugere categoria e prioridade → palavra de risco vira P1 com "Avise a brigada pelo rádio" (ninguém rebaixa) → gestor confirma → fila Aberto / Em atendimento / Resolvido → linha do tempo que não se apaga → mapa com zona cinza (ninguém conferiu no prazo) → painel por zona e equipe.
 
 Evidências de testes e correções:
-- 67 testes automáticos (pytest), rodando no GitHub em todo pull request
+- 73 testes automáticos (pytest), rodando no GitHub em todo pull request
 - QA ponta a ponta no computador e no celular: 7 problemas achados e corrigidos em commits "fix:" (docs/evidencias/qa/)
+- QR de verdade: as etiquetas do site no ar foram lidas por imagem e as 11 abrem a zona certa sem login (docs/evidencias/qr/)
 - Responsividade (tecnologia sorteada) em 6 larguras de tela (docs/evidencias/responsividade/)
 - Avaliação da IA: teste cego n = 20 com 100% categoria, 95% prioridade e 6 de 6 P1; teste de campo n = 16 com 81% e 62% (docs/evidencias/modelo/resumo.md)
 - Teste de usabilidade com 3 pessoas de fora (docs/missao-2/teste-usabilidade.md)
@@ -72,7 +73,6 @@ Uso de IA declarado: docs/IA.md
 Índice de evidências: docs/evidencias/README.md
 ```
 
-Quando o ramo da prova do QR entrar no `main`, acrescente na lista de evidências acima: "- Prova de que o QR das etiquetas abre a zona certa (docs/evidencias/qr/)". <!-- CONFERIR -->
 
 ## Texto para colar — entrega final (até 12h)
 

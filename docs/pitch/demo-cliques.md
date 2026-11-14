@@ -18,11 +18,9 @@ Resultado conferido em 13/11 à noite com o banco de exemplo (servidor local de 
 | 1 | Aponte a câmera para o **QR da Área técnica L2** e abra o link (ou digite `/z/area-tecnica-l2`) | Tela da zona: nome, piso L2, "Registrando como: Campo (sem crachá)", botões **Tudo OK**, **Atenção**, **Problema** |
 | 2 | Toque **Problema** | Abre "O que você viu?" com botões prontos ("Vazamento", "Quadro aberto", "Cheiro de queimado") |
 | 3 | Escreva **cheiro de fumaça no quadro**. Em "Perto de", escolha **quadro** | — |
-| 4 | Toque **Ver sugestão da IA** | Caixa vermelha: **"Avise a brigada pelo rádio. O sistema não aciona ninguém e não rebaixa este risco."** · Prioridade **P1** · texto "confiança 24% · IA em dúvida, confira" |
-| 5 | A IA sugeriu **Limpeza** (errado). Troque **Categoria** para **Elétrica** e **Equipe** para **Manutenção** | É o momento de mostrar que **a pessoa corrige a IA** |
+| 4 | Toque **Ver sugestão da IA** | Caixa vermelha: **"Avise a brigada pelo rádio. O sistema não aciona ninguém e não rebaixa este risco."** · Prioridade **P1** · pergunta **"A IA ficou em dúvida. É mais Limpeza ou Elétrica?"** |
+| 5 | A IA ficou em dúvida e chutou **Limpeza** (errado). Toque **Elétrica** na pergunta | Categoria vira **Elétrica** e Equipe vira **Manutenção**. É o momento de mostrar que **a IA admite a dúvida e a pessoa decide** |
 | 6 | Toque **Registrar problema** | Caixa vermelha da brigada de novo + "Ocorrência #N registrada e enviada para Manutenção. Ver linha do tempo" |
-
-Com a pergunta de desempate pronta, no passo 5 a tela pergunta qual das duas categorias é a certa e basta responder Elétrica. <!-- CONFERIR -->
 
 ## Parte 2 — Computador (gestor OTTO)
 
@@ -37,7 +35,7 @@ Com a pergunta de desempate pronta, no passo 5 a tela pergunta qual das duas cat
 | 13 | Menu **Painel de gestão** | Zonas no prazo (%), Sem conferência, Tempo médio, Acerto da IA; tabela "Situação das zonas"; "nunca por pessoa" |
 | 14 | Menu **Inteligência artificial** | 100% categoria · 95% prioridade · 100% dos P1 (6 de 6) · 90% da regra simples; tabela "Regras x modelo x modelo + regra dura"; matriz |
 
-A fila se atualiza sozinha a cada 5 s, então a ocorrência do celular aparece sem recarregar. <!-- CONFERIR -->
+A fila se atualiza sozinha a cada 5 s, então a ocorrência do celular aparece sem recarregar.
 
 ## Parte 3 — Gato da sexta-feira 13 (só no notebook)
 No sábado o gato só aparece ligando o servidor com a variável `SEXTA13=1`. No Render ele **não** aparece (seria preciso criar a variável no painel do serviço).
@@ -57,7 +55,7 @@ A IA e o visual estão dentro do projeto: **não precisa de internet**, só de u
 5. Sem celular funcionando: faça tudo no notebook, abrindo `http://127.0.0.1:8000/z/area-tecnica-l2` numa janela estreita (a tela é a mesma).
 6. Último recurso: mostrar os prints de `docs/evidencias/qa/` (são do app de verdade, 13/11).
 
-Deixe o projeto **instalado e testado no notebook antes de sábado 8h** (`python -m pytest -q` → 67 passed).
+Deixe o projeto **instalado e testado no notebook antes de sábado 8h** (`python -m pytest -q` → 73 passed).
 
 ## Dicas de gravação
 - **Resolução:** grave o computador em 1920×1080 (ou 1366×768) com zoom do navegador em 110–125%, para a banca ler. Esconda a barra de favoritos e feche abas com nomes pessoais.

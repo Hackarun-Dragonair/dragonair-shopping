@@ -16,9 +16,9 @@ Um site responsivo (celular, tablet e computador, sem instalar nada) para a rond
 ## Como funciona
 1. **Funcionário (celular):** lê o QR da zona. Não precisa entrar com crachá. Toca OK, Atenção ou Problema. No Problema, escreve do seu jeito ou toca um botão pronto ("Vaso entupido", "Quadro aberto"...).
 2. **IA:** sugere categoria (Hidráulica, Elétrica, Climatização, Limpeza, Segurança, Estrutura), prioridade (P1 a P4) e equipe. Mostra a confiança e, abaixo de 50%, avisa "IA em dúvida, confira". A pessoa pode mudar antes de registrar.
-   Quando a IA fica em dúvida entre duas categorias, a tela da zona faz uma pergunta de desempate. <!-- CONFERIR -->
+   Quando a IA fica em dúvida entre duas categorias, a tela da zona faz uma pergunta de desempate.
 3. **Regra de risco acima da IA:** fumaça, fogo, choque ou pessoa presa → **P1** e "Avise a brigada pelo rádio". Ninguém rebaixa (nem a IA, nem o gestor). O sistema não chama ninguém sozinho.
-4. **Gestor (computador):** entra com crachá, confirma ou corrige a sugestão. A ocorrência vai para a **fila** (Aberto → Em atendimento → Resolvido) da equipe certa. A fila se atualiza sozinha a cada 5 s. <!-- CONFERIR -->
+4. **Gestor (computador):** entra com crachá, confirma ou corrige a sugestão. A ocorrência vai para a **fila** (Aberto → Em atendimento → Resolvido) da equipe certa. A fila se atualiza sozinha a cada 5 s.
 5. **Linha do tempo:** registro, sugestão da IA, aviso de risco, quem assumiu, confirmação e solução, cada um com hora. O banco bloqueia apagar ou alterar esses registros. Vira um dossiê para imprimir.
 6. **Mapa e painel:** o mapa mostra o estado de cada zona e atualiza sozinho a cada 5 s. O painel mostra % de zonas no prazo, zonas sem conferência, tempo médio de solução, reincidência e o acerto da IA. Tudo por zona e equipe, **nunca por pessoa**.
 
@@ -47,7 +47,7 @@ Também existe: editor de mapa (o gestor envia uma imagem de fundo e pinta bloqu
 **No desenvolvimento:** Claude, Cursor e Gemini ajudaram em ideias, código, telas, testes e documentos. Tudo declarado e revisado pela equipe em `docs/IA.md`.
 
 ## Tecnologia
-Python 3.11+ · Flask · Jinja2 · SQLite · Bootstrap 5 (local, sem internet) · JavaScript puro · scikit-learn · segno (QR) · pytest (67 testes) · GitHub Actions (testes em todo PR) · Render (link público).
+Python 3.11+ · Flask · Jinja2 · SQLite · Bootstrap 5 (local, sem internet) · JavaScript puro · scikit-learn · segno (QR) · pytest (73 testes) · GitHub Actions (testes em todo PR) · Render (link público).
 Tecnologia sorteada: **Responsividade** — testada em 6 larguras, de 375 px a 1920 px (`docs/evidencias/responsividade/`).
 
 ## Links
@@ -55,7 +55,7 @@ Tecnologia sorteada: **Responsividade** — testada em 6 larguras, de 375 px a 1
 - **Demo online:** https://ronda-viva-0ek7.onrender.com (grátis: o 1º acesso leva cerca de 1 min; dados de exemplo voltam a cada reinício)
 - **Como executar:** `README.md`, seção "Como executar"
 - **Evidências:** `docs/evidencias/` · **Uso de IA:** `docs/IA.md`
-- **Prova de que o QR das etiquetas abre a zona certa:** `docs/evidencias/qr/` <!-- CONFERIR -->
+- **Prova de que o QR das etiquetas abre a zona certa:** [`docs/evidencias/qr/`](evidencias/qr/README.md)
 - **Crachás da demo (fictícios):** OTTO e LIA = Gestor; RITA e CAIO = Funcionário. O QR funciona sem entrar.
 
 ## Equipe

@@ -36,7 +36,7 @@ A equipe revisou e responde por todo conteúdo gerado com IA.
 
 **Como lidamos com os erros da IA:**
 - Ela só **sugere**. A tela mostra a confiança, e abaixo de 50% avisa "IA em dúvida, confira".
-- Quando ela fica em dúvida entre duas categorias, a tela da zona faz uma pergunta de desempate. <!-- CONFERIR -->
+- Quando ela fica em dúvida entre duas categorias, a tela da zona faz uma pergunta de desempate.
 - **Regra fixa acima da IA** (`app/dominio.py`): fumaça, fogo, choque ou pessoa presa → **P1** e "Avise a brigada pelo rádio". Ninguém rebaixa, nem a IA nem o supervisor. O sistema não aciona ninguém sozinho.
 - Toda sugestão e toda correção ficam na **linha do tempo**, que não se apaga.
 - Não avalia pessoas: indicadores só por zona e equipe.

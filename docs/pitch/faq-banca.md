@@ -23,7 +23,7 @@ Os botões OK e Atenção não usam IA. Ela entra no "Problema": quem viu escrev
 No teste cego (20 frases escritas e rotuladas à mão pela equipe, que o modelo nunca viu): 100% na categoria, 95% na prioridade e 6 de 6 casos P1 marcados como P1. Só regras de palavras-chave ficariam em 90% e 40%. **Mas** o teste é pequeno e foi escrito pela mesma equipe do treino. Com 16 frases reais do campo (rótulos ainda a revisar), cai para 81% e 62%. Esse é o número mais perto da realidade.
 
 **6. E se a IA errar?**
-Ela não decide. Mostra a confiança e, abaixo de 50%, avisa "IA em dúvida, confira". Quem registra pode mudar, e o gestor confirma ou corrige. A correção fica na linha do tempo. E a regra de risco fica acima dela.
+Ela não decide. Mostra a confiança e, abaixo de 50%, avisa "IA em dúvida, confira"; e quando ela fica entre duas categorias, pergunta "É mais X ou Y?" com dois botões. Quem registra pode mudar, e o gestor confirma ou corrige. A correção fica na linha do tempo. E a regra de risco fica acima dela.
 
 **7. Por que não usaram ChatGPT ou outra IA pronta?**
 Custaria por uso, precisaria de internet e mandaria texto do shopping para fora. O nosso modelo roda dentro do servidor, responde na hora, não custa nada por uso e tem acerto que conseguimos medir e mostrar. Usamos IAs prontas (Claude, Cursor, Gemini) só para **desenvolver**, tudo declarado em `docs/IA.md`.
@@ -34,7 +34,7 @@ Pode virar, e é de propósito. Fumaça na praça de alimentação pode ser inc�
 ## Testes
 
 **9. Como vocês testaram?**
-- **67 testes automáticos** (pytest), rodando no GitHub em todo pull request.
+- **73 testes automáticos** (pytest), rodando no GitHub em todo pull request.
 - **QA ponta a ponta** no computador e no celular: achamos 7 problemas e corrigimos em 8 commits `fix:` (`docs/evidencias/qa/`).
 - **Responsividade** em 6 larguras de tela, de 375 px a 1920 px (`docs/evidencias/responsividade/`).
 - **Avaliação da IA** com teste cego e teste de campo (`docs/evidencias/modelo/`).
