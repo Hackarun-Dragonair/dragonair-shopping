@@ -1,0 +1,191 @@
+<!doctype html>
+<!-- Cartelas do vídeo do pitch. Cada <section> vira um PNG 3840x2160 (render_cartelas.py).
+     Paleta do app: bronze #7a5c32, bege #efe9dd, café #2c241b, off-white #f6f4ef.
+     Sem logotipo oficial do shopping e sem marcas reais. -->
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<style>
+  @font-face { font-family: M; font-weight: 500; src: url("{{FONTES}}/Montserrat-500.ttf"); }
+  @font-face { font-family: M; font-weight: 600; src: url("{{FONTES}}/Montserrat-600.ttf"); }
+  @font-face { font-family: M; font-weight: 700; src: url("{{FONTES}}/Montserrat-700.ttf"); }
+  @font-face { font-family: M; font-weight: 800; src: url("{{FONTES}}/Montserrat-800.ttf"); }
+  :root { --bronze: #7a5c32; --bronze-claro: #c9a66b; --bege: #efe9dd; --cafe: #2c241b; --off: #f6f4ef;
+          --texto2: #786e62; --vermelho: #c43838; --cinza: #8c857b; --verde: #1e7e50; --amarelo: #e5a11a; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: transparent; font-family: M, sans-serif; color: var(--cafe); }
+  section { width: 1920px; height: 1080px; position: relative; overflow: hidden; }
+  .rotulo { font-weight: 700; font-size: 26px; letter-spacing: .32em; text-transform: uppercase; }
+  .ic { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+  /* 1. Abertura: o problema numa frase */
+  #abertura { background: radial-gradient(ellipse at 30% 20%, #8d6b3c 0%, #7a5c32 45%, #5e4624 100%); color: var(--off);
+    display: flex; flex-direction: column; justify-content: center; padding: 0 190px 120px; }
+  #abertura .rotulo { color: #ead9b8; margin-bottom: 44px; }
+  #abertura h1 { font-weight: 800; font-size: 104px; line-height: 1.08; letter-spacing: -.02em; max-width: 1400px; }
+  #abertura h1 em { font-style: normal; color: #f3dfb4; border-bottom: 8px solid #c9a66b; }
+  #abertura .relogio { position: absolute; right: 170px; top: 150px; width: 210px; height: 210px; color: #ead9b8; opacity: .9; }
+
+  /* 2. Hoje: papel e rádio */
+  #hoje { background: var(--bege); display: flex; flex-direction: column; align-items: center; padding-top: 120px; }
+  #hoje .rotulo { color: var(--bronze); margin-bottom: 26px; }
+  #hoje h2 { font-weight: 800; font-size: 64px; letter-spacing: -.01em; margin-bottom: 70px; }
+  #hoje .duas { display: flex; gap: 70px; }
+  #hoje .item { width: 640px; height: 470px; background: #fff; border: 2px solid #ddd6c8; border-radius: 28px;
+    box-shadow: 0 18px 40px rgba(44,36,27,.10); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 0 50px; }
+  #hoje .item svg { width: 200px; height: 200px; color: var(--bronze); margin-bottom: 34px; }
+  #hoje .item strong { font-size: 40px; font-weight: 800; line-height: 1.2; }
+  #hoje .item span { font-size: 30px; color: var(--texto2); font-weight: 600; margin-top: 12px; line-height: 1.3; }
+  #hoje .risco { position: absolute; width: 150px; height: 6px; background: var(--vermelho); transform: rotate(-12deg); }
+
+  /* 3. Solução: nome + slogan */
+  #solucao { background: radial-gradient(ellipse at 50% 40%, #3a3026 0%, #2c241b 60%, #1f1913 100%); color: var(--off);
+    display: flex; flex-direction: column; align-items: center; justify-content: center; padding-bottom: 130px; text-align: center; }
+  .escudo { width: 150px; height: 150px; border-radius: 34px; background: var(--bronze); display: grid; place-items: center; margin-bottom: 46px;
+    box-shadow: 0 0 0 14px rgba(122,92,50,.25); }
+  .escudo svg { width: 92px; height: 92px; color: #fff; stroke-width: 2.1; }
+  #solucao .nome, #fim .nome { font-weight: 800; font-size: 132px; letter-spacing: .16em; text-transform: uppercase; color: #d6b67c; margin-right: -.16em; }
+  #solucao .slogan, #fim .slogan { font-weight: 600; font-size: 52px; margin-top: 26px; color: var(--off); }
+  #solucao .slogan b, #fim .slogan b { color: #d6b67c; font-weight: 800; }
+  #solucao .tres { display: flex; gap: 22px; margin-top: 64px; }
+  .pilula { font-size: 28px; font-weight: 700; padding: 14px 30px; border-radius: 40px; border: 2px solid rgba(214,182,124,.55); color: #ead9b8; }
+
+  /* 4. Fundos das cenas de celular (o celular entra por cima, na esquerda) */
+  .fundo-cel { background: linear-gradient(120deg, #f6f4ef 0%, #efe9dd 55%, #e7dfcf 100%); }
+  .fundo-cel .halo { position: absolute; left: 230px; top: 140px; width: 660px; height: 800px; border-radius: 50%;
+    background: radial-gradient(closest-side, rgba(122,92,50,.16), rgba(122,92,50,0)); }
+  .coluna { position: absolute; left: 960px; top: 150px; width: 860px; }
+  .etiqueta { width: 560px; margin: 30px auto 0; background: #fff; border-radius: 26px; border: 2px solid #ddd6c8;
+    box-shadow: 0 22px 50px rgba(44,36,27,.14); padding: 34px 40px 30px; text-align: center; transform: rotate(-2deg); }
+  .etiqueta .topo { display: flex; align-items: center; justify-content: center; gap: 14px; color: var(--bronze); font-weight: 800; letter-spacing: .2em; font-size: 24px; text-transform: uppercase; }
+  .etiqueta .topo svg { width: 34px; height: 34px; }
+  .etiqueta .qr { width: 340px; height: 340px; margin: 22px auto 12px; }
+  .etiqueta .qr svg { width: 100%; height: 100%; }
+  .etiqueta h3 { font-size: 40px; font-weight: 800; }
+  .etiqueta p { font-size: 24px; color: var(--texto2); font-weight: 600; margin-top: 6px; }
+  .coluna .rotulo { color: var(--bronze); margin-bottom: 26px; }
+  .passos { list-style: none; margin-top: 10px; }
+  .passos li { display: flex; align-items: center; gap: 26px; font-size: 36px; font-weight: 700; color: #a99e8f; padding: 18px 0; line-height: 1.2; }
+  .passos li i { flex: 0 0 66px; height: 66px; border-radius: 50%; border: 3px solid #cfc6b6; display: grid; place-items: center; font-style: normal; font-size: 30px; font-weight: 800; color: #b3a896; }
+  .passos li.feito { color: #8f8577; }
+  .passos li.feito i { background: #e2d8c4; border-color: #e2d8c4; color: var(--bronze); }
+  .passos li.agora { color: var(--cafe); }
+  .passos li.agora i { background: var(--bronze); border-color: var(--bronze); color: #fff; box-shadow: 0 0 0 10px rgba(122,92,50,.18); }
+  .passos li.risco.agora i { background: var(--vermelho); border-color: var(--vermelho); box-shadow: 0 0 0 10px rgba(196,56,56,.18); }
+
+  /* 5. Moldura do celular (PNG transparente; o vídeo da tela fica por baixo) */
+  #moldura { background: transparent; }
+  #moldura svg { position: absolute; left: 0; top: 0; filter: drop-shadow(0 30px 40px rgba(44,36,27,.30)) drop-shadow(0 6px 10px rgba(44,36,27,.22)); }
+
+  /* 6. Diferencial */
+  #diferencial { background: var(--bege); padding: 120px 150px 0; }
+  #diferencial .rotulo { color: var(--bronze); text-align: center; margin-bottom: 60px; }
+  #diferencial .lados { display: flex; gap: 60px; justify-content: center; }
+  #diferencial .lado { width: 760px; height: 560px; border-radius: 30px; padding: 56px 60px; display: flex; flex-direction: column; }
+  #diferencial .lado svg { width: 120px; height: 120px; margin-bottom: 30px; }
+  #diferencial .lado h3 { font-size: 50px; font-weight: 800; margin-bottom: 18px; }
+  #diferencial .lado p { font-size: 38px; font-weight: 600; line-height: 1.3; }
+  #diferencial .velho { background: #e3dccd; color: #8f8577; border: 2px dashed #c9bfad; }
+  #diferencial .novo { background: var(--cafe); color: var(--off); box-shadow: 0 26px 60px rgba(44,36,27,.25); }
+  #diferencial .novo h3 { color: #d6b67c; }
+  #diferencial .novo b { color: #f3dfb4; }
+  #diferencial .grade { display: grid; grid-template-columns: repeat(4, 40px); gap: 10px; margin-bottom: 30px; }
+  #diferencial .grade span { width: 40px; height: 40px; border-radius: 9px; background: var(--verde); }
+  #diferencial .grade span.c { background: var(--cinza); outline: 3px dashed #d6b67c; outline-offset: 2px; }
+  #diferencial .grade span.a { background: var(--amarelo); }
+
+  /* 7. Fechamento */
+  #fim { background: radial-gradient(ellipse at 50% 40%, #3a3026 0%, #2c241b 60%, #1f1913 100%); color: var(--off);
+    display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding-bottom: 60px; }
+  #fim .linha { width: 160px; height: 4px; background: #7a5c32; margin: 56px 0 40px; border-radius: 2px; }
+  #fim .equipe { font-size: 44px; font-weight: 800; letter-spacing: .04em; }
+  #fim .equipe span { color: #d6b67c; }
+  #fim .desafio { font-size: 28px; font-weight: 600; color: #b9ad9a; margin-top: 18px; }
+  #fim .aviso { position: absolute; bottom: 46px; font-size: 22px; color: #8f8577; font-weight: 600; letter-spacing: .04em; }
+</style>
+</head>
+<body>
+
+<section id="abertura">
+  <svg class="relogio ic" viewBox="0 0 24 24" stroke-width="1.4"><circle cx="12" cy="12" r="9.5"/><path d="M12 6.5V12l3.5 2.2"/></svg>
+  <div class="rotulo">Sábado · meio-dia · shopping lotado</div>
+  <h1>Alguém conferiu o banheiro <em>na última hora?</em></h1>
+</section>
+
+<section id="hoje">
+  <div class="rotulo">Hoje</div>
+  <h2>A resposta chega tarde, ou se perde</h2>
+  <div class="duas">
+    <div class="item">
+      <svg class="ic" viewBox="0 0 24 24" stroke-width="1.3"><path d="M6 2.5h8.5L19 7v14.5H6z"/><path d="M14.5 2.5V7H19"/><path d="M8.5 10.5h8M8.5 13.5h8M8.5 16.5h4"/><path d="M12.5 19.6c1-1.4 1.6-1.4 2 0 .4 1.2 1 1.2 2.4-.4"/></svg>
+      <strong>Folha de papel</strong><span>assinada depois da ronda</span>
+    </div>
+    <div class="item">
+      <svg class="ic" viewBox="0 0 24 24" stroke-width="1.3"><rect x="7" y="7.5" width="9" height="14" rx="1.6"/><path d="M9 7.5V2.5"/><path d="M9.5 11h4M9.5 13.5h4"/><circle cx="11.5" cy="17.6" r="1.4"/><path d="M18.5 9.5c1 1.2 1 3.8 0 5M20.6 7.8c1.8 2.3 1.8 6.1 0 8.4"/></svg>
+      <strong>Rádio e troca de turno</strong><span>o problema se perde no caminho</span>
+    </div>
+  </div>
+</section>
+
+<section id="solucao">
+  <div class="escudo"><svg class="ic" viewBox="0 0 24 24"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6l-8-3z"/><path d="m9 12 2 2 4-4"/></svg></div>
+  <div class="nome">Ronda Viva</div>
+  <div class="slogan">Mostra o que <b>ninguém conferiu</b>. Registra que <b>cuidou</b>.</div>
+  <div class="tres"><span class="pilula">QR em cada zona</span><span class="pilula">IA que sugere, gente que decide</span><span class="pilula">Sem instalar nada</span></div>
+</section>
+
+<section id="fundo-cel-qr" class="fundo-cel">
+  <div class="halo"></div>
+  <div class="coluna">
+    <div class="etiqueta">
+      <div class="topo"><svg class="ic" viewBox="0 0 24 24"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6l-8-3z"/><path d="m9 12 2 2 4-4"/></svg>Ronda Viva</div>
+      <div class="qr">{{QR}}</div>
+      <h3>Área técnica L2</h3>
+      <p>Aponte a câmera do celular</p>
+    </div>
+  </div>
+</section>
+
+{{PASSOS}}
+
+<section id="moldura">
+  <!-- Corpo do celular com o buraco da tela: a tela (440x950 a partir de 340,65) fica transparente. -->
+  <svg width="1920" height="1080" viewBox="0 0 1920 1080">
+    <path fill-rule="evenodd" fill="#191410" d="M389 50h342a64 64 0 0 1 64 64v852a64 64 0 0 1-64 64H389a64 64 0 0 1-64-64V114a64 64 0 0 1 64-64z
+      M390 65h340a50 50 0 0 1 50 50v850a50 50 0 0 1-50 50H390a50 50 0 0 1-50-50V115a50 50 0 0 1 50-50z"/>
+    <path fill="none" stroke="#4a4036" stroke-width="2" d="M389 50h342a64 64 0 0 1 64 64v852a64 64 0 0 1-64 64H389a64 64 0 0 1-64-64V114a64 64 0 0 1 64-64z"/>
+    <rect x="795" y="250" width="5" height="90" rx="2.5" fill="#2a231c"/>
+    <rect x="320" y="210" width="5" height="60" rx="2.5" fill="#2a231c"/>
+    <rect x="320" y="290" width="5" height="60" rx="2.5" fill="#2a231c"/>
+    <rect x="536" y="56" width="48" height="4" rx="2" fill="#3c332a"/>
+  </svg>
+</section>
+
+<section id="diferencial">
+  <div class="rotulo">O diferencial</div>
+  <div class="lados">
+    <div class="lado velho">
+      <svg class="ic" viewBox="0 0 24 24" stroke-width="1.4"><rect x="5" y="3.5" width="14" height="18" rx="2"/><path d="M9 3.5h6v2.5H9z"/><path d="m8 11 1.5 1.5L12 10M8 16l1.5 1.5L12 15M14 11.5h2.5M14 16.5h2.5"/></svg>
+      <h3>Folha e checklist</h3>
+      <p>mostram o que foi feito.</p>
+    </div>
+    <div class="lado novo">
+      <div class="grade"><span></span><span class="c"></span><span></span><span class="a"></span><span class="c"></span><span></span><span></span><span class="c"></span></div>
+      <h3>Ronda Viva</h3>
+      <p>mostra o que <b>ninguém conferiu</b> e <b>prova</b> que o shopping cuidou.</p>
+    </div>
+  </div>
+</section>
+
+<section id="fim">
+  <div class="escudo"><svg class="ic" viewBox="0 0 24 24"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6l-8-3z"/><path d="m9 12 2 2 4-4"/></svg></div>
+  <div class="nome">Ronda Viva</div>
+  <div class="slogan">Mostra o que <b>ninguém conferiu</b>. Registra que <b>cuidou</b>.</div>
+  <div class="linha"></div>
+  <div class="equipe">Equipe <span>Dragonair</span> · HackaRun 2026</div>
+  <div class="desafio">Desafio de eficiência operacional · Capim Dourado Shopping</div>
+  <div class="aviso">Protótipo com dados e crachás fictícios · telas gravadas do app funcionando</div>
+</section>
+
+</body>
+</html>
