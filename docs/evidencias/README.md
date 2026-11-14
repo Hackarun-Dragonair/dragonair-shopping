@@ -15,4 +15,5 @@ Ex.: `m1_12-2130_quadro-ideias.png`, `m2_13-2040_teste-cadastro-falhou.png`, `m2
 | desafio-09.png | 1 | Tira oficial do desafio sorteado |
 | primeira-entrega-orientacoes.jpg | 1 | Orientações da 1ª entrega (grupo, 12/11) |
 | modelo/ (resumo.md + CSVs) | 2 | Avaliação da IA gerada por `python -m app.avaliar`: teste cego (n = 20) e teste de campo (rótulos a revisar) |
+| qa/ (README.md + 10 prints) | 2 | QA ponta a ponta (13/11, 22h): 8 bugs achados e corrigidos em commits `fix:`, prints do PC (1366 px) e do celular (390 px) |
 | | | |
