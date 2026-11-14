@@ -3,10 +3,10 @@
 > Para continuar o trabalho com outra conta/sessão. Leia junto com `AGENTS.md`, `docs/CHECKLIST-ENTREGA.md` e `docs/IA.md`.
 > Atualizado: sexta 13/11, 23h20. Regra da noite: commit + push a cada passo pequeno; este arquivo é atualizado depois de cada passo.
 
-## Estado agora (sexta 13/11, 23h20)
+## Estado agora (sexta 13/11, 23h40)
 - **No ar:** https://ronda-viva-0ek7.onrender.com (Render grátis; cada push no `main` publica sozinho; dorme após 15 min).
 - **`main` = `origin/main`:** QA + visual bronze/bege (ramo `qa-fixes`, aprovado pelo revisor e publicado; conferido no Render às 22h54). Tag de segurança: `v-missao2-estavel` (c153cdd). Se algo quebrar: `git revert` ou voltar para a tag.
-- **Ramo `noite/integracao` (no GitHub, 16 commits sobre o main, 73 testes passando) — AGUARDANDO REVISOR:**
+- **Ramo `noite/integracao` (no GitHub, 17 commits sobre o main, 73 testes passando) — REVISOR: código, testes, navegador e QR aprovados sem 🔴; falta só o veredito da documentação (o revisor parou por limite de tokens às 23h30 e foi retomado). Achados de docs já corrigidos em f38eb68. Veredito parcial: `/tmp/claude-1000/-home-arthur-dragonair-shopping/3215d6be-1483-4889-9083-26ba89cb4b6c/scratchpad/revisor-integracao/veredito.md`:**
   - `fix:` faixa de abas sem fresta; quadro "Indicadores/Ocorrências ativas" do mapa atualiza a cada 5 s; tela da zona ignora nova sugestão durante envio (achados do 1º revisor).
   - `feat:` pergunta de desempate "É mais X ou Y?" quando a IA fica em dúvida (frase da demo "cheiro de fumaça no quadro" → Limpeza ou Elétrica, continua P1).
   - `fix:` fila atualiza a cada 5 s mantendo a rolagem.
