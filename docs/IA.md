@@ -20,7 +20,8 @@ A equipe revisou e responde por todo conteúdo gerado com IA.
 | 13/11 15h | Arthur | Claude | Criar as telas responsivas (mapa em blocos, tela da zona com sugestão da IA, fila, linha do tempo, painel, Sobre a IA) em cima da API do Paulo, seguindo o visual do protótipo do Mateus | Arthur revisa e ensaia a explicação; Mateus ajusta o visual |
 | 13/11 19h30 | Bypaulohx | Cursor (Grok) | Completar o backend que ainda estava em aberto: dossiê, celular autorizado com crachá, fila de envio, PDF das etiquetas e alertas por zona | Sem telas novas. A equipe revisa no pull request |
 | 13/11 noite | Arthur | Claude | Separar o teste cego (só rótulos humanos) do teste de campo (rótulos sugeridos por IA), criar `app/avaliar.py`, mostrar recall de P1, comparação e matriz de confusão na tela "Sobre a IA" | Equipe confere os números com `python -m app.avaliar` e revisa os rótulos do teste de campo |
-| 13/11 22h | Arthur | Claude (Claude Code + navegador automático) | QA ponta a ponta no PC e no celular (390 px), corrigir 8 bugs em commits `fix:` e aplicar o visual bronze/bege com abas, a partir de uma referência em HTML enviada pelo Arthur. Da referência ficaram só as cores e a disposição: sem planta real, sem nomes de lojas e sem arquivos da internet | Arthur aprova antes de juntar no `main`; lista de bugs e prints em `docs/evidencias/qa/` |
+| 13/11 22h | Arthur | Claude (Claude Code + navegador automático) | QA ponta a ponta no PC e no celular (390 px), corrigir os 7 problemas achados (8 commits `fix:`) e aplicar o visual bronze/bege com abas, a partir de uma referência em HTML enviada pelo Arthur. Da referência ficaram só as cores e a disposição: sem planta real, sem nomes de lojas e sem arquivos da internet | Arthur aprova antes de juntar no `main`; lista de bugs e prints em `docs/evidencias/qa/` |
+| 13/11 22h40 | Arthur | Claude (Claude Code, agente de documentação) | Testar o README do zero (clone novo, ambiente novo, `pytest` e servidor no ar) e escrever, a partir do código e dos documentos da equipe: resumo de 1 página, roteiro do pitch de 90 s, ordem de cliques da demo, FAQ da banca, cola para integrantes, checklist de sábado, textos de entrega e índice de evidências | Números copiados de `docs/evidencias/modelo/resumo.md` e conferidos rodando o sistema; o resultado do teste de usabilidade **não** foi preenchido (é da equipe); a equipe revisa, ensaia e ajusta antes de enviar |
 
 ## Dentro da solução
 
@@ -35,6 +36,7 @@ A equipe revisou e responde por todo conteúdo gerado com IA.
 
 **Como lidamos com os erros da IA:**
 - Ela só **sugere**. A tela mostra a confiança, e abaixo de 50% avisa "IA em dúvida, confira".
+- Quando ela fica em dúvida entre duas categorias, a tela da zona faz uma pergunta de desempate. <!-- CONFERIR -->
 - **Regra fixa acima da IA** (`app/dominio.py`): fumaça, fogo, choque ou pessoa presa → **P1** e "Avise a brigada pelo rádio". Ninguém rebaixa, nem a IA nem o supervisor. O sistema não aciona ninguém sozinho.
 - Toda sugestão e toda correção ficam na **linha do tempo**, que não se apaga.
 - Não avalia pessoas: indicadores só por zona e equipe.
