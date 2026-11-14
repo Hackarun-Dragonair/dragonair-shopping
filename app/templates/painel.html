@@ -42,13 +42,13 @@
       </div>
       <div class="table-responsive">
         <table class="table table-sm tabela align-middle mb-0">
-          <thead><tr><th>Zona</th><th>Piso</th><th>Estado</th><th class="d-none d-sm-table-cell">Última conferência</th><th class="text-end d-none d-sm-table-cell">Prazo</th><th></th></tr></thead>
+          <thead><tr><th>Zona</th><th class="d-none d-sm-table-cell">Piso</th><th>Estado</th><th class="d-none d-sm-table-cell">Última conferência</th><th class="text-end d-none d-sm-table-cell">Prazo</th><th></th></tr></thead>
           <tbody>
           {% for z in zonas %}
             <tr>
               <td><a href="{{ url_for('zona.ver', codigo=z.codigo) }}" class="link-tabela">{{ z.nome }}</a>
                 {% if z.reincidencia %}<span class="tag-repetido" title="Problema repetido">{{ icone('repetido') }} repetido</span>{% endif %}</td>
-              <td>{{ z.piso }}</td>
+              <td class="d-none d-sm-table-cell">{{ z.piso }}</td>
               <td><span class="chip estado-{{ z.estado }}">{{ z.rotulo }}</span></td>
               <td class="text-secondary d-none d-sm-table-cell">{{ z.ha or 'nunca' }}</td>
               <td class="text-end text-secondary d-none d-sm-table-cell">{{ z.prazo_minutos }} min</td>
