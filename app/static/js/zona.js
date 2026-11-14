@@ -46,6 +46,10 @@
     const alerta = $("alerta-risco");
     if (s.risco) { alerta.textContent = s.aviso; alerta.classList.remove("d-none"); }
     else { alerta.classList.add("d-none"); }
+    // Nova sugestão = novo registro: libera o botão e limpa o recado do registro anterior
+    $("botao-registrar").disabled = false;
+    $("botao-registrar").textContent = "Registrar problema";
+    $("resultado").innerHTML = "";
     $("sugestao").classList.remove("d-none");
   });
 
@@ -65,6 +69,7 @@
     });
     const aviso = r.aviso ? `<div class="alert alert-danger fw-bold">${seguro(r.aviso)}</div>` : "";
     $("sugestao").classList.add("d-none");
+    $("descricao").value = "";            // pronto para o próximo relato
     $("resultado").innerHTML = aviso +
       `<div class="aviso aviso-ok">Ocorrência #${r.problema.id} registrada e enviada para ${seguro(r.problema.equipe_nome)}.
        <a href="/telas/problemas/${r.problema.id}">Ver linha do tempo</a></div>`;
