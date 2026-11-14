@@ -1,9 +1,9 @@
 {# Tela que abre ao ler o QR da zona: OK / Atenção / Problema. #}
 {% extends "base.html" %}
+{% set pagina = 'zona' %}
 {% block titulo %}{{ zona.nome }} · Ronda Viva{% endblock %}
 {% block conteudo %}
 {% from "_icones.html" import icone %}
-{% set pagina = 'zona' %}
 <div class="mx-auto tela-campo">
   <a href="{{ url_for('mapa.inicio') }}" class="link-voltar">{{ icone('voltar') }} Mapa</a>
   <div class="card cartao-zona mb-3"><div class="card-body">

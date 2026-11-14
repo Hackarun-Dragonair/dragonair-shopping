@@ -261,3 +261,6 @@ a { color: #8a6a1c; }
   .entrar-form { padding: 20px; }
 }
 @media (max-width: 768px) { .linha-info { grid-template-columns: 1fr 1fr; } }
+
+.chip.estado-cinza { border: 0; }
+.tabela td:nth-child(n+4) { white-space: nowrap; }
