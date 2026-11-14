@@ -4,7 +4,7 @@
 > Itens combinados terminaram às 23h50 de sexta. Pedido extra do Arthur (0h): mapa com formas de shopping — entregue às 0h35.
 
 ## Resultado em uma linha
-Tudo combinado está no `main`, publicado no site e marcado com a tag **`v-missao2-entrega`**. São 77 testes passando, e três revisões independentes aprovaram sem nenhum problema grave.
+Tudo combinado está no `main`, publicado no site e marcado com a tag **`v-missao2-entrega`**. São **78 testes** passando. Cada lote passou por um revisor independente antes do `main`.
 
 ## O que foi feito
 | # | Item | Situação | Onde ver |
@@ -26,11 +26,23 @@ Tags: `v-missao2-entrega` é a versão da entrega. `v-missao2-final` (antes do m
 - Os ramos dos construtores partiram de uma versão anterior do `main`. Foram reaplicados por cima, com 2 conflitos só em documentação, resolvidos mantendo as duas versões.
 - Problemas apontados pelos revisores e já corrigidos: registro duplicado com cliques rápidos, quadro "ao vivo" que não atualizava sozinho, fresta de 2 px no cabeçalho, textos da documentação desatualizados.
 
+## Depois da meia-noite (atualizado sábado 8h40)
+| Hora | O que aconteceu |
+|---|---|
+| 0h35 | Mapa com formas de shopping no `main` e no site (revisor aprovou; nada copiado da planta real) |
+| 0h40–2h15 | **Vídeo de 90 s:** versão 1 (88,6 s, telas reais do app, legendas, voz guia). Banca simulada rodada 1: **6,3** (pitch/comunicação) e **7,35** (técnica/negócio). Versão 2 feita com as 10 mudanças pedidas (gancho em movimento, IA contando a própria dúvida, comparação de números no lugar do "100%", diferencial sem exagero, fechamento com piloto de 30 dias e "testes · demo online") |
+| 1h45–2h15 | Correções pedidas pela banca técnica, revisadas e no `main`: teste de usabilidade descrito como **pendente**; limites da IA explicados (teste cego pequeno, escrito pela equipe e usado para escolher o modelo; confiança média 37%); FAQ com 6 perguntas difíceis novas (100%, fumaça com 24%, checklist, linha do tempo × demo, gás, planta pública); limite de 9 MB no envio de arquivos com mensagem clara |
+| 2h20 | **Limite de uso da conta atingido**: o trabalho parou até de manhã. Nada se perdeu (tudo no GitHub) |
+| 8h30 | Produtor retomado para fechar a v2; banca rodada 2 avaliando |
+
+## Decisão que é da equipe (não foi mexido)
+- **"Gás" não está na regra fixa de P1.** Hoje "cheiro de gás no restaurante" vira Limpeza P2, sem aviso da brigada. Incluir é uma linha em `app/dominio.py` + um teste, mas muda o contrato da equipe. A FAQ (pergunta 20) já tem a resposta honesta para a banca.
+
 ## O que sobrou (só vocês podem fazer)
 1. **Teste de usabilidade com 3 pessoas de fora** → `docs/missao-2/teste-usabilidade.md`. Se não der tempo, **apaguem a linha dele** do texto de entrega (está marcada em `docs/ENTREGA.md`): declarar teste não feito é proibido.
 2. **Enviar a Missão 2 até 9h45** com o texto pronto de `docs/ENTREGA.md`, e guardar o print do envio em `docs/evidencias/`.
 3. **10h:** colar as orientações da Missão 3 em `docs/desafio.md` e conferir se pedem algo além do que está pronto.
-4. **Gravar o vídeo de 90 s** seguindo `docs/pitch/roteiro-90s.md` e `docs/pitch/demo-cliques.md`. Preencham quem fala (Voz 1 e Voz 2). Abram o site uns 2 minutos antes, porque ele dorme.
+4. **Vídeo de 90 s:** já está montado em `/home/arthur/Vídeos/ronda-viva-pitch/` (sem voz e com voz guia). Falta **gravar a voz** (5 min, `docs/pitch/video/GRAVAR-VOZ.md`) e rodar `bash docs/pitch/video/montar_com_voz.sh voz.m4a`. Se não der, enviar a versão com voz guia e declarar no `IA.md`.
 5. **Entrega final até 12h** e **vídeo + resumo às 13h** (`docs/RESUMO.md`).
 6. Cada um ler `docs/pitch/cola-integrantes.md`: a banca pode perguntar para qualquer um.
 
