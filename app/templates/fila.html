@@ -75,7 +75,21 @@
 {% endblock %}
 {% block scripts %}
 <script>
-  // A fila se atualiza sozinha a cada 15 s (se ninguém estiver mexendo nos filtros).
-  setInterval(() => { if (!document.hidden && !document.activeElement.closest("form")) location.reload(); }, 15000);
+  // A fila se atualiza sozinha a cada 5 s (se ninguém estiver mexendo nos filtros).
+  // Antes de recarregar, guarda a rolagem; depois de recarregar, volta para o mesmo ponto.
+  // O try/catch evita erro em navegador que bloqueia o sessionStorage (ex.: aba anônima).
+  try {
+    const rolagem = sessionStorage.getItem("fila-rolagem");
+    if (rolagem !== null) {
+      sessionStorage.removeItem("fila-rolagem");
+      // "instant": pula direto para o ponto, sem a animação de rolagem do Bootstrap.
+      window.scrollTo({ top: Number(rolagem), behavior: "instant" });
+    }
+  } catch (erro) {}
+  setInterval(() => {
+    if (document.hidden || document.activeElement.closest("form")) return;
+    try { sessionStorage.setItem("fila-rolagem", String(window.scrollY)); } catch (erro) {}
+    location.reload();
+  }, 5000);
 </script>
 {% endblock %}
