@@ -41,8 +41,8 @@ Todas com `https` e o endereço público (nenhuma com `127.0.0.1` ou `localhost`
 
 ## O que falhou e como corrigimos
 
-Nada impediu o QR de funcionar, então não houve mudança no código do app.
-Observação: o OpenCV não leu 1 de 11 QR quando a página foi renderizada em 300 dpi (e nenhum em 600 dpi), por causa de filetes brancos finos entre os quadradinhos do desenho. O zxing-cpp leu os 11 em 72, 150, 300 e 600 dpi, e o OpenCV leu todos em 72–200 dpi. Não mexemos para não mudar escopo; se algum celular falhar na demo, imprima em "qualidade normal".
+Nada impediu o QR de funcionar. Depois desta verificação houve uma correção pequena no desenho do QR (commit `fix: QR das etiquetas sem filete branco entre os quadradinhos`, em `app/etiquetas.py`).
+Observação: o OpenCV não leu 1 de 11 QR quando a página foi renderizada em 300 dpi (e nenhum em 600 dpi), por causa de filetes brancos finos entre os quadradinhos do desenho. O zxing-cpp leu os 11 em 72, 150, 300 e 600 dpi, e o OpenCV leu todos em 72–200 dpi. Correção aplicada depois: cada quadradinho passou a ser pintado com contorno (`re B` no PDF). Medido de novo com OpenCV: 300 dpi de 10/11 para 11/11 e 600 dpi de 0/11 para 9/11. Se algum celular ainda falhar na demo, imprima em "qualidade normal".
 
 Para não quebrar no futuro, entraram 3 testes em `tests/test_backlog.py`: a URL usa `PUBLIC_BASE_URL` quando configurado; atrás do proxy do Render usa `https` e o host público; e cada URL abre sem login com os três botões.
 

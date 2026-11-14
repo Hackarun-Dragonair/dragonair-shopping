@@ -67,7 +67,7 @@ Evidências de testes e correções:
 - QR de verdade: as etiquetas do site no ar foram lidas por imagem e as 11 abrem a zona certa sem login (docs/evidencias/qr/)
 - Responsividade (tecnologia sorteada) em 6 larguras de tela (docs/evidencias/responsividade/)
 - Avaliação da IA: teste cego n = 20 com 100% categoria, 95% prioridade e 6 de 6 P1; teste de campo n = 16 com 81% e 62% (docs/evidencias/modelo/resumo.md)
-- Teste de usabilidade com 3 pessoas de fora (docs/missao-2/teste-usabilidade.md)
+- Teste de usabilidade com 3 pessoas de fora (docs/missao-2/teste-usabilidade.md)   ← SÓ DEIXE ESTA LINHA SE O TESTE FOI FEITO E ANOTADO DE VERDADE; se não, apague antes de enviar
 
 Uso de IA declarado: docs/IA.md
 Índice de evidências: docs/evidencias/README.md
@@ -101,7 +101,7 @@ Documentação:
 
 Evidências das missões: docs/evidencias/README.md (índice por missão)
 - Missão 1: docs/missao-1/ENTREGA-1.md
-- Missão 2: QA com correções, responsividade, avaliação da IA, teste de usabilidade
+- Missão 2: QA com correções, responsividade, avaliação da IA, teste de usabilidade   ← tire "teste de usabilidade" se ele não foi feito de verdade
 - Missão 3: <COLAR ORIENTAÇÕES DA MISSÃO 3> (o que foi pedido e onde está atendido)
 
 Tecnologia: Python, Flask, SQLite, Bootstrap local, JavaScript, scikit-learn (modelo próprio, sem internet), pytest. Tecnologia sorteada: Responsividade.
