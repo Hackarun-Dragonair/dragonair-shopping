@@ -24,7 +24,7 @@ A banca pode perguntar para **qualquer** integrante. Leia isto 2 vezes e treine 
 | `app/seed.py` | Os **dados de exemplo** fictícios (11 zonas, crachás OTTO, LIA, RITA, CAIO) |
 | `data/treino.csv` | As 145 frases que ensinam a IA |
 | `data/teste_cego.csv` | 20 frases separadas, que a IA nunca viu, para medir o acerto |
-| `tests/` | 77 testes automáticos que conferem se tudo continua funcionando |
+| `tests/` | 78 testes automáticos que conferem se tudo continua funcionando |
 | `docs/` | Documentos, evidências e declaração de uso de IA |
 
 **Se a banca pedir para apontar no código:**

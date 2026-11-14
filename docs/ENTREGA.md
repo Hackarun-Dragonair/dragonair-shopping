@@ -62,7 +62,7 @@ Fluxo principal implementado:
 QR da zona → OK / Atenção / Problema → IA própria (sem internet) sugere categoria e prioridade → palavra de risco vira P1 com "Avise a brigada pelo rádio" (ninguém rebaixa) → gestor confirma → fila Aberto / Em atendimento / Resolvido → linha do tempo que não se apaga → mapa com zona cinza (ninguém conferiu no prazo) → painel por zona e equipe.
 
 Evidências de testes e correções:
-- 77 testes automáticos (pytest), rodando no GitHub em todo pull request
+- 78 testes automáticos (pytest), rodando no GitHub em todo pull request
 - QA ponta a ponta no computador e no celular: 7 problemas achados e corrigidos em commits "fix:" (docs/evidencias/qa/)
 - QR de verdade: as etiquetas do site no ar foram lidas por imagem e as 11 abrem a zona certa sem login (docs/evidencias/qr/)
 - Responsividade (tecnologia sorteada) em 6 larguras de tela (docs/evidencias/responsividade/)

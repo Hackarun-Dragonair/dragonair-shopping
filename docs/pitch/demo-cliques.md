@@ -55,7 +55,7 @@ A IA e o visual estão dentro do projeto: **não precisa de internet**, só de u
 5. Sem celular funcionando: faça tudo no notebook, abrindo `http://127.0.0.1:8000/z/area-tecnica-l2` numa janela estreita (a tela é a mesma).
 6. Último recurso: mostrar os prints de `docs/evidencias/qa/` (são do app de verdade, 13/11).
 
-Deixe o projeto **instalado e testado no notebook antes de sábado 8h** (`python -m pytest -q` → 77 passed).
+Deixe o projeto **instalado e testado no notebook antes de sábado 8h** (`python -m pytest -q` → 78 passed).
 
 ## Dicas de gravação
 - **Resolução:** grave o computador em 1920×1080 (ou 1366×768) com zoom do navegador em 110–125%, para a banca ler. Esconda a barra de favoritos e feche abas com nomes pessoais.

@@ -34,7 +34,7 @@ Pode virar, e é de propósito. Fumaça na praça de alimentação pode ser inc�
 ## Testes
 
 **9. Como vocês testaram?**
-- **77 testes automáticos** (pytest), rodando no GitHub em todo pull request.
+- **78 testes automáticos** (pytest), rodando no GitHub em todo pull request.
 - **QA ponta a ponta** no computador e no celular: achamos 7 problemas e corrigimos em 8 commits `fix:` (`docs/evidencias/qa/`).
 - **Responsividade** em 6 larguras de tela, de 375 px a 1920 px (`docs/evidencias/responsividade/`).
 - **Avaliação da IA** com teste cego e teste de campo (`docs/evidencias/modelo/`).

@@ -28,7 +28,7 @@ Critério "Cumprimento das missões e qualidade das evidências" vale 20%. Tudo 
 | [`qr/`](qr/README.md) (README + `m2_13-2242_etiquetas-qr.png`) | QR de verdade: o PDF de etiquetas (local e do site no ar) virou imagem e cada QR foi lido: 11 zonas → endereço certo → abre sem login (HTTP 200). Depois, correção do desenho do QR (`fix:`) para ler melhor impresso |
 | [`mapa/`](mapa/README.md) (README + 8 prints) | Mapa com formas de shopping: zonas em polígono, 4 pisos redesenhados do zero (fictício, sem a planta real), no computador e no celular |
 | [`../missao-2/teste-usabilidade.md`](../missao-2/teste-usabilidade.md) | Teste com 3 pessoas de fora: **roteiro pronto; o teste ainda não foi feito**. O resultado só entra aqui depois que o teste for feito de verdade (regra 6.5). Até lá, não citar como evidência |
-| Testes automáticos: pasta `tests/` + GitHub Actions | 77 testes (pytest) rodando em todo pull request (aba **Actions** do repositório) |
+| Testes automáticos: pasta `tests/` + GitHub Actions | 78 testes (pytest) rodando em todo pull request (aba **Actions** do repositório) |
 | Histórico do git (commits `fix:`) | Cada correção com uma frase explicando o que mudou |
 | Print do envio da Missão 2 | *(a salvar aqui no sábado: `m2_14-0945_envio-missao2.png`)* |
 

@@ -88,7 +88,7 @@ Ao iniciar, o banco é recriado com dados de exemplo: 11 zonas fictícias, algum
 ```bash
 python -m pytest -q
 ```
-Esperado: **77 passed**. Leva de 2 a 8 minutos, dependendo do computador, porque a IA é treinada várias vezes nos testes.
+Esperado: **78 passed**. Leva de 2 a 8 minutos, dependendo do computador, porque a IA é treinada várias vezes nos testes.
 
 ### 6. Usar no celular (mesma rede)
 1. Notebook e celular no **mesmo Wi-Fi** ou no hotspot do celular.
