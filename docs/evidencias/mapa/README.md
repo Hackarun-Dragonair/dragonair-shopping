@@ -20,3 +20,5 @@
 | L1 | `m2_14-0019_mapa-l1-pc.png` | `m2_14-0019_mapa-l1-cel.png` |
 | L2 | `m2_14-0019_mapa-l2-pc.png` | `m2_14-0019_mapa-l2-cel.png` |
 | Estacionamento | `m2_14-0019_mapa-estacionamento-pc.png` | `m2_14-0019_mapa-estacionamento-cel.png` |
+
+Mapa denso (14/11, 10h11, computador 1366 px): `m2_14-1011_mapa-denso-terreo.png`, `-l1`, `-l2`, `-estacionamento` — desenho fictício com dezenas de lojas geradas por função (Térreo 71, L1 68, L2 44 blocos; garagem com vagas); as 11 zonas iguais, tocáveis, zero erro de JS, conferido também em 390 px.
