@@ -20,6 +20,11 @@ supervisor e linha do tempo, mapa, painel, o que medimos da IA), **4 · Diferenc
 | frases a 3–4,6 palavras/s, silêncios de até 4 s | cerca de **2,8 palavras/s** dentro das frases; pausas de 0,6–0,9 s entre as partes; 1,5 s no fim |
 | rótulos pequenos | rótulos 50% maiores e zoom maior em todas as telas (legível em 640x360) |
 
+Ajustes depois da banca simulada 2 (nota 8,1): abertura enquadra só o desenho do mapa (a coluna com
+"100% Acerto da IA" fica fora), corte seco do painel direto para o zoom da tabela da IA, linha do tempo
+enquadrada com o começo das linhas, cartela final com "78 testes automáticos" (número do main),
+e guias de locução pedindo "sem pressa, pausas curtas" (cerca de 2,8 palavras/s).
+
 Números falados, conferidos em `docs/evidencias/modelo/resumo.md`: teste cego n = 20, recall de P1
 "só regras de palavras" 67% (4 de 6) e "modelo + regra dura" 100% (6 de 6); frases reais do campo
 (rótulos ainda a revisar): categoria 81%. Os 24% são a confiança que a tela mostra na demo.
