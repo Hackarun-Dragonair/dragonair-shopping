@@ -12,7 +12,7 @@
 |---|---|
 | Site da demo (Render grátis) | https://ronda-viva-0ek7.onrender.com — dorme após 15 min; o 1º acesso leva cerca de 1 min |
 | Repositório | https://github.com/Hackarun-Dragonair/dragonair-shopping |
-| Versão da Missão 2 (tag) | `v-missao2-final` |
+| Versão da Missão 2 (tag) | `v-missao2-entrega` |
 | **Como executar** | [seção abaixo](#como-executar) |
 | Resumo de 1 página | [`docs/RESUMO.md`](docs/RESUMO.md) |
 | Checklist e textos de entrega | [`docs/ENTREGA.md`](docs/ENTREGA.md) |
@@ -88,7 +88,7 @@ Ao iniciar, o banco é recriado com dados de exemplo: 11 zonas fictícias, algum
 ```bash
 python -m pytest -q
 ```
-Esperado: **73 passed**. Leva de 2 a 8 minutos, dependendo do computador, porque a IA é treinada várias vezes nos testes.
+Esperado: **77 passed**. Leva de 2 a 8 minutos, dependendo do computador, porque a IA é treinada várias vezes nos testes.
 
 ### 6. Usar no celular (mesma rede)
 1. Notebook e celular no **mesmo Wi-Fi** ou no hotspot do celular.

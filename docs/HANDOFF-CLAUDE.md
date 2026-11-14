@@ -3,14 +3,14 @@
 > Para continuar o trabalho com outra conta/sessão. Leia junto com `AGENTS.md`, `docs/CHECKLIST-ENTREGA.md` e `docs/IA.md`.
 > Atualizado: sexta 13/11, 23h45. Regra da noite: commit + push a cada passo pequeno; este arquivo é atualizado depois de cada passo.
 
-## Estado agora (sexta 13/11, 23h45) — TUDO DA NOITE ESTÁ NO MAIN E NO AR
+## Estado agora (sábado 14/11, 0h40) — TUDO DA NOITE ESTÁ NO MAIN E NO AR
 - **No ar:** https://ronda-viva-0ek7.onrender.com — conferido às 23h40 no navegador (celular: pergunta de desempate na frase da demo; PC: OTTO cai no painel, mapa com abas e quadro lateral; nenhum erro de JS).
-- **`main` = `origin/main`, 73 testes passando.** Tags: `v-missao2-final` (versão da entrega da Missão 2) e `v-missao2-estavel` (ponto de segurança anterior, c153cdd).
+- **`main` = `origin/main`, 77 testes passando.** Tags: `v-missao2-entrega` (versão da entrega da Missão 2, com o mapa novo), `v-missao2-final` (antes do mapa novo) e `v-missao2-estavel` (ponto de segurança anterior, c153cdd).
 - Entrou na noite (2 revisões independentes aprovadas, sem 🔴): QA + 7 bugs corrigidos, visual bronze/bege com abas, pergunta de desempate, fila e quadro do mapa a cada 5 s, QR de verdade (11/11 etiquetas do Render abrem a zona certa) + desenho do QR corrigido, README testado do zero, `docs/RESUMO.md`, `docs/ENTREGA.md`, `docs/pitch/` (roteiro 90 s, cliques, FAQ, cola, checklist), IA.md e índice de evidências.
 - Ramos `noite/*` e `qa-fixes` já estão no main; podem ser apagados depois da entrega.
 
 ## Próximo passo exato
-- **EM ANDAMENTO (14/11, ~0h):** pedido do Arthur — mapa fictício com formas irregulares de shopping (polígonos), feito do ZERO, sem copiar a planta real nem o HTML de referência (regra 8). Construtor no ramo `noite/planta-organica` (commits `wip:` frequentes). Depois: revisor (testes, navegador 1366/390 px, nenhuma marca real, nada derivado da planta) → merge no main → conferir Render → atualizar este arquivo e docs/RELATORIO-NOITE.md. Se o ramo não ficar bom até 9h, NÃO juntar: o mapa atual funciona.
+- **Concluído 0h35:** mapa com formas de shopping (polígonos, do zero) aprovado pelo revisor, no main e no Render. Tag da entrega: `v-missao2-entrega`.
 - Nada de código pendente. Escopo congelado.
 - Às 6h: escrever `docs/RELATORIO-NOITE.md` (feito / falhou / sobrou) e push.
 - Sábado: seguir `docs/pitch/checklist-sabado.md` e `docs/ENTREGA.md`.

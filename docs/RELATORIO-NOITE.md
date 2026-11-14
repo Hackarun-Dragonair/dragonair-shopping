@@ -1,10 +1,10 @@
 # Relatório da noite — sexta 13/11 para sábado 14/11
 
 > Trabalho feito por agentes de IA (Claude Code) com autorização do Arthur, seguindo as regras dele: escopo congelado, revisor aprova antes do `main`, testes antes de cada commit, conferir o Render depois de cada envio. Declarado em `docs/IA.md`.
-> Encerrado às 23h50 de sexta: os 6 itens combinados terminaram antes das 6h.
+> Itens combinados terminaram às 23h50 de sexta. Pedido extra do Arthur (0h): mapa com formas de shopping — entregue às 0h35.
 
 ## Resultado em uma linha
-Tudo combinado está no `main`, publicado no site e marcado com a tag **`v-missao2-final`**. São 73 testes passando, e duas revisões independentes aprovaram sem nenhum problema grave.
+Tudo combinado está no `main`, publicado no site e marcado com a tag **`v-missao2-entrega`**. São 77 testes passando, e três revisões independentes aprovaram sem nenhum problema grave.
 
 ## O que foi feito
 | # | Item | Situação | Onde ver |
@@ -15,9 +15,10 @@ Tudo combinado está no `main`, publicado no site e marcado com a tag **`v-missa
 | 4 | Fila a cada 5 s | ✅ mantém a rolagem e não recarrega com o filtro aberto. O quadro ao lado do mapa também atualiza a cada 5 s | fila e mapa |
 | 5 | Documentação | ✅ README testado do zero (clone novo, ambiente novo, testes, servidor), `RESUMO.md`, `ENTREGA.md` com os textos prontos, IA.md e índice de evidências | `README.md`, `docs/` |
 | 6 | Pitch | ✅ roteiro de 90 s cronometrado, ordem de cliques da demo, perguntas da banca, cola para os integrantes e checklist de sábado | `docs/pitch/` |
+| + | Mapa com formas de shopping (pedido extra) | ✅ zonas em polígono; os 4 pisos redesenhados do zero com formas irregulares e nomes fictícios; revisor confirmou por programa que nada veio da planta real nem do HTML de referência | `docs/evidencias/mapa/` |
 | + | Prints do gato da sexta-feira 13 | ✅ tirados às 22h32 do dia 13 (só valiam naquele dia) | `docs/evidencias/` |
 
-Tags: `v-missao2-final` é a versão da entrega. `v-missao2-estavel` é o ponto de segurança anterior.
+Tags: `v-missao2-entrega` é a versão da entrega. `v-missao2-final` (antes do mapa novo) e `v-missao2-estavel` são pontos de segurança anteriores.
 
 ## O que falhou ou deu trabalho
 - O limite de uso de uma conta acabou às 23h30, com o revisor no meio do trabalho. O revisor foi retomado na outra conta e terminou. Nada se perdeu, porque tudo já estava em commit e no GitHub.
@@ -34,6 +35,7 @@ Tags: `v-missao2-final` é a versão da entrega. `v-missao2-estavel` é o ponto 
 6. Cada um ler `docs/pitch/cola-integrantes.md`: a banca pode perguntar para qualquer um.
 
 ## Riscos para a demo
+- No celular, os botões de zoom (+/−) cobrem a borda direita da Área técnica (L2) no mapa. Toque no meio da zona.
 - O site no ar dorme depois de 15 min e leva ~1 min para acordar. Plano B: rodar no notebook (`python wsgi.py`), descrito em `docs/pitch/demo-cliques.md`.
 - O gato da sexta-feira 13 só aparece com `SEXTA13=1 python wsgi.py`, no notebook.
 - A planta enviada no "Editar mapa" some quando o site reinicia. Para a demo, usem o desenho fictício.

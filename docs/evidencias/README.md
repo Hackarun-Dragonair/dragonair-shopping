@@ -26,8 +26,9 @@ Critério "Cumprimento das missões e qualidade das evidências" vale 20%. Tudo 
 | [`m2_13-2240_gato-sexta13-no-mapa.png`](m2_13-2240_gato-sexta13-no-mapa.png) · [`m2_13-2240_gato-sexta13-celular.png`](m2_13-2240_gato-sexta13-celular.png) | Easter Egg: gato preto na zona esquecida há mais tempo (print real do dia 13/11, 22h32) |
 | [`m2_13-2240_gato-espantado.png`](m2_13-2240_gato-espantado.png) | Conferir a zona espanta o gato: "Gato preto espantado!" |
 | [`qr/`](qr/README.md) (README + `m2_13-2242_etiquetas-qr.png`) | QR de verdade: o PDF de etiquetas (local e do site no ar) virou imagem e cada QR foi lido: 11 zonas → endereço certo → abre sem login (HTTP 200). Depois, correção do desenho do QR (`fix:`) para ler melhor impresso |
+| [`mapa/`](mapa/README.md) (README + 8 prints) | Mapa com formas de shopping: zonas em polígono, 4 pisos redesenhados do zero (fictício, sem a planta real), no computador e no celular |
 | [`../missao-2/teste-usabilidade.md`](../missao-2/teste-usabilidade.md) | Teste com 3 pessoas de fora: roteiro, folha de anotação e resumo (preenchido pela equipe no dia) |
-| Testes automáticos: pasta `tests/` + GitHub Actions | 73 testes (pytest) rodando em todo pull request (aba **Actions** do repositório) |
+| Testes automáticos: pasta `tests/` + GitHub Actions | 77 testes (pytest) rodando em todo pull request (aba **Actions** do repositório) |
 | Histórico do git (commits `fix:`) | Cada correção com uma frase explicando o que mudou |
 | Print do envio da Missão 2 | *(a salvar aqui no sábado: `m2_14-0945_envio-missao2.png`)* |
 
