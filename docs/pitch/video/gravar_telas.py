@@ -10,7 +10,7 @@ Como funciona:
   - SÓ durante a gravação, injeta uma seta de mouse e um círculo de toque desenhados em CSS,
     porque o Chrome sem janela não desenha o cursor;
   - guarda marcas de tempo (marcas.json) para a montagem cortar as esperas.
-Saída: celular.mp4 (780x1688), computador.mp4 (3072x1728, tela de 1536x864 com zoom 2x) e marcas.json.
+Saída: abertura.mp4 (mapa), celular.mp4 (780x1688), computador.mp4 (3072x1728, tela de 1536x864 com zoom 2x) e marcas.json.
 """
 import asyncio
 import base64
@@ -171,6 +171,40 @@ async def rolar_ate(page, seletor, topo=90, duracao=0.9):
         await asyncio.sleep(0.01)
 
 
+async def rolar_ate_loc(page, loc, topo=90, duracao=0.9):
+    """Igual a rolar_ate, mas para um elemento achado pelo Playwright (ex.: por texto)."""
+    b = await loc.first.bounding_box()
+    y0 = await page.evaluate("scrollY")
+    y = y0 + b["y"] - topo
+    comeco = time.time()
+    while True:
+        s = min(1.0, (time.time() - comeco) / duracao)
+        await page.evaluate(f"scrollTo(0, {y0 + (y - y0) * s * s * (3 - 2 * s)})")
+        if s >= 1.0:
+            break
+        await asyncio.sleep(0.01)
+
+
+async def abertura(nav):
+    """Mapa real, sem ninguém logado, com as zonas cinza: é a primeira imagem do vídeo."""
+    print("abertura (mapa)")
+    ctx = await nav.new_context(viewport={"width": 1536, "height": 864}, device_scale_factor=2, locale="pt-BR")
+    await ctx.add_init_script("window.__semCursor = true;" + CURSOR_JS)
+    page = await ctx.new_page()
+    await page.goto(BASE + "/")
+    await page.wait_for_selector("svg .zona")
+    await asyncio.sleep(1.0)
+    g = Gravador(page, "abertura", 3072, 1728)
+    await g.comecar()
+    n = await page.locator("svg .zona.z-cinza").count()
+    g.marcar("mapa", svg=await g.caixa("svg.mapa-svg"),
+             cinzas=[await g.caixa(f"svg .zona.z-cinza >> nth={i}") for i in range(n)])
+    await asyncio.sleep(9.0)
+    marcas = await g.parar()
+    await ctx.close()
+    return marcas
+
+
 async def tocar(page, seletor):
     await page.locator(seletor).first.scroll_into_view_if_needed()
     await page.tap(seletor)
@@ -186,6 +220,23 @@ async def celular(nav):
     await page.goto("about:blank")
     g = Gravador(page, "celular", 780, 1688)
     await g.comecar()
+    # Uso do dia a dia: QR do Sanitário piso 1 (sem conferência) -> Tudo OK -> verde no mapa.
+    await page.goto(BASE + "/z/sanitario-piso1?origem=qr")
+    await page.wait_for_load_state("networkidle")
+    g.marcar("zona_ok", cartao=await g.caixa(".cartao-zona"), botoes=await g.caixa("form.d-grid"))
+    await asyncio.sleep(3.0)
+    await page.tap("button[value=ok]")
+    g.marcar("toque_ok")
+    await page.wait_for_selector(".aviso-ok")
+    await asyncio.sleep(0.3)
+    g.marcar("ok_registrado", aviso=await g.caixa(".aviso-ok"), cartao=await g.caixa(".cartao-zona"))
+    await asyncio.sleep(1.8)
+    await page.tap("a.link-voltar")
+    await page.wait_for_selector("svg .zona")
+    await asyncio.sleep(0.8)
+    g.marcar("mapa_cel", svg=await g.caixa("svg.mapa-svg"),
+             zona=await g.caixa("svg .zona[aria-label^='Sanitário piso 1']"))
+    await asyncio.sleep(3.0)
     await page.goto(BASE + "/z/area-tecnica-l2?origem=qr")
     await page.wait_for_load_state("networkidle")
     g.marcar("zona")
@@ -212,11 +263,12 @@ async def celular(nav):
     await rolar_ate(page, "#sugestao", topo=72, duracao=1.0)
     await asyncio.sleep(0.3)
     g.marcar("sugestao", alerta=await g.caixa("#alerta-risco"), desempate=await g.caixa("#desempate"),
-             prioridade=await g.caixa("#prioridade"))
+             prioridade=await g.caixa("#prioridade"), confianca=await g.caixa("#confianca"))
     await asyncio.sleep(3.5)
     eletrica = "#desempate button:has-text('Elétrica')"
     await page.tap(eletrica)
-    g.marcar("toque_eletrica", categoria=await g.caixa("#categoria"))
+    g.marcar("toque_eletrica", categoria=await g.caixa("#categoria"), alerta=await g.caixa("#alerta-risco"),
+             prioridade=await g.caixa("#prioridade"))
     await asyncio.sleep(2.0)
     await page.tap("#botao-registrar")
     g.marcar("toque_registrar")
@@ -263,7 +315,8 @@ async def computador(nav, href):
     g.marcar("clicou_confirmar")
     await page.wait_for_selector("#mensagem .aviso")
     await page.wait_for_load_state("networkidle")
-    g.marcar("mantida", aviso=await g.caixa("#mensagem .aviso"), linha=await g.caixa(".linha-tempo"))
+    g.marcar("mantida", aviso=await g.caixa("#mensagem .aviso"), linha=await g.caixa(".linha-tempo"),
+             permanente=await g.caixa("text=Registro permanente"))
     await asyncio.sleep(2.5)
     await ir_ate(page, ".linha-tempo li:last-child", 1.4, dx=0.3)
     g.marcar("linha_tempo")
@@ -289,7 +342,7 @@ async def computador(nav, href):
     await page.goto(BASE + "/telas/painel")
     await page.wait_for_load_state("networkidle")
     await asyncio.sleep(0.6)
-    g.marcar("painel", topo=await g.caixa("main .row >> nth=0"))
+    g.marcar("painel", topo=await g.caixa("main .row >> nth=0"), cabecalho=await g.caixa("text=não avalia pessoas"))
     await mover(page, 760, 300, 1.4)
     await asyncio.sleep(2.0)
     await page.mouse.wheel(0, 0)
@@ -299,13 +352,22 @@ async def computador(nav, href):
     await page.goto(BASE + "/telas/sobre-a-ia")
     await page.wait_for_load_state("networkidle")
     await asyncio.sleep(0.6)
-    g.marcar("ia", numeros=await g.caixa(".row, .cartoes-ia, main .card"))
-    await asyncio.sleep(1.0)
-    await ir_ate(page, "text=dos P1 marcados como P1", 1.4)
-    g.marcar("ia_p1")
-    await asyncio.sleep(2.5)
-    await ir_ate(page, "text=Modelo + regra dura >> nth=-1", 1.2)
-    g.marcar("ia_tabela", tabela=await g.caixa("table >> nth=0"))
+    tabela = page.locator(".card:has-text('Regras x modelo')").first
+    await rolar_ate_loc(page, tabela, topo=110, duracao=0.8)  # tabela no alto: os cartões de 100% saem da tela
+    await asyncio.sleep(0.3)
+    g.marcar("ia", tabela=await g.caixa(".card:has-text('Regras x modelo')"))
+    await asyncio.sleep(0.8)
+    await ir_ate(page, "td:has-text('Só regras de palavras')", 1.2)
+    g.marcar("ia_regras")
+    await asyncio.sleep(2.2)
+    await ir_ate(page, "td:has-text('Modelo + regra dura')", 1.0)
+    g.marcar("ia_modelo")
+    await asyncio.sleep(2.0)
+    campo = page.locator("p:has-text('Também medimos')")
+    await rolar_ate_loc(page, campo, topo=420, duracao=1.0)
+    await asyncio.sleep(0.3)
+    g.marcar("ia_campo", campo=await g.caixa("p:has-text('Também medimos')"))
+    await ir_ate(page, "p:has-text('Também medimos') strong", 1.0)
     await asyncio.sleep(3.5)
     marcas = await g.parar()
     await ctx.close()
@@ -315,10 +377,11 @@ async def computador(nav, href):
 async def principal():
     async with async_playwright() as p:
         nav = await p.chromium.launch(channel="chrome")
+        m_abertura = await abertura(nav)
         m_cel, href = await celular(nav)
         m_pc = await computador(nav, href)
         await nav.close()
-    (SAIDA / "marcas.json").write_text(json.dumps({"celular": m_cel, "computador": m_pc}, indent=1, ensure_ascii=False))
+    (SAIDA / "marcas.json").write_text(json.dumps({"abertura": m_abertura, "celular": m_cel, "computador": m_pc}, indent=1, ensure_ascii=False))
 
 
 asyncio.run(principal())

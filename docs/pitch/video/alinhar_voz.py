@@ -9,7 +9,7 @@ Como decide:
      se ainda assim passar, o vídeo fica um pouco mais longo (o regulamento aceita até 2 min);
      se a fala for curta, a cena final fica mais tempo na tela;
   3. acha as pausas da gravação e usa as maiores como troca de bloco do roteiro
-     (problema, solução, IA, gestor, acerto, diferencial); dentro de cada bloco,
+     (problema, solução, IA, supervisor, acerto, diferencial, próximo passo); dentro de cada bloco,
      escolhe em ordem as pausas que melhor batem com a proporção da voz guia (troca de frase).
 Só usa a biblioteca padrão do Python e o ffmpeg.
 """
@@ -20,14 +20,13 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from roteiro_video import INICIO  # noqa: E402
+from roteiro_video import FOLGA_FINAL, INICIO  # noqa: E402
 
 guia = json.loads(Path(sys.argv[1]).read_text())
 voz = Path(sys.argv[2])
 saida = Path(sys.argv[3])
 saida.mkdir(parents=True, exist_ok=True)
 
-FOLGA_FINAL = 3.0           # segundos da cartela final depois da última fala
 LIMITE_VIDEO = 90.0
 MAX_ACELERA = 1.06
 
@@ -162,7 +161,7 @@ for n, k in enumerate(blocos):
     for j, i in enumerate(range(k, ult + 1)):
         f = falas_g[i]
         ini, fim = comecos[j], fins_antes[j]
-        novas.append(dict(texto=f["texto"], bloco=f["bloco"], inicio=round(ini, 3), fim=round(max(fim, ini + 0.6), 3)))
+        novas.append(dict(id=f["id"], texto=f["texto"], bloco=f["bloco"], inicio=round(ini, 3), fim=round(max(fim, ini + 0.6), 3)))
 for a, b in zip(novas, novas[1:]):  # legenda nunca passa por cima da seguinte
     a["fim"] = min(a["fim"], b["inicio"] - 0.05)
 

@@ -1,6 +1,7 @@
 """Renderiza as cartelas (cartelas.html) em PNG 3840x2160 (o dobro de 1920x1080, para o zoom suave).
 
-Uso: <python com playwright>/bin/python docs/pitch/video/render_cartelas.py <pasta_trabalho> <qr.svg>
+Uso: <python com playwright>/bin/python docs/pitch/video/render_cartelas.py <pasta_trabalho> <qr-zona.svg> <qr-demo.svg>
+(qr-zona: etiqueta da zona de demonstração; qr-demo: link da demo online, na cartela final)
 Precisa das fontes Montserrat em <pasta_trabalho>/fontes (licença OFL, baixadas pelo fazer_video.sh).
 """
 import sys
@@ -10,19 +11,27 @@ from playwright.sync_api import sync_playwright
 
 AQUI = Path(__file__).resolve().parent
 trabalho = Path(sys.argv[1]).resolve()
-qr = Path(sys.argv[2]).read_text()
-if "viewBox" not in qr:  # o segno grava largura fixa; com viewBox o QR estica no tamanho da etiqueta
+
+
+def ler_qr(caminho):
+    """O segno grava largura fixa; com viewBox o QR estica no tamanho da caixa."""
     import re
-    m = re.search(r'width="(\d+)" height="(\d+)"', qr)
-    qr = qr.replace(m.group(0), f'viewBox="0 0 {m.group(1)} {m.group(2)}"', 1)
+    qr = Path(caminho).read_text()
+    if "viewBox" not in qr:
+        m = re.search(r'width="(\d+)" height="(\d+)"', qr)
+        qr = qr.replace(m.group(0), f'viewBox="0 0 {m.group(1)} {m.group(2)}"', 1)
+    return qr
+
+
+qr_zona, qr_demo = ler_qr(sys.argv[2]), ler_qr(sys.argv[3])
 saida = trabalho / "cartelas"
 saida.mkdir(parents=True, exist_ok=True)
 
 # Passos da cena do celular: um fundo para cada passo em destaque.
 PASSOS = [
-    ("Toca Problema e escreve do seu jeito", ""),
-    ("A IA sugere categoria e prioridade", ""),
-    ("Em dúvida, ela pergunta. A pessoa decide", ""),
+    ("Escreve do seu jeito", ""),
+    ("A IA ficou em dúvida? Ela pergunta", ""),
+    ("A pessoa decide com um toque", ""),
     ("Risco: P1 e aviso para a brigada", "risco"),
 ]
 blocos = []
@@ -35,7 +44,7 @@ for atual in range(1, len(PASSOS) + 1):
   <div class="coluna"><div class="rotulo">No celular do funcionário</div><ul class="passos">{"".join(itens)}</ul></div></section>''')
 
 html = (AQUI / "cartelas.html").read_text()
-html = html.replace("{{FONTES}}", (trabalho / "fontes").as_uri()).replace("{{QR}}", qr).replace("{{PASSOS}}", "\n".join(blocos))
+html = html.replace("{{FONTES}}", (trabalho / "fontes").as_uri()).replace("{{QR_ZONA}}", qr_zona).replace("{{QR_DEMO}}", qr_demo).replace("{{PASSOS}}", "\n".join(blocos))
 pagina = trabalho / "cartelas.html"
 pagina.write_text(html)
 
