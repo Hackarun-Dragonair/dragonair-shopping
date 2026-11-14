@@ -20,7 +20,7 @@
 ## Pendências (ordem de prioridade)
 1. **Arthur dar OK → juntar `qa-fixes` no `main` e enviar** (rodar `.venv/bin/python -m pytest -q` antes; esperado 67 passed). Depois conferir o site no Render.
 2. **Teste de usabilidade real com 3 pessoas de fora** → preencher `docs/missao-2/teste-usabilidade.md` (o roteiro está pronto; o QA automático **não** substitui, regra 6.5).
-3. **Prints** que faltam no checklist: gato 🐈‍⬛ no mapa (só vale no dia 13!) e telas no celular de verdade → `docs/evidencias/`.
+3. **Prints** que faltam: telas num celular de verdade → `docs/evidencias/` (os do gato 🐈‍⬛ já estão lá, tirados em 13/11 22h32).
 4. **README** "Como executar" testado por quem não escreveu o código; `docs/IA.md` final.
 5. Fila recarrega a cada 15 s (o mapa já usa 5 s). Baixar para 5 s se der tempo.
 6. Selo "IA local · X ms" e top-2 na sugestão (cortar se atrasar).
