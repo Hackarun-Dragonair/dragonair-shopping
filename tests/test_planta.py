@@ -37,6 +37,14 @@ def test_rejeita_arquivo_que_nao_e_imagem(client):
     assert resp.status_code == 400
 
 
+def test_recusa_envio_grande_demais(client):
+    _gestor(client)
+    grande = PNG + b"\x00" * (10 * 1024 * 1024)  # 10 MB, acima do limite de 9 MB
+    resp = client.post("/plantas/L1/imagem", data={"arquivo": (io.BytesIO(grande), "planta.png")},
+                       content_type="multipart/form-data")
+    assert resp.status_code == 413
+
+
 def test_rejeita_zona_de_outro_piso_e_grade_invalida(client):
     _gestor(client)
     assert client.post("/plantas/L1/layout", json={"celulas": [[0, 0, "doca-1"]]}).status_code == 400
