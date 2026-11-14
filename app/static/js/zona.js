@@ -42,12 +42,52 @@
     $("equipe").value = String(r.equipe_id);
 
     const pct = Math.round(s.confianca * 100);
-    $("confianca").textContent = `Sugestão da IA local · confiança ${pct}%` + (pct < 50 ? " · IA em dúvida, confira" : "") + ". Você pode mudar.";
+    const emDuvida = pct < 50 && !s.alternativa;   // com alternativa, a pergunta abaixo já avisa
+    $("confianca").textContent = `Sugestão da IA local · confiança ${pct}%` + (emDuvida ? " · IA em dúvida, confira" : "") + ". Você pode mudar.";
+    mostrarDesempate(s, r);
     const alerta = $("alerta-risco");
     if (s.risco) { alerta.textContent = s.aviso; alerta.classList.remove("d-none"); }
     else { alerta.classList.add("d-none"); }
     $("sugestao").classList.remove("d-none");
   });
+
+  // 2b) Pergunta de desempate: a IA ficou entre duas categorias.
+  // Os botões só preenchem Categoria e Equipe; a pessoa ainda pode mudar tudo nos campos.
+  let opcoes = [];   // [{categoria, equipe_id}, {categoria, equipe_id}]
+  function mostrarDesempate(s, r) {
+    if (!s.alternativa || !r.alternativa_equipe) {
+      $("desempate").classList.add("d-none");
+      return;
+    }
+    opcoes = [
+      { categoria: s.categoria, equipe_id: String(r.equipe_id) },
+      { categoria: s.alternativa, equipe_id: String(r.alternativa_equipe.equipe_id) },
+    ];
+    $("pergunta-desempate").innerHTML =
+      `A IA ficou em dúvida. É mais <strong>${seguro(s.categoria_nome)}</strong> ou <strong>${seguro(s.alternativa_nome)}</strong>?`;
+    $("opcao-1").textContent = s.categoria_nome;
+    $("opcao-2").textContent = s.alternativa_nome;
+    marcarOpcao();
+    $("desempate").classList.remove("d-none");
+  }
+
+  // Deixa dourado o botão que bate com a categoria escolhida agora.
+  function marcarOpcao() {
+    ["opcao-1", "opcao-2"].forEach((id, i) => {
+      const escolhido = opcoes[i] && $("categoria").value === opcoes[i].categoria;
+      $(id).classList.toggle("btn-primary", escolhido);
+      $(id).classList.toggle("btn-outline-light", !escolhido);
+    });
+  }
+
+  ["opcao-1", "opcao-2"].forEach((id, i) => {
+    $(id).addEventListener("click", function () {
+      $("categoria").value = opcoes[i].categoria;
+      $("equipe").value = opcoes[i].equipe_id;
+      marcarOpcao();
+    });
+  });
+  $("categoria").addEventListener("change", marcarOpcao);
 
   // 3) Registrar
   $("botao-registrar").addEventListener("click", async function () {

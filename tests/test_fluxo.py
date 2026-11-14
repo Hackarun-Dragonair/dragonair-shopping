@@ -61,6 +61,33 @@ def test_frase_de_vazamento_sugere_hidraulica_e_entra_na_fila(client):
     assert any("pingando do teto" in item["descricao"] for item in fila)
 
 
+def test_frase_ambigua_traz_pergunta_de_desempate(client):
+    # "lixo e agua no piso" pode ser Hidráulica (vazamento) ou Limpeza (sujeira):
+    # a IA devolve uma alternativa e a equipe dela, e a tela pergunta à pessoa.
+    triagem = client.post(
+        "/z/banheiro-l2-norte/triagem",
+        json={"descricao": "lixo e agua no piso", "origem": "qr"},
+    ).get_json()
+    sugestao = triagem["sugestao"]
+    assert {sugestao["categoria"], sugestao["alternativa"]} == {"hidraulica", "limpeza"}
+    assert sugestao["alternativa_nome"]
+    assert triagem["alternativa_equipe"]["equipe_id"] != triagem["equipe_id"]
+
+
+def test_frase_clara_nao_traz_desempate(client):
+    triagem = client.post(
+        "/z/banheiro-l2-norte/triagem",
+        json={"descricao": "está pingando do teto do banheiro", "origem": "qr"},
+    ).get_json()
+    assert triagem["sugestao"]["alternativa"] is None
+    assert triagem["alternativa_equipe"] is None
+
+
+def test_tela_da_zona_tem_espaco_para_o_desempate(client):
+    html = client.get("/z/banheiro-l2-norte").get_data(as_text=True)
+    assert 'id="desempate"' in html
+
+
 def test_fumaca_permanece_p1_se_tentarem_rebaixar(client, app):
     with app.app_context():
         from app.db import get_db
