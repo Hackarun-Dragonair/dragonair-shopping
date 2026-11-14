@@ -31,10 +31,10 @@ _ACENTOS = str.maketrans(
     "aaaaaeeeeiiiiooooouuuuc",
 )
 
-# Só os casos combinados no planejamento. Faísca e alagamento sobem
-# a prioridade pelas regras abaixo, sem o aviso de brigada.
+# Casos combinados pela equipe (gás incluído no sábado 14/11, depois da banca simulada).
+# Faísca e alagamento sobem a prioridade pelas regras abaixo, sem o aviso de brigada.
 _RISCO = re.compile(
-    r"\bfumaca\b|\bfogo\b|\bincendio\b|\bchoque\b|\beletrocut"
+    r"\bfumaca\b|\bfogo\b|\bincendio\b|\bgas\b|\bchoque\b|\beletrocut"
     r"|\bpessoa presa\b|\bgente presa\b|\balguem preso\b"
     r"|\bpreso no elevador\b|\bpresa no elevador\b"
 )

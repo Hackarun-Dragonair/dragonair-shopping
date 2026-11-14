@@ -22,6 +22,8 @@ def test_palavras_de_risco_disparam_o_aviso():
         "tomada deu choque",
         "pessoa presa no elevador",
         "incêndio no corredor",
+        "cheiro de gás no restaurante",
+        "vazamento de gas na cozinha",
     ):
         assert detectar_risco(frase)
 
@@ -29,6 +31,7 @@ def test_palavras_de_risco_disparam_o_aviso():
 def test_piso_molhado_nao_e_risco_de_brigada():
     assert not detectar_risco("piso molhado sem placa")
     assert not detectar_risco("fogão da lanchonete sujo")
+    assert not detectar_risco("gasto de papel toalha alto")  # "gas" só como palavra inteira
 
 
 def test_risco_nao_rebaixa_mesmo_se_o_modelo_disser_p4():

@@ -7,7 +7,7 @@ Você vai me ajudar no projeto **Ronda Viva** (hackathon, equipe de 4 alunos ini
 É um sistema web responsivo para shopping: o funcionário lê o QR de uma zona (banheiro, praça, doca...)
 e toca OK / Atenção / Problema. Uma IA offline sugere categoria e prioridade (P1 a P4). O mapa fica cinza
 quando ninguém conferiu a zona no prazo. Toda ocorrência tem linha do tempo que não pode ser apagada.
-Fumaça, fogo, choque ou pessoa presa = P1 + "Avise a brigada pelo rádio", nunca rebaixa.
+Fumaça, fogo, gás, choque ou pessoa presa = P1 + "Avise a brigada pelo rádio", nunca rebaixa.
 
 Tecnologia FIXA: Python + Flask + Jinja2 + SQLite (sqlite3 puro) + Bootstrap 5 local + JavaScript puro + scikit-learn + pytest.
 Não sugira outras tecnologias, API paga, React nem banco externo. Não mude a API JSON existente.

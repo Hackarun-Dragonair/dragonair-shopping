@@ -42,7 +42,7 @@ A equipe revisou e responde por todo conteúdo gerado com IA.
 **Como lidamos com os erros da IA:**
 - Ela só **sugere**. A tela mostra a confiança, e abaixo de 50% avisa "IA em dúvida, confira". Esse aviso **aparece na maioria das vezes**, não só em casos raros (ver "Limite" abaixo). Por isso a pessoa e o gestor sempre conferem.
 - Quando ela fica em dúvida entre duas categorias, a tela da zona faz uma pergunta de desempate.
-- **Regra fixa acima da IA** (`app/dominio.py`): fumaça, fogo, choque ou pessoa presa → **P1** e "Avise a brigada pelo rádio". Ninguém rebaixa, nem a IA nem o supervisor. O sistema não aciona ninguém sozinho.
+- **Regra fixa acima da IA** (`app/dominio.py`): fumaça, fogo, gás, choque ou pessoa presa → **P1** e "Avise a brigada pelo rádio". Ninguém rebaixa, nem a IA nem o supervisor. O sistema não aciona ninguém sozinho.
 - Toda sugestão e toda correção ficam na **linha do tempo**, que não se apaga.
 - Não avalia pessoas: indicadores só por zona e equipe.
 
@@ -69,5 +69,5 @@ A equipe revisou e responde por todo conteúdo gerado com IA.
 - Por isso o número **mais perto do real é o do teste de campo**: 81% de categoria e 62% de prioridade, com rótulos ainda a revisar. Próximo passo: validação cruzada (dividir o treino em partes e testar cada parte com o resto) e um teste novo escrito por pessoas de fora, que não viram o treino.
 - **A confiança costuma ficar abaixo de 50%.** Medimos (14/11, `obter_modelo().prever` em cada frase): no teste cego, 16 de 20 frases ficaram abaixo de 50%; no teste de campo, 13 de 16. A média foi 37% nos dois (com 6 categorias, um chute daria 17%). É natural com 145 frases de treino. Na prática, o aviso de dúvida aparece quase sempre, e a pessoa confirma a categoria com um toque. Calibrar a confiança é próximo passo.
 - **Onde a IA mais ajuda é na prioridade**, não na categoria. Comparando com as palavras-chave sozinhas: no teste cego, prioridade 95% contra 40%; no campo, 62% contra 12%. Na categoria a diferença é menor (100% contra 90%; 81% contra 69%).
-- O recall de P1 de 100% vem do modelo + regras de prioridade. A regra dura em si garante só fumaça, fogo, choque e pessoa presa; os outros P1 (faísca, saída de emergência travada, extintor ausente, forro pendurado) o modelo acertou. **Gás não está na regra dura**: "cheiro de gás" ainda depende da IA (hoje sai como Limpeza P2). Incluir gás na regra é uma decisão da equipe.
+- O recall de P1 de 100% vem do modelo + regras de prioridade. A regra dura em si garante só fumaça, fogo, gás, choque e pessoa presa; os outros P1 (faísca, saída de emergência travada, extintor ausente, forro pendurado) o modelo acertou. **Gás não está na regra dura**: "cheiro de gás" ainda depende da IA (hoje sai como Limpeza P2). Incluir gás na regra é uma decisão da equipe.
 - Por isso a IA só sugere e o supervisor confirma.

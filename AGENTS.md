@@ -8,7 +8,7 @@
 - Uma IA offline sugere categoria e prioridade. O supervisor confirma.
 - O mapa fica **cinza** quando ninguém conferiu a zona no prazo.
 - Toda ocorrência tem uma **linha do tempo** que não pode ser apagada.
-- Fumaça, fogo, choque ou pessoa presa → **P1** e **"Avise a brigada pelo rádio"**. Nunca rebaixa; o sistema nunca chama ninguém sozinho.
+- Fumaça, fogo, gás, choque ou pessoa presa → **P1** e **"Avise a brigada pelo rádio"**. Nunca rebaixa; o sistema nunca chama ninguém sozinho.
 - Indicadores por zona e equipe, **nunca por pessoa**.
 
 ## Tecnologia (não trocar)

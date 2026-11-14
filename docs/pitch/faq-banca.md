@@ -77,7 +77,7 @@ A visão é pelo **lugar**, no mapa: a zona esquecida fica cinza, mesmo sem tare
 As duas coisas são verdade. O banco tem um bloqueio (`app/db.py`, função `instalar_triggers`) que impede alterar ou apagar a linha do tempo pelo sistema. A demo usa `SEED_ON_START=1` **de propósito**: a cada início, o banco volta aos dados de exemplo, para a banca sempre ver o mesmo cenário. Em produção: `SEED_ON_START=0` e cópia de segurança (backup) do banco.
 
 **20. Cheiro de gás: o que acontece?**
-Hoje, a regra de risco cobre **fumaça, fogo, choque e pessoa presa**. Gás ainda depende da IA. Rodamos o modelo: "cheiro de gás no restaurante" sai como Limpeza P2 (26%, com a pergunta "Limpeza ou Elétrica?") e "vazamento de gás na cozinha" sai como Segurança P2. Não aparece o aviso da brigada. Incluir gás na regra de risco é uma decisão da equipe e muda o contrato; seria a primeira coisa do piloto, junto com a brigada do shopping.
+Vira **P1** com "Avise a brigada pelo rádio". Na madrugada, a nossa banca simulada achou que "cheiro de gás no restaurante" saía como Limpeza P2, porque gás dependia só da IA. A equipe decidiu no sábado incluir **gás** na regra fixa (`app/dominio.py`, lista `_RISCO`), com teste. É um exemplo do que a regra fixa existe para fazer: o que é risco de vida não depende do palpite da IA. No piloto, a lista de palavras seria revisada com a brigada do shopping.
 
 **21. A planta enviada no editor fica pública?**
 Sim: a imagem de fundo é mostrada a quem abre o mapa, sem login. Por isso a equipe **não usa a planta real** do shopping, só um desenho nosso. Em produção, a imagem ficaria só para quem entrou com crachá.

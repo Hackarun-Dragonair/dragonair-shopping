@@ -6,7 +6,7 @@ A banca pode perguntar para **qualquer** integrante. Leia isto 2 vezes e treine 
 1. **Cada área do shopping é uma "zona"** e tem um **QR** colado sempre no mesmo tipo de lugar.
 2. O funcionário lê o QR com o celular (sem instalar nada, sem senha) e toca **OK, Atenção ou Problema**.
 3. No **Problema**, escreve do jeito dele. A **IA sugere** a categoria (ex.: Elétrica) e a prioridade (P1 a P4), e a pessoa pode mudar.
-4. Se a frase tem **fumaça, fogo, choque ou pessoa presa**, vira **P1** e aparece **"Avise a brigada pelo rádio"**. Ninguém baixa essa prioridade.
+4. Se a frase tem **fumaça, fogo, gás, choque ou pessoa presa**, vira **P1** e aparece **"Avise a brigada pelo rádio"**. Ninguém baixa essa prioridade.
 5. O **gestor** entra com crachá e **confirma**. A ocorrência vai para a **fila** da equipe certa: Aberto → Em atendimento → Resolvido. Cada passo entra numa **linha do tempo que não se apaga**.
 6. O **mapa** mostra cada zona com uma cor. **Cinza = ninguém conferiu no prazo.** O **painel** mostra os números por zona e equipe, nunca por pessoa.
 
@@ -44,7 +44,7 @@ A banca pode perguntar para **qualquer** integrante. Leia isto 2 vezes e treine 
 - **Limite:** o teste cego é pequeno e foi escrito por nós. O 100% não é garantia no shopping de verdade. **Por isso a IA só sugere e o gestor confirma.**
 
 ## A regra que ninguém quebra
-Fumaça, fogo, choque ou pessoa presa → **P1** + "Avise a brigada pelo rádio".
+Fumaça, fogo, gás, choque ou pessoa presa → **P1** + "Avise a brigada pelo rádio".
 - A IA não consegue baixar. O gestor tenta P3 e o sistema responde "Prioridade mantida em P1".
 - O sistema **não chama ninguém sozinho**: quem decide é a brigada.
 

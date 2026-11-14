@@ -24,7 +24,7 @@ Código de zona: minúsculo com hífen. Ex.: `sanitario-piso1`.
 - Guia passo a passo: [`missao-2/guia-dados.md`](missao-2/guia-dados.md).
 
 ## 3. Regras que não mudam
-- Fumaça, fogo, choque ou pessoa presa → **P1** e **"Avise a brigada pelo rádio"**. Ninguém rebaixa (`garantir_prioridade`). O sistema não aciona ninguém sozinho.
+- Fumaça, fogo, gás, choque ou pessoa presa → **P1** e **"Avise a brigada pelo rádio"**. Ninguém rebaixa (`garantir_prioridade`). O sistema não aciona ninguém sozinho.
 - A IA só **sugere**. O supervisor confirma.
 - A **linha do tempo** (tabela `eventos`) só recebe novos registros. Nunca altera nem apaga.
 - Indicadores por **zona e equipe**, nunca por pessoa. Usuários da demo são fictícios.
