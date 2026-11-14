@@ -13,6 +13,7 @@ def app(tmp_path):
             "DATABASE": str(tmp_path / "teste.sqlite3"),
             "SEED_ON_START": True,
             "SECRET_KEY": "teste",
+            "PLANTAS_DIR": str(tmp_path / "plantas"),
         }
     )
     yield aplicacao
