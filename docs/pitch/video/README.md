@@ -16,7 +16,7 @@ Os vídeos **não vão para o git** (são grandes). Ficam em `~/Vídeos/ronda-vi
 | `pitch-90s-final.mp4` | gerado por `montar_com_voz.sh` com a voz gravada pela equipe |
 | `trabalho/` | gravações de tela, cartelas, voz guia, cenas e quadros de revisão (pode apagar; o `fazer_video.sh` refaz) |
 
-Formato: 1920x1080, 30 fps, H.264 + AAC 48 kHz, cerca de 20 MB.
+Formato: 1920x1080, 30 fps, H.264 + AAC 48 kHz, cerca de 23 MB (limite: 50 MB).
 
 ## Gravar a voz humana (versão final)
 1. Siga [`GRAVAR-VOZ.md`](GRAVAR-VOZ.md) (5 minutos, no celular) lendo [`texto-locucao.md`](texto-locucao.md).
