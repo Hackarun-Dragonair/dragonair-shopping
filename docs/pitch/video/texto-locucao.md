@@ -11,7 +11,8 @@ Não precisa bater no segundo: o `montar_com_voz.sh` encaixa a sua voz e acerta 
 - Pode falar "pra" no lugar de "para", se sair mais natural. Não troque o resto: a legenda segue este texto.
 - Pronúncia: "P1" = **pê um**; "P3" = **pê três**; "QR" = **quê érre**; "IA" = **i á**; "24%" = **vinte e quatro por cento**; "81%" = **oitenta e um por cento**.
 
-**Ritmo:** calmo. 211 palavras em cerca de **88 segundos de fala** (no máximo 2,6 palavras por segundo em cada frase).
+**Ritmo:** calmo. 211 palavras em cerca de **88 segundos** de vídeo: cerca de **2,8 palavras por segundo** dentro das frases.
+**Fale sem pressa**, principalmente nas frases curtas e nos números; as pausas entre as partes são **curtas** (cerca de 1 s).
 O vídeo tem **89,6 s**. Se a sua fala passar de 90 s, o script acelera no máximo 6%, sem cortar nada.
 
 ---

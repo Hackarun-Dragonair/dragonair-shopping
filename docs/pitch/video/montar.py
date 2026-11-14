@@ -29,6 +29,7 @@ MARCAS = json.loads((TRAB / "telas" / "marcas.json").read_text())
 AB, CEL, PC = MARCAS["abertura"], MARCAS["celular"], MARCAS["computador"]
 FPS = 30
 XF = 0.35  # duração da transição entre cenas (fade)
+CORTE_SECO = {"ia"}  # cenas que entram com corte seco (a fusão mostraria o topo da tela da IA)
 
 T = {f["id"]: f["inicio"] for f in TEMPOS["falas"]}  # início de cada fala
 E = {f["id"]: f["fim"] for f in TEMPOS["falas"]}     # fim de cada fala
@@ -185,11 +186,17 @@ def render_cartela(nome, imagens, dur, z_fim=1.06, centro=None):
 
 def render_gancho(nome, dur):
     """Abertura: o mapa real com zonas cinza se aproximando devagar e, por cima, a pergunta entrando."""
-    cinzas = [centro_pc(c) for c in AB["mapa"]["cinzas"]]
-    alvo = max(cinzas, key=lambda c: c[0])  # zona cinza mais à direita (a faixa cobre a esquerda)
+    # Enquadra só o desenho do mapa: a borda direita do quadro nunca passa do fim do mapa,
+    # então a coluna de indicadores (com "100% Acerto da IA") fica de fora.
+    x, y, w, h = AB["mapa"]["svg"]
+    direita, cy = x + w + 20, y + h / 2
+
+    def centro_x(z):
+        return direita - 3072 / z / 2
+
     fundo = CENAS / f"{nome}_mapa.mp4"
     render_um(fundo, trecho("abertura", m(AB, "mapa") + 0.2, m(AB, "mapa") + 0.2 + dur,
-                            zoom=[(0, 1.05, 1536, 864), (dur, 1.45, alvo[0], alvo[1])]), 1.0, 0.0)
+                            zoom=[(0, 1.45, centro_x(1.45), cy), (dur, 1.7, centro_x(1.7), cy + 60)]), 1.0, 0.0)
     t_rot = 0.25
     t_l1 = T["p2"] - 0.15
     t_l2 = T["p2"] + 0.85
@@ -287,7 +294,8 @@ def cena(nome):
     if nome == "gestor":
         prio = centro_pc(p["escolheu_p3"]["prioridade"], 420, 60)
         aviso = centro_pc(p["mantida"]["aviso"], 80, -60)
-        perm = centro_pc(p["mantida"]["permanente"], -250, 220)
+        lx, ly, lw, lh = p["mantida"]["linha"]
+        perm = (lx + lw / 2, p["mantida"]["permanente"][1] + 420)  # coluna inteira + cabeçalho
         linha = centro_pc(p["mantida"]["linha"], 0, 40)
         mantem = T["g1"] + 0.55 * (E["g1"] - T["g1"])  # "...o sistema mantém P1"
         return render_trechos(nome, [
@@ -295,7 +303,7 @@ def cena(nome):
             trecho("pc", m(p, "mantida") - 0.05, m(p, "mantida") + 1.8, em=mantem,
                    zoom=fixo(2.1, aviso, de=(1.7, aviso), entra=0.5)),
             trecho("pc", m(p, "mantida") + 1.8, m(p, "linha_tempo") + 1.6, em=T["g2"] - 0.2,
-                   zoom=[(0, 2.2, *perm), (1.7, 2.2, *perm), (2.6, 1.6, *linha)]),
+                   zoom=[(0, 1.75, *perm), (1.7, 1.75, *perm), (2.6, 1.6, *linha)]),
         ], ini, d)
     if nome == "mapa":
         cinzas = [centro_pc(cx) for cx in p["mapa_caixas"]["cinzas"]]
@@ -316,7 +324,7 @@ def cena(nome):
         tabela = centro_pc(tab, 0, 150)
         campo = centro_pc(p["ia_campo"]["campo"], 0, 380)
         return render_trechos(nome, [
-            trecho("pc", m(p, "ia") + 0.1, m(p, "ia_regras") + 1.6, zoom=fixo(1.65, tabela)),
+            trecho("pc", m(p, "ia") + 0.3, m(p, "ia_regras") + 1.6, zoom=fixo(1.65, tabela)),
             trecho("pc", m(p, "ia_regras") + 1.6, m(p, "ia_modelo") + 1.0, em=T["a2"] - 0.8, zoom=fixo(1.65, tabela)),
             trecho("pc", m(p, "ia_campo") - 1.4, m(p, "ia_campo") + 3.0, em=T["a3"] - 0.6,
                    zoom=fixo(1.7, campo, de=(1.65, tabela), entra=1.2)),
@@ -443,7 +451,8 @@ def montar():
         entradas += ["-i", a]
     atual = "[0:v]"
     for i in range(1, len(arquivos)):
-        filtros.append(f"{atual}[{i}:v]xfade=transition=fade:duration={XF}:offset={inicios[ordem[i]]:.3f}[x{i}]")
+        dur_xf = 0.04 if ordem[i] in CORTE_SECO else XF
+        filtros.append(f"{atual}[{i}:v]xfade=transition=fade:duration={dur_xf}:offset={inicios[ordem[i]]:.3f}[x{i}]")
         atual = f"[x{i}]"
     filtros.append(f"{atual}format=yuv420p[v]")
     ffmpeg(*entradas, "-filter_complex", ";".join(filtros), "-map", "[v]", "-t", f"{TOTAL:.3f}",

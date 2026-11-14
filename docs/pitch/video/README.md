@@ -14,10 +14,10 @@ supervisor e linha do tempo, mapa, painel, o que medimos da IA), **4 · Diferenc
 | celular quase parado (19–28 s) | QR do Sanitário piso 1 → tela da zona → toque em **Tudo OK** → zona **verde** no mapa do celular; zoom de 1,7x |
 | fala dizia "a IA sugere" enquanto a tela mostrava a IA em dúvida | a fala conta o que a tela mostra: **24%**, ela **perguntou**, ele escolheu Elétrica; "roda sem internet" saiu |
 | "linha do tempo que não se apaga" | "a IA sugeriu Limpeza, o supervisor confirmou Elétrica, com hora e nome" + zoom em "Registro permanente" |
-| cartões gigantes de 100% e "o acerto é real" | zoom na **tabela de comparação**: palavras-chave 4 de 6 riscos, com a IA 6 de 6; em frases reais, **81%** |
+| cartões gigantes de 100% e "o acerto é real" | corte seco direto no zoom da **tabela de comparação** (os cartões de 100% não aparecem): palavras-chave 4 de 6 riscos, com a IA 6 de 6; em frases reais, **81%** |
 | "prova que o shopping cuidou" e slogan 3 vezes | "Checklist cobra a tarefa. A Ronda Viva mostra o lugar…"; slogan só nas cartelas |
-| final parado com 4 s mudos | **próximo passo** (piloto de 30 dias) + faixa "77 testes automáticos · teste cego n = 20 · demo online" + QR da demo; 1,5 s de folga |
-| frases a 3–4,6 palavras/s | no máximo **2,6 palavras/s em cada frase**; pausas de 0,7 s entre as partes |
+| final parado com 4 s mudos | **próximo passo** (piloto de 30 dias) + faixa "78 testes automáticos · teste cego n = 20 · demo online" + QR da demo; 1,5 s de folga |
+| frases a 3–4,6 palavras/s, silêncios de até 4 s | cerca de **2,8 palavras/s** dentro das frases; pausas de 0,6–0,9 s entre as partes; 1,5 s no fim |
 | rótulos pequenos | rótulos 50% maiores e zoom maior em todas as telas (legível em 640x360) |
 
 Números falados, conferidos em `docs/evidencias/modelo/resumo.md`: teste cego n = 20, recall de P1
@@ -47,8 +47,10 @@ Formato: 1920x1080, 30 fps, H.264 + AAC 48 kHz, cerca de 25 MB (limite: 50 MB).
    - Fala longa: acelera no máximo 6% (atempo), sem cortar nada. Se ainda passar, o vídeo fica um pouco mais longo (até 2 min é aceito).
    - Fala curta: as cenas acompanham a fala e a cartela final segura até no mínimo 80 s (regulamento: 75 s).
    - As legendas e as trocas de cena seguem a voz: o script acha as pausas `//` entre as partes
-     e, dentro de cada parte, as pausas entre as frases. Testado com três gravações simuladas
-     (lenta, normal e curta, com ruído): legenda a menos de 0,1 s do começo de cada frase.
+     e, dentro de cada parte, as pausas entre as frases (a duração esperada de cada frase vem do
+     tamanho do texto falado, então a pausa de uma vírgula não é confundida com o fim da frase).
+     Testado com o texto da v2 e três gravações simuladas com ruído: fala de 91 s e de 102 s →
+     legenda a menos de 0,1 s do começo de cada frase; fala exagerada de 115 s → uma frase 1,6 s fora.
 
 ## Como foi feito
 Tudo por script, sem editor de vídeo:

@@ -20,7 +20,8 @@ e roda **um comando**. O resto é automático.
 ## 3. Grave (3 min)
 - Assista uma vez o `pitch-90s-voz-guia.mp4` para pegar o ritmo (não precisa imitar a voz).
 - Toque em gravar, espere **2 segundos em silêncio** e comece.
-- Leia o texto **inteiro de uma vez**, no seu jeito de falar, com calma.
+- Leia o texto **inteiro de uma vez**, no seu jeito de falar. **Fale sem pressa**: frase curta também é devagar
+  ("Por isso criamos a Ronda Viva", "com a IA, os 6", "81%"). **Pausas curtas entre as partes** (cerca de 1 s, não 2).
   - `/` = respira curto. `//` = pausa de cerca de 1 segundo entre as partes. **Faça as pausas `//`**:
     é por elas que o computador acha onde começa cada parte do vídeo.
   - Errou uma palavra? Pare, respire e **comece de novo a frase** (ou a gravação toda). Não corte no celular.

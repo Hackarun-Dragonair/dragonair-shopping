@@ -20,7 +20,12 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from roteiro_video import FOLGA_FINAL, INICIO  # noqa: E402
+from roteiro_video import FALAS, FOLGA_FINAL, INICIO  # noqa: E402
+
+# Tamanho falado de cada frase (o texto como se pronuncia: "24%" = "vinte e quatro por cento").
+# Quem lê leva um tempo proporcional a isso; a voz guia não serve de régua porque ela é
+# desacelerada de propósito nas frases curtas.
+FALADO = {f["id"]: len(f["tts"]) + 12 for f in FALAS}  # +12 ≈ a respiração depois da frase
 
 guia = json.loads(Path(sys.argv[1]).read_text())
 voz = Path(sys.argv[2])
@@ -109,7 +114,6 @@ limites = blocos + [len(falas_g)]
 novas = []
 for n, k in enumerate(blocos):
     ult = limites[n + 1] - 1
-    gb = falas_g[ult]["fim"]
     ha = inicio_bloco_h[k]
     if n + 1 < len(blocos):
         # fim real do bloco na voz: começo da pausa que termina onde o próximo bloco começa
@@ -121,14 +125,24 @@ for n, k in enumerate(blocos):
     # Dentro do bloco: cada troca de frase vai para uma pausa da gravação. Escolhe, em ordem,
     # o conjunto de pausas que fica mais perto da proporção da voz guia (programação dinâmica);
     # pausas mais longas valem mais. Se não houver pausa boa, usa a proporção.
-    g0b = falas_g[k]["inicio"]
-    previstos = [ha + (falas_g[i]["inicio"] - g0b) * (hb - ha) / max(gb - g0b, 0.1) for i in range(k + 1, ult + 1)]
+    pesos = [FALADO[falas_g[i]["id"]] for i in range(k, ult + 1)]
+    por_peso = (hb - ha) / sum(pesos)
+    acumulado, previstos = 0.0, []
+    for w in pesos[:-1]:
+        acumulado += w
+        previstos.append(ha + acumulado * por_peso)
     cand = [(a, b) for a, b in pausas if ha + 0.6 < b < hb]
     SEM = 1.4  # custo de não usar pausa nenhuma numa troca
 
-    def custo(i, j):
+    # duração esperada de cada frase na voz (a frase i vai da troca i-1 até a troca i)
+    esperadas = [w * por_peso for w in pesos[:-1]]
+
+    def custo(i, j, antes):
+        """Quanto custa pôr a troca i na pausa j, sabendo que a frase começou em 'antes'.
+        Pesa mais a duração da frase do que a posição absoluta: assim a pausa de uma vírgula
+        no meio da frase não é confundida com o fim dela."""
         a, b = cand[j]
-        return abs(b - previstos[i]) - 0.5 * min(b - a, 1.2)
+        return abs((b - antes) - esperadas[i]) + 0.4 * abs(b - previstos[i]) - 0.5 * min(b - a, 1.2)
 
     memo = {}
 
@@ -138,11 +152,12 @@ for n, k in enumerate(blocos):
             return 0.0, []
         if (i, ultimo) in memo:
             return memo[(i, ultimo)]
+        antes = ha if ultimo < 0 else cand[ultimo][1]
         c, resto = melhor(i + 1, ultimo)
         opcao = (SEM + c, [None] + resto)
-        for j in range(ultimo + 1, len(cand)):
+        for j in range(max(ultimo, -1) + 1, len(cand)):
             c, resto = melhor(i + 1, j)
-            total_c = custo(i, j) + c
+            total_c = custo(i, j, antes) + c
             if total_c < opcao[0]:
                 opcao = (total_c, [j] + resto)
         memo[(i, ultimo)] = opcao
