@@ -46,7 +46,7 @@ Também existe: editor de mapa (o gestor envia uma imagem de fundo e pinta bloqu
 **No desenvolvimento:** Claude, Cursor e Gemini ajudaram em ideias, código, telas, testes e documentos. Tudo declarado e revisado pela equipe em `docs/IA.md`.
 
 ## Tecnologia
-Python 3.11+ · Flask · Jinja2 · SQLite · Bootstrap 5 (local, sem internet) · JavaScript puro · scikit-learn · segno (QR) · pytest (77 testes) · GitHub Actions (testes em todo PR) · Render (link público).
+Python 3.11+ · Flask · Jinja2 · SQLite · Bootstrap 5 (local, sem internet) · JavaScript puro · scikit-learn · segno (QR) · pytest (78 testes) · GitHub Actions (testes em todo PR) · Render (link público).
 Tecnologia sorteada: **Responsividade** — testada em 6 larguras, de 375 px a 1920 px (`docs/evidencias/responsividade/`).
 
 ## Links
