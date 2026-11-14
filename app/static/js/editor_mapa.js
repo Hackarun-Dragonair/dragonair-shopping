@@ -168,37 +168,48 @@
     }
     estado.colunas = c; estado.linhas = l; selecao = new Set(); alterado = true; desenhar();
   });
-  $("ed-salvar").addEventListener("click", async () => {
+  // Grava grade, formato e bloquinhos do piso. Devolve true se salvou.
+  async function salvarLayout(textoOk) {
     const celulas = [...estado.celulas].map(([k, z]) => { const [c, l] = k.split(",").map(Number); return [c, l, z]; });
     try {
       const r = await chamarApi(`/plantas/${encodeURIComponent(piso)}/layout`,
         { colunas: estado.colunas, linhas: estado.linhas, proporcao: estado.proporcao, celulas });
       layouts = r.pisos; alterado = false;
-      msg(`Mapa do piso ${piso} salvo (${r.celulas} bloquinhos).`, "success");
-    } catch (e) { msg("Não salvou: " + e.message, "danger"); }
-  });
+      msg(textoOk || `Mapa do piso ${piso} salvo (${r.celulas} bloquinhos).`, "success");
+      return true;
+    } catch (e) { msg("Não salvou: " + e.message, "danger"); return false; }
+  }
+  $("ed-salvar").addEventListener("click", () => salvarLayout());
   $("ed-enviar").addEventListener("click", async () => {
     const arquivo = $("ed-arquivo").files[0];
     if (!arquivo) return msg("Escolha uma imagem.", "danger");
     const form = new FormData(); form.append("arquivo", arquivo);
     msg("Enviando…");
-    const resp = await fetch(`/plantas/${encodeURIComponent(piso)}/imagem`, { method: "POST", body: form, headers: { Accept: "application/json" } });
-    const json = await resp.json().catch(() => ({}));
+    let resp, json;
+    try {
+      resp = await fetch(`/plantas/${encodeURIComponent(piso)}/imagem`, { method: "POST", body: form, headers: { Accept: "application/json" } });
+      json = await resp.json().catch(() => ({}));
+    } catch (e) {
+      return msg("Não enviado: sem conexão. Verifique a internet e tente de novo.", "danger");
+    }
     if (!resp.ok) return msg(json.mensagem || "Não deu certo.", "danger");
     layouts = json.pisos;
     // Usa a proporção real da imagem para os bloquinhos não ficarem tortos
+    // e já salva, para a planta não voltar torta se a pessoa sair sem salvar.
     const img = new Image();
     img.onload = () => {
       estado.imagem = layouts[piso].imagem;
       estado.proporcao = img.naturalHeight / img.naturalWidth;
-      alterado = true; desenhar();
-      msg("Imagem enviada. Agora pinte os setores e salve.", "success");
+      desenhar();
+      salvarLayout("Imagem enviada e salva. Agora pinte os setores e salve.");
     };
     img.src = URL.createObjectURL(arquivo);
   });
   $("ed-tirar").addEventListener("click", async () => {
-    const r = await chamarApi(`/plantas/${encodeURIComponent(piso)}/imagem/remover`, {});
-    layouts = r.pisos; estado.imagem = null; desenhar(); msg("Imagem removida.");
+    try {
+      const r = await chamarApi(`/plantas/${encodeURIComponent(piso)}/imagem/remover`, {});
+      layouts = r.pisos; estado.imagem = null; desenhar(); msg("Imagem removida.");
+    } catch (e) { msg("Não removeu: " + e.message, "danger"); }
   });
   $("ed-piso").addEventListener("change", (e) => {
     if (alterado && !window.confirm("Há mudanças não salvas neste piso. Trocar mesmo assim?")) { e.target.value = piso; return; }
