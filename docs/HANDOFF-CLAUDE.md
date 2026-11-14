@@ -10,6 +10,7 @@
 - Ramos `noite/*` e `qa-fixes` já estão no main; podem ser apagados depois da entrega.
 
 ## Próximo passo exato
+- **EM ANDAMENTO (14/11, ~0h):** pedido do Arthur — mapa fictício com formas irregulares de shopping (polígonos), feito do ZERO, sem copiar a planta real nem o HTML de referência (regra 8). Construtor no ramo `noite/planta-organica` (commits `wip:` frequentes). Depois: revisor (testes, navegador 1366/390 px, nenhuma marca real, nada derivado da planta) → merge no main → conferir Render → atualizar este arquivo e docs/RELATORIO-NOITE.md. Se o ramo não ficar bom até 9h, NÃO juntar: o mapa atual funciona.
 - Nada de código pendente. Escopo congelado.
 - Às 6h: escrever `docs/RELATORIO-NOITE.md` (feito / falhou / sobrou) e push.
 - Sábado: seguir `docs/pitch/checklist-sabado.md` e `docs/ENTREGA.md`.
