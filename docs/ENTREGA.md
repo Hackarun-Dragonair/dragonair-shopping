@@ -16,7 +16,7 @@ Horários de sábado: [`pitch/checklist-sabado.md`](pitch/checklist-sabado.md).
 | Avaliação da IA | https://github.com/Hackarun-Dragonair/dragonair-shopping/blob/main/docs/evidencias/modelo/resumo.md |
 | QA ponta a ponta (bugs e correções) | https://github.com/Hackarun-Dragonair/dragonair-shopping/blob/main/docs/evidencias/qa/README.md |
 | Declaração de uso de IA | https://github.com/Hackarun-Dragonair/dragonair-shopping/blob/main/docs/IA.md |
-| Teste de usabilidade | https://github.com/Hackarun-Dragonair/dragonair-shopping/blob/main/docs/missao-2/teste-usabilidade.md |
+| Teste de usabilidade | https://github.com/Hackarun-Dragonair/dragonair-shopping/blob/main/docs/missao-2/teste-usabilidade.md ← roteiro pronto; **só deixe esta linha se o teste foi feito e anotado de verdade** (regra 6.5) |
 | Pitch (roteiro, demo, FAQ) | https://github.com/Hackarun-Dragonair/dragonair-shopping/tree/main/docs/pitch |
 | Missão 1 | https://github.com/Hackarun-Dragonair/dragonair-shopping/blob/main/docs/missao-1/ENTREGA-1.md |
 | Vídeo do pitch | `<LINK DO VÍDEO>` |
