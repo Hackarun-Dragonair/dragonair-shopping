@@ -9,7 +9,7 @@ Horários de sábado: [`pitch/checklist-sabado.md`](pitch/checklist-sabado.md).
 |---|---|
 | Repositório | https://github.com/Hackarun-Dragonair/dragonair-shopping |
 | Site da demo | https://ronda-viva-0ek7.onrender.com (1º acesso: cerca de 1 min) |
-| Versão estável da Missão 2 | tag `v-missao2-estavel` → https://github.com/Hackarun-Dragonair/dragonair-shopping/tree/v-missao2-estavel |
+| Versão da Missão 2 | tag `v-missao2-final` → https://github.com/Hackarun-Dragonair/dragonair-shopping/tree/v-missao2-final (ponto de segurança anterior: `v-missao2-estavel`) |
 | Instruções de execução | https://github.com/Hackarun-Dragonair/dragonair-shopping#como-executar |
 | Resumo de 1 página | https://github.com/Hackarun-Dragonair/dragonair-shopping/blob/main/docs/RESUMO.md |
 | Evidências (índice) | https://github.com/Hackarun-Dragonair/dragonair-shopping/blob/main/docs/evidencias/README.md |
@@ -53,7 +53,7 @@ Equipe Dragonair — HackaRun 2026 — Desafio 09 (Eficiência operacional e inf
 Missão 2: protótipo funcional — Ronda Viva ("Mostra o que ninguém conferiu. Registra que cuidou.")
 
 Repositório: https://github.com/Hackarun-Dragonair/dragonair-shopping
-Versão desta entrega: tag v-missao2-estavel
+Versão desta entrega: tag v-missao2-final (https://github.com/Hackarun-Dragonair/dragonair-shopping/tree/v-missao2-final)
 Site da demo: https://ronda-viva-0ek7.onrender.com (plano grátis: o 1º acesso leva cerca de 1 min)
 Como executar: README, seção "Como executar" (python wsgi.py → http://127.0.0.1:8000)
 Crachás da demo (fictícios): OTTO e LIA = Gestor; RITA e CAIO = Funcionário. O QR da zona funciona sem entrar.

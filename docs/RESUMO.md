@@ -51,7 +51,7 @@ Python 3.11+ · Flask · Jinja2 · SQLite · Bootstrap 5 (local, sem internet) �
 Tecnologia sorteada: **Responsividade** — testada em 6 larguras, de 375 px a 1920 px (`docs/evidencias/responsividade/`).
 
 ## Links
-- **Repositório:** https://github.com/Hackarun-Dragonair/dragonair-shopping (versão estável da Missão 2: tag `v-missao2-estavel`)
+- **Repositório:** https://github.com/Hackarun-Dragonair/dragonair-shopping (versão da Missão 2: tag `v-missao2-final`)
 - **Demo online:** https://ronda-viva-0ek7.onrender.com (grátis: o 1º acesso leva cerca de 1 min; dados de exemplo voltam a cada reinício)
 - **Como executar:** `README.md`, seção "Como executar"
 - **Evidências:** `docs/evidencias/` · **Uso de IA:** `docs/IA.md`

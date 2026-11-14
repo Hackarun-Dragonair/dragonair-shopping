@@ -12,7 +12,7 @@
 |---|---|
 | Site da demo (Render grátis) | https://ronda-viva-0ek7.onrender.com — dorme após 15 min; o 1º acesso leva cerca de 1 min |
 | Repositório | https://github.com/Hackarun-Dragonair/dragonair-shopping |
-| Versão estável da Missão 2 (tag) | `v-missao2-estavel` |
+| Versão da Missão 2 (tag) | `v-missao2-final` |
 | **Como executar** | [seção abaixo](#como-executar) |
 | Resumo de 1 página | [`docs/RESUMO.md`](docs/RESUMO.md) |
 | Checklist e textos de entrega | [`docs/ENTREGA.md`](docs/ENTREGA.md) |
