@@ -324,7 +324,7 @@ def cena(nome):
         tabela = centro_pc(tab, 0, 150)
         campo = centro_pc(p["ia_campo"]["campo"], 0, 380)
         return render_trechos(nome, [
-            trecho("pc", m(p, "ia") + 0.3, m(p, "ia_regras") + 1.6, zoom=fixo(1.65, tabela)),
+            trecho("pc", m(p, "ia") + 2.4, m(p, "ia_regras") + 1.6, zoom=fixo(1.65, tabela)),  # depois de a rolagem terminar
             trecho("pc", m(p, "ia_regras") + 1.6, m(p, "ia_modelo") + 1.0, em=T["a2"] - 0.8, zoom=fixo(1.65, tabela)),
             trecho("pc", m(p, "ia_campo") - 1.4, m(p, "ia_campo") + 3.0, em=T["a3"] - 0.6,
                    zoom=fixo(1.7, campo, de=(1.65, tabela), entra=1.2)),
