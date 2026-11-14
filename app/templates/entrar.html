@@ -25,7 +25,13 @@
     <p class="text-secondary small mb-3">Escolha o perfil e informe o código do crachá.</p>
 
     {% if erro %}<div class="aviso aviso-problema">{{ erro }}</div>{% endif %}
-    {% if usuario_atual %}<div class="aviso aviso-neutro">Conectado como <strong class="ms-1">{{ usuario_atual.nome }}</strong>&nbsp;({{ usuario_atual.perfil_nome }}). Entrar com outro crachá troca o perfil.</div>{% endif %}
+    {% if usuario_atual %}
+    <div class="aviso aviso-neutro d-block">
+      Conectado como <strong>{{ usuario_atual.nome }}</strong> ({{ usuario_atual.perfil_nome }}). Entrar com outro crachá troca o perfil.
+      {# No celular o menu lateral some: este é o único botão de sair. Aparelho compartilhado precisa dele. #}
+      <form method="post" action="{{ url_for('acesso.sair') }}" class="mt-2"><button class="btn btn-sm btn-outline-danger w-100">{{ icone('sair') }} Sair deste aparelho</button></form>
+    </div>
+    {% endif %}
 
     <form method="post" action="{{ url_for('acesso.entrar_cracha') }}">
       <input type="hidden" name="proximo" value="{{ proximo }}">

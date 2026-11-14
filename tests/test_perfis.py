@@ -33,3 +33,8 @@ def test_sair(client):
 def test_redirect_so_interno(client):
     resp = client.post("/entrar/cracha", data={"cracha": "OTTO", "perfil": "gestor", "proximo": "//site-malicioso.com"})
     assert "site-malicioso" not in resp.headers["Location"]
+
+
+def test_tela_de_entrada_tem_sair_para_o_celular(client):
+    client.post("/entrar/cracha", data={"cracha": "RITA", "perfil": "funcionario"})
+    assert "Sair deste aparelho" in client.get("/entrar").get_data(as_text=True)
