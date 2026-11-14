@@ -26,8 +26,10 @@
 </div>
 {% endif %}
 
+<div class="grade-mapa">
+<div>
 <div class="mapa-caixa" id="mapa-caixa">
-  <div class="pisos" id="pisos" aria-label="Escolher piso"></div>
+  <div class="pisos"><div class="pisos-rotulo">{{ icone('predio') }} Pavimento</div><div class="pisos-botoes" id="pisos" aria-label="Escolher piso"></div></div>
   <div class="inspetor d-none" id="inspetor"></div>
   <div class="controles-mapa">
     <button type="button" id="zoom-mais" title="Aproximar">{{ icone('mais') }}</button>
@@ -43,8 +45,36 @@
 </div>
 <div id="sem-lugar" class="small mt-2 d-none"></div>
 <div class="small text-secondary mt-1 mb-3">Setores do mapa definidos pelo gestor em <strong>Editar mapa</strong>. Sem planta enviada, aparece o desenho esquemático da equipe.</div>
+</div>
 
-<h2 class="h6 text-secondary">Todas as zonas</h2>
+{# Computador grande: indicadores e ocorrências ativas ao lado do mapa (como no painel). Por zona e equipe, nunca por pessoa. #}
+<aside class="lateral-mapa">
+  <div class="card cartao-cd">
+    <div class="cd-titulo"><span>{{ icone('painel') }} Indicadores ao vivo</span></div>
+    <div class="p-3"><div class="row g-2">
+      <div class="col-6"><div class="mini-kpi"><strong style="color:var(--ok)">{{ d.zonas_no_prazo_pct }}%</strong><span>Zonas no prazo</span></div></div>
+      <div class="col-6"><div class="mini-kpi"><strong style="color:var(--ouro)">{{ d.tempo_medio_min if d.tempo_medio_min is not none else '—' }}{% if d.tempo_medio_min is not none %}<small class="fs-6"> min</small>{% endif %}</strong><span>Tempo de solução</span></div></div>
+      <div class="col-6"><div class="mini-kpi"><strong style="color:var(--problema)">{{ d.reincidencia }}</strong><span>Problemas repetidos</span></div></div>
+      <div class="col-6"><div class="mini-kpi ia"><strong>{{ (ia.acerto_categoria * 100)|round|int }}%</strong><span>Acerto da IA</span></div></div>
+    </div></div>
+  </div>
+  <div class="card cartao-cd">
+    <div class="cd-titulo"><span>{{ icone('sirene') }} Ocorrências ativas</span><span class="chip prio-P1">{{ abertos|length }}</span></div>
+    <div class="p-2">
+      {% for p in abertos[:8] %}
+      <a class="ocorrencia-mini" href="{{ url_for('telas.problema', problema_id=p.id) }}">
+        <div class="d-flex justify-content-between align-items-center gap-2"><strong>{{ p.zona_nome }}</strong><span class="chip prio-{{ p.prioridade }}">{{ p.prioridade }}</span></div>
+        <div class="mt-1">{{ p.descricao }}</div>
+        <small>{{ p.categoria_nome }} · {{ p.equipe_nome }} · {{ p.status_nome }}</small>
+      </a>
+      {% else %}<div class="vazio">Nenhuma ocorrência aberta.</div>{% endfor %}
+      {% if abertos|length > 8 %}<a href="{{ url_for('telas.fila') }}" class="small d-block text-center">Ver todas na fila</a>{% endif %}
+    </div>
+  </div>
+</aside>
+</div>
+
+<h2 class="rotulo-campo mt-3">Todas as zonas</h2>
 {% for ordem, zonas_do_piso in zonas|groupby('ordem_piso') %}
 <div class="small text-secondary mt-2 mb-1">Piso {{ zonas_do_piso[0].piso }}</div>
 <div class="grade-zonas">

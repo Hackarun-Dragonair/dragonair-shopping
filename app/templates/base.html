@@ -1,69 +1,62 @@
-{# Molde de todas as telas: menu lateral + barra superior no computador, barra inferior no celular. #}
+{# Molde de todas as telas: cabeçalho + faixa dourada de abas no computador, barra inferior no celular. #}
 {% from "_icones.html" import icone %}
 {% set pagina = pagina|default('') %}
 {% set gestor = usuario_atual and usuario_atual.perfil == 'gestor' %}
-{% set secoes = {'mapa': ('Operação', 'Mapa das zonas'), 'fila': ('Operação', 'Fila de ocorrências'), 'painel': ('Gestão', 'Painel de gestão'), 'editor': ('Gestão', 'Editar mapa'), 'ia': ('Sistema', 'Inteligência artificial'), 'entrar': ('Sistema', 'Acesso'), 'zona': ('Operação', 'Ronda da zona')} %}
 <!DOCTYPE html>
 <html lang="pt-BR" data-bs-theme="light">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#1f1d1a">
+  <meta name="theme-color" content="#7A5C32">
   <title>{% block titulo %}Ronda Viva{% endblock %}</title>
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='6' fill='%23b8902f'/%3E%3Cpath d='M12 4 6 6.3v4.5c0 3.8 2.6 6 6 6.7 3.4-.7 6-2.9 6-6.7V6.3L12 4z' fill='%231f1d1a'/%3E%3C/svg%3E">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='6' fill='%237A5C32'/%3E%3Cpath d='M12 4 6 6.3v4.5c0 3.8 2.6 6 6 6.7 3.4-.7 6-2.9 6-6.7V6.3L12 4z' fill='%23F6F4EF'/%3E%3C/svg%3E">
   {# Bootstrap fica dentro do projeto: funciona sem internet na demo #}
   <link rel="stylesheet" href="{{ url_for('static', filename='vendor/bootstrap.min.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/ronda.css') }}">
 </head>
 <body class="{% block corpo_classe %}{% endblock %}">
-  <nav class="menu-lateral" aria-label="Menu principal">
+  {# Cabeçalho branco com a marca + faixa dourada de abas (computador). No celular: cabeçalho enxuto + barra de baixo. #}
+  <header class="topo">
     <a href="{{ url_for('mapa.inicio') }}" class="marca">
       <span class="marca-icone">{{ icone('escudo') }}</span>
-      <span><strong>Ronda Viva</strong><small>Capim Dourado Shopping</small></span>
+      <span class="marca-divisor"></span>
+      <span class="marca-texto"><strong>Ronda Viva</strong><small>Capim Dourado Shopping · Operações em tempo real</small></span>
     </a>
-    <div class="menu-itens">
-      <div class="menu-grupo">Operação</div>
+    <div class="topo-direita">
+      <span class="ao-vivo"><i></i> Ao vivo · <span id="relogio">--:--</span></span>
+      {% if usuario_atual %}
+        <span class="usuario-chip">
+          <span class="avatar">{{ usuario_atual.nome[:1] }}</span>
+          <span class="usuario-nome"><strong>{{ usuario_atual.nome }}</strong><small>{{ usuario_atual.perfil_nome }} · {{ usuario_atual.funcao }}</small></span>
+        </span>
+        <form method="post" action="{{ url_for('acesso.sair') }}"><button class="btn btn-sm btn-contorno" title="Sair">{{ icone('sair') }}<span class="so-pc"> Sair</span></button></form>
+      {% else %}
+        <a href="{{ url_for('acesso.entrar_tela') }}" class="btn btn-sm btn-primary">{{ icone('usuario') }}<span class="so-pc"> Entrar com crachá</span></a>
+      {% endif %}
+    </div>
+  </header>
+
+  <nav class="faixa-dourada" aria-label="Menu principal">
+    <div class="faixa-abas">
       <a href="{{ url_for('mapa.inicio') }}" class="{{ 'ativo' if pagina == 'mapa' }}">{{ icone('mapa') }} Mapa das zonas</a>
       <a href="{{ url_for('telas.fila') }}" class="{{ 'ativo' if pagina == 'fila' }}">{{ icone('fila') }} Fila de ocorrências</a>
       {% if gestor %}
-      <div class="menu-grupo">Gestão</div>
       <a href="{{ url_for('telas.painel') }}" class="{{ 'ativo' if pagina == 'painel' }}">{{ icone('painel') }} Painel de gestão</a>
       <a href="{{ url_for('planta.editor') }}" class="{{ 'ativo' if pagina == 'editor' }}">{{ icone('editar') }} Editar mapa</a>
-      <a href="{{ url_for('backlog.etiquetas_pdf') }}">{{ icone('etiqueta') }} Etiquetas QR (PDF)</a>
+      <a href="{{ url_for('backlog.etiquetas_pdf') }}">{{ icone('etiqueta') }} Etiquetas QR</a>
       {% endif %}
-      <div class="menu-grupo">Sistema</div>
       <a href="{{ url_for('telas.sobre_ia') }}" class="{{ 'ativo' if pagina == 'ia' }}">{{ icone('ia') }} Inteligência artificial</a>
     </div>
-    <div class="menu-usuario">
-      {% if usuario_atual %}
-        <div class="usuario-chip">
-          <span class="avatar">{{ usuario_atual.nome[:1] }}</span>
-          <span><strong>{{ usuario_atual.nome }}</strong><small>{{ usuario_atual.perfil_nome }} · {{ usuario_atual.funcao }}</small></span>
-        </div>
-        <form method="post" action="{{ url_for('acesso.sair') }}"><button class="btn btn-sm btn-sair w-100 mt-2">{{ icone('sair') }} Sair</button></form>
-      {% else %}
-        <a href="{{ url_for('acesso.entrar_tela') }}" class="btn btn-sm btn-primary w-100">{{ icone('usuario') }} Entrar com crachá</a>
-      {% endif %}
-      <div class="menu-rodape">Protótipo · HackaRun 2026 · Equipe Dragonair<br><span>Dados de demonstração</span></div>
+    <div class="faixa-direita">
+      {% if usuario_atual %}<span class="perfil-tag {{ 'gestor' if gestor }}">{{ usuario_atual.perfil_nome }}</span>
+      {% else %}<a class="perfil-tag" href="{{ url_for('acesso.entrar_tela') }}">Campo · sem crachá</a>{% endif %}
     </div>
   </nav>
 
-  <div class="area">
-    <header class="barra-topo">
-      <div class="trilha">
-        {% set s = secoes.get(pagina) %}
-        {% if s %}<span>{{ s[0] }}</span><span class="sep">/</span><strong>{{ s[1] }}</strong>{% else %}<strong>Ronda Viva</strong>{% endif %}
-      </div>
-      <div class="topo-direita">
-        <span class="ao-vivo"><i></i> Ao vivo · <span id="relogio">--:--</span></span>
-        {% if usuario_atual %}<span class="perfil-tag {{ 'gestor' if gestor }}">{{ usuario_atual.perfil_nome }}</span>
-        {% else %}<a class="perfil-tag" href="{{ url_for('acesso.entrar_tela') }}">Campo · sem crachá</a>{% endif %}
-      </div>
-    </header>
-    <main class="conteudo">
-      {% block conteudo %}{% endblock %}
-    </main>
-  </div>
+  <main class="conteudo">
+    {% block conteudo %}{% endblock %}
+  </main>
+  <footer class="rodape">Protótipo · HackaRun 2026 · Equipe Dragonair · Dados e crachás de demonstração</footer>
 
   <nav class="menu-celular" aria-label="Menu">
     <a href="{{ url_for('mapa.inicio') }}" class="{{ 'ativo' if pagina == 'mapa' }}">{{ icone('mapa') }}<span>Mapa</span></a>

@@ -19,3 +19,9 @@ def test_mapa_carrega_script_e_aviso_de_planta(client):
     assert "js/mapa.js" in html
     assert "Editar mapa" in html
     assert 'id="sem-lugar"' in html  # zonas ainda não pintadas na planta não somem
+
+
+def test_mapa_tem_abas_e_painel_ao_lado(client):
+    html = client.get("/").get_data(as_text=True)
+    assert "faixa-dourada" in html  # abas no computador
+    assert "Indicadores ao vivo" in html and "Ocorrências ativas" in html

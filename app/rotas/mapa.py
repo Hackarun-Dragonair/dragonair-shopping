@@ -1,7 +1,8 @@
 from flask import Blueprint, current_app, render_template, request, url_for
 
-from app.consultas import listar_zonas, montar_mapa
+from app.consultas import indicadores, listar_problemas, listar_zonas, montar_mapa
 from app.db import get_db
+from app.modelo import obter_modelo
 from app.sexta13 import FRASE as FRASE_SEXTA13
 from app.rotas.comum import json_resposta, quer_json
 
@@ -49,8 +50,10 @@ def inicio():
                 },
             }
         )
+    db = get_db()
     return render_template(
-        "inicio.html", zonas=listar_zonas(get_db()), frase_sexta13=FRASE_SEXTA13
+        "inicio.html", pagina="mapa", zonas=listar_zonas(db), frase_sexta13=FRASE_SEXTA13,
+        d=indicadores(db), abertos=listar_problemas(db, status="abertos"), ia=obter_modelo().relatorio,
     )
 
 
