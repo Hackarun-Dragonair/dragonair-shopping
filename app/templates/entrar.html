@@ -36,7 +36,7 @@
       <input type="hidden" name="proximo" value="{{ proximo }}">
       <button class="cartao w-100 text-start d-flex justify-content-between align-items-center">
         <span><strong>{{ c.cracha }}</strong> · {{ c.nome }} <span class="text-secondary small">({{ c.funcao }})</span></span>
-        <span class="badge {{ 'bg-primary' if c.perfil == 'gestor' else 'text-bg-secondary' }}">{{ 'Gestor' if c.perfil == 'gestor' else 'Funcionário' }}</span>
+        <span class="badge {{ 'estado-atencao' if c.perfil == 'gestor' else 'text-bg-secondary' }}">{{ 'Gestor' if c.perfil == 'gestor' else 'Funcionário' }}</span>
       </button>
     </form>
     {% endfor %}

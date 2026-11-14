@@ -11,9 +11,9 @@
   </div>
 
   {% if espantou %}
-    <div class="alert alert-dark">{{ frase_espantou }}</div>
+    <div class="alert alert-warning">{{ frase_espantou }}</div>
   {% elif zona.gato %}
-    <div class="alert alert-dark small">🐈‍⬛ Sexta-feira 13: o gato preto está aqui, porque esta é a zona esquecida há mais tempo. Confira para espantá-lo.</div>
+    <div class="alert alert-warning small">🐈‍⬛ Sexta-feira 13: o gato preto está aqui, porque esta é a zona esquecida há mais tempo. Confira para espantá-lo.</div>
   {% endif %}
 
   {% if registrado == 'ok' %}
