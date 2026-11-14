@@ -36,4 +36,4 @@ Navegador: Playwright num ambiente separado (não entra no `requirements.txt`), 
 - **Missão 2 e entrega final:** sábado **12h** (confirmado pelo Arthur).
 - **Vídeo de 90 s + resumo:** entre **12h e 13h**.
 - **Entrega final:** sábado **12h**.
-- **Vídeo:** antes das 12h.
+- **Vídeo:** gravado e montado até ~11h45; envio entre 12h e 13h.
