@@ -27,7 +27,7 @@ def _pagina(zona: dict) -> bytes:
             if not escuro:
                 continue
             x = origem_x + coluna * modulo
-            comandos.append(f"{x} {y} {modulo} {modulo} re f".encode())
+            comandos.append(f"{x} {y} {modulo} {modulo} re B".encode())  # B = pinta e contorna: sem filete branco entre quadradinhos
     texto_x = origem_x + lado * modulo + 24
     linhas = [
         (texto_x, 760, 16, zona["nome"]),
