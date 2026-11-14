@@ -23,7 +23,7 @@ a { color: var(--ouro); }
 .form-control:focus, .form-select:focus { border-color: var(--ouro-claro); box-shadow: 0 0 0 .2rem rgba(122, 92, 50, .18); }
 
 /* ---------- Cabeçalho branco + faixa dourada de abas (computador) e barra de baixo (celular) ---------- */
-.topo { position: sticky; top: 0; z-index: 1040; background: var(--branco); border-bottom: 1px solid var(--borda);
+.topo { position: sticky; top: 0; z-index: 1040; height: 58px; background: var(--branco); border-bottom: 1px solid var(--borda);
   display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 22px; }
 .marca { display: flex; gap: 14px; align-items: center; color: var(--texto); text-decoration: none; min-width: 0; }
 .marca:hover { color: var(--texto); }
@@ -43,7 +43,7 @@ a { color: var(--ouro); }
 .avatar { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; background: var(--ouro-fundo); color: var(--ouro); border: 1px solid var(--ouro-claro); font-weight: 800; flex-shrink: 0; }
 .btn-contorno { background: var(--branco); color: var(--ouro); border: 1px solid var(--ouro); font-weight: 600; }
 .btn-contorno:hover { background: var(--ouro); color: #fff; }
-.faixa-dourada { position: sticky; top: 59px; z-index: 1030; background: var(--ouro); color: #fff; display: flex; align-items: center;
+.faixa-dourada { position: sticky; top: 58px; z-index: 1030; background: var(--ouro); color: #fff; display: flex; align-items: center;
   justify-content: space-between; gap: 12px; padding: 0 22px; min-height: 46px; box-shadow: 0 2px 8px rgba(44, 36, 27, .12); }
 .faixa-abas { display: flex; gap: 2px; overflow-x: auto; scrollbar-width: none; }
 .faixa-abas::-webkit-scrollbar { display: none; }
