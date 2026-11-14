@@ -175,3 +175,46 @@ def test_etiquetas_em_json_e_pdf(client):
     assert pdf.mimetype == "application/pdf"
     assert pdf.data.startswith(b"%PDF")
     assert b"sanitario-piso1" in pdf.data
+
+
+SITE = "https://ronda-viva-0ek7.onrender.com"
+
+
+def _etiquetas_do_gestor(client, **cabecalhos):
+    client.post("/entrar/cracha", data={"cracha": "OTTO", "perfil": "gestor"})
+    lista = client.get("/etiquetas", headers=cabecalhos).get_json()["etiquetas"]
+    pdf = client.get("/etiquetas.pdf", headers=cabecalhos)
+    assert pdf.status_code == 200
+    return lista, pdf.data
+
+
+def test_qr_usa_public_base_url_quando_configurado(app, client):
+    app.config["PUBLIC_BASE_URL"] = SITE + "/"
+    lista, pdf = _etiquetas_do_gestor(client)
+    assert lista
+    for item in lista:
+        assert item["url"] == f"{SITE}/z/{item['codigo']}"
+        assert item["url"].encode() in pdf  # o texto impresso embaixo do QR
+    assert f"/Count {len(lista)} ".encode() in pdf  # uma etiqueta por zona
+
+
+def test_qr_no_render_usa_https_e_o_host_publico(client):
+    # Sem PUBLIC_BASE_URL, o Render manda o endereço real nos cabeçalhos do proxy.
+    proxy = {"X-Forwarded-Proto": "https", "X-Forwarded-Host": "ronda-viva-0ek7.onrender.com"}
+    lista, pdf = _etiquetas_do_gestor(client, **proxy)
+    assert lista
+    for item in lista:
+        assert item["url"] == f"{SITE}/z/{item['codigo']}"
+    assert b"127.0.0.1" not in pdf and b"localhost" not in pdf
+
+
+def test_url_do_qr_abre_sem_login(app, client):
+    app.config["PUBLIC_BASE_URL"] = SITE
+    lista, _pdf = _etiquetas_do_gestor(client)
+    visitante = app.test_client()  # quem lê o QR não tem crachá
+    for item in lista:
+        tela = visitante.get(item["url"].removeprefix(SITE), headers={"Accept": "text/html"})
+        assert tela.status_code == 200
+        html = tela.get_data(as_text=True)
+        for valor in ("ok", "atencao", "problema"):
+            assert f'value="{valor}"' in html
