@@ -11,6 +11,7 @@ from app.consultas import (
 )
 from app.db import get_db
 from app.dominio import CATEGORIAS, PRIORIDADES
+from app.rotas.acesso_web import so_gestor
 from app.rotas.comum import ator_atual, corpo, json_resposta
 from app.servico import assumir_problema, confirmar_problema, resolver_problema
 
@@ -99,6 +100,7 @@ def dossie(problema_id: int):
 
 
 @bp.post("/problemas/<int:problema_id>/confirmar")
+@so_gestor
 def confirmar(problema_id: int):
     problema = _carregar(problema_id)
     categoria, prioridade, equipe_id, aviso = _dados_confirmacao(problema)

@@ -1,11 +1,11 @@
 {# Molde de todas as telas: menu lateral no computador, menu de baixo no celular. Visual baseado no protótipo do Mateus. #}
 {% from "_icones.html" import icone %}
 <!DOCTYPE html>
-<html lang="pt-BR" data-bs-theme="dark">
+<html lang="pt-BR" data-bs-theme="light">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#16181d">
+  <meta name="theme-color" content="#1f1d1a">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ctext y=%22.9em%22 font-size=%2290%22%3E🐉%3C/text%3E%3C/svg%3E">
   <title>{% block titulo %}Ronda Viva{% endblock %}</title>
   {# Bootstrap fica dentro do projeto: funciona sem internet na demo #}
@@ -17,17 +17,26 @@
   <nav class="menu-lateral">
     <a href="{{ url_for('mapa.inicio') }}" class="marca">
       <span class="marca-icone">{{ icone('escudo') }}</span>
-      <span><strong>Ronda Viva</strong><small>Mostra o que ninguém conferiu.</small></span>
+      <span><strong>Ronda Viva</strong><small>Capim Dourado Shopping</small></span>
     </a>
     <div class="menu-itens">
       <a href="{{ url_for('mapa.inicio') }}" class="{{ 'ativo' if pagina == 'mapa' }}">{{ icone('mapa') }} Mapa das zonas</a>
       <a href="{{ url_for('telas.fila') }}" class="{{ 'ativo' if pagina == 'fila' }}">{{ icone('fila') }} Fila de problemas</a>
-      <a href="{{ url_for('telas.painel') }}" class="{{ 'ativo' if pagina == 'painel' }}">{{ icone('painel') }} Painel de gestão</a>
+      {% if usuario_atual and usuario_atual.perfil == 'gestor' %}<a href="{{ url_for('telas.painel') }}" class="{{ 'ativo' if pagina == 'painel' }}">{{ icone('painel') }} Painel de gestão</a>{% endif %}
+      {% if usuario_atual and usuario_atual.perfil == 'gestor' %}<a href="{{ url_for('planta.editor') }}" class="{{ 'ativo' if pagina == 'editor' }}">{{ icone('ajustar') }} Editar mapa</a>{% endif %}
       <a href="{{ url_for('telas.sobre_ia') }}" class="{{ 'ativo' if pagina == 'ia' }}">{{ icone('ia') }} Sobre a IA</a>
     </div>
+    <div class="menu-usuario">
+      {% if usuario_atual %}
+        <div class="small"><strong>{{ usuario_atual.nome }}</strong><br><span class="text-secondary">{{ usuario_atual.perfil_nome }}</span></div>
+        <form method="post" action="{{ url_for('acesso.sair') }}"><button class="btn btn-sm btn-outline-light w-100 mt-2">Sair</button></form>
+      {% else %}
+        <a href="{{ url_for('acesso.entrar_tela') }}" class="btn btn-sm btn-primary w-100">Entrar com crachá</a>
+      {% endif %}
+    </div>
     <div class="menu-rodape">
-      Equipe Dragonair · HackaRun 2026<br>
-      <span>Shopping e dados fictícios</span>
+      Protótipo · Equipe Dragonair · HackaRun 2026<br>
+      <span>Dados de demonstração</span>
     </div>
   </nav>
 
@@ -38,7 +47,8 @@
   <nav class="menu-celular">
     <a href="{{ url_for('mapa.inicio') }}" class="{{ 'ativo' if pagina == 'mapa' }}">{{ icone('mapa') }}<span>Mapa</span></a>
     <a href="{{ url_for('telas.fila') }}" class="{{ 'ativo' if pagina == 'fila' }}">{{ icone('fila') }}<span>Fila</span></a>
-    <a href="{{ url_for('telas.painel') }}" class="{{ 'ativo' if pagina == 'painel' }}">{{ icone('painel') }}<span>Painel</span></a>
+    {% if usuario_atual and usuario_atual.perfil == 'gestor' %}<a href="{{ url_for('telas.painel') }}" class="{{ 'ativo' if pagina == 'painel' }}">{{ icone('painel') }}<span>Painel</span></a>
+    {% else %}<a href="{{ url_for('acesso.entrar_tela') }}" class="{{ 'ativo' if pagina == 'entrar' }}">{{ icone('escudo') }}<span>{{ 'Perfil' if usuario_atual else 'Entrar' }}</span></a>{% endif %}
     <a href="{{ url_for('telas.sobre_ia') }}" class="{{ 'ativo' if pagina == 'ia' }}">{{ icone('ia') }}<span>IA</span></a>
   </nav>
 

@@ -13,6 +13,7 @@ from app.etiquetas import pdf_etiquetas
 from app.fila_envio import aplicar_fila
 from app.ritmo import listar_alertas, prazo_sugerido
 from app.rotas.comum import ator_atual, corpo, json_resposta
+from app.rotas.acesso_web import so_gestor
 from app.rotas.mapa import url_da_zona
 
 bp = Blueprint("backlog", __name__)
@@ -124,6 +125,7 @@ def etiquetas():
 
 
 @bp.get("/etiquetas.pdf")
+@so_gestor
 def etiquetas_pdf():
     arquivo = pdf_etiquetas(_etiquetas())
     resposta = Response(arquivo, mimetype="application/pdf")

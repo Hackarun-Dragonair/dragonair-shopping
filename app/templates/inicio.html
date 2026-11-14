@@ -20,7 +20,7 @@
 {% set zona_gato = zonas|selectattr('gato')|first %}
 {% if zona_gato %}
 {# Easter Egg sexta-feira 13 (app/sexta13.py): frase uma vez só, gato em uma zona só. #}
-<div class="alert alert-dark d-flex align-items-center gap-2 py-2" role="status">
+<div class="alert alert-warning d-flex align-items-center gap-2 py-2" role="status">
   <span class="fs-4" aria-hidden="true">🐈‍⬛</span>
   <span class="small">{{ frase_sexta13 }} Agora ele está em <strong>{{ zona_gato.nome }}</strong>.</span>
 </div>
@@ -41,7 +41,7 @@
     <span><i style="background:var(--cinza)"></i>Ninguém conferiu</span>
   </div>
 </div>
-<div class="small text-secondary mt-1 mb-3">Desenho esquemático feito pela equipe. Não é a planta real do shopping.</div>
+<div class="small text-secondary mt-1 mb-3">Setores do mapa definidos pelo gestor em <strong>Editar mapa</strong>. Sem planta enviada, aparece o desenho esquemático da equipe.</div>
 
 <h2 class="h6 text-secondary">Todas as zonas</h2>
 {% for ordem, zonas_do_piso in zonas|groupby('ordem_piso') %}

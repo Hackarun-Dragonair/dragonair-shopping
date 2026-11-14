@@ -15,10 +15,13 @@
     · IA sugeriu: {{ p.sugestao_nome }} {{ p.sugestao_prioridade }}</div>
 
   <div id="mensagem"></div>
+  {% if not p.confirmado and not pode_confirmar and p.status != 'resolvido' %}
+  <div class="alert alert-secondary py-2 small">Aguardando o gestor confirmar a sugestão da IA. <a href="{{ url_for('acesso.entrar_tela', perfil='gestor', proximo=request.path) }}">Entrar como gestor</a></div>
+  {% endif %}
 
   {% if p.status != 'resolvido' %}
   <div class="card mb-3"><div class="card-body">
-    {% if not p.confirmado %}
+    {% if not p.confirmado and pode_confirmar %}
     <h2 class="h6">Supervisor: confirmar a sugestão</h2>
     <div class="row g-2 mb-2">
       <div class="col-12 col-sm-4"><select id="categoria" class="form-select">

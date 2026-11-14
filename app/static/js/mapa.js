@@ -2,7 +2,9 @@
 // não usa a planta do shopping (dado sensível) nem nomes de lojas reais.
 // Lê GET /mapa a cada 15 s, pinta cada zona pelo estado e abre um painel ao tocar.
 (function () {
-  const W = 1000, H = 620;
+  const W = 1000;
+  let H = 620;          // muda quando o piso tem planta de fundo (proporção da imagem)
+  let layouts = {};     // planta + bloquinhos desenhados pelo gestor (GET /mapa/layout)
   const caixa = document.getElementById("mapa-caixa");
   if (!caixa) return;
   const NS = "http://www.w3.org/2000/svg";
@@ -82,9 +84,41 @@
     return { base, pos };
   }
 
+  function desenharPlanta(lay, daquele) {
+    // Modo planta: imagem de fundo + bloquinhos de cada setor pintados pelo estado da zona
+    H = Math.round(W * (lay.proporcao || 0.62));
+    svg.setAttribute("viewBox", `0 0 ${W} ${H}`); svg.setAttribute("height", H);
+    svg.appendChild(el("rect", { x: 0, y: 0, width: W, height: H, class: "fundo-planta" }));
+    if (lay.imagem) svg.appendChild(el("image", { href: lay.imagem, x: 0, y: 0, width: W, height: H, preserveAspectRatio: "none", class: "imagem-planta" }));
+    const cw = W / lay.colunas, ch = H / lay.linhas;
+    const porZona = {};
+    lay.celulas.forEach(([c, li, cod]) => (porZona[cod] = porZona[cod] || []).push([c, li]));
+    daquele.forEach((z) => {
+      const cels = porZona[z.codigo];
+      if (!cels) return;
+      const g = el("g", { class: `zona z-${z.estado}${selecionada === z.codigo ? " selecionada" : ""}`, tabindex: 0, role: "button", "aria-label": `${z.nome}: ${z.rotulo}` });
+      let sx = 0, sy = 0, minY = Infinity, maxX = 0;
+      cels.forEach(([c, li]) => {
+        g.appendChild(el("rect", { x: c * cw, y: li * ch, width: cw + 0.6, height: ch + 0.6 }));
+        sx += (c + 0.5) * cw; sy += (li + 0.5) * ch; minY = Math.min(minY, li * ch); maxX = Math.max(maxX, (c + 1) * cw);
+      });
+      g.addEventListener("click", (e) => { e.stopPropagation(); abrir(z.codigo); });
+      g.addEventListener("keydown", (e) => { if (e.key === "Enter") abrir(z.codigo); });
+      svg.appendChild(g);
+      const cx = sx / cels.length, cy = sy / cels.length;
+      svg.appendChild(el("text", { x: cx, y: cy - 8, class: "zona-texto" }, z.nome.replace("Praça de alimentação — ", "Praça ")));
+      svg.appendChild(el("text", { x: cx, y: cy + 12, class: "zona-texto zona-sub" }, z.rotulo));
+      if (z.gato) svg.appendChild(el("text", { x: maxX - 16, y: minY + 26, class: "gato-svg" }, "🐈‍⬛"));
+    });
+  }
+
   function desenhar() {
     svg.innerHTML = "";
     const daquele = zonas.filter((z) => z.piso === pisoAtual);
+    const lay = layouts[pisoAtual];
+    if (lay && (lay.imagem || (lay.celulas && lay.celulas.length))) return desenharPlanta(lay, daquele);
+    H = 620;
+    svg.setAttribute("viewBox", `0 0 ${W} ${H}`); svg.setAttribute("height", H);
     const { base, pos } = desenhoDoPiso(pisoAtual, daquele);
     svg.appendChild(el("path", { d: base.casca, class: "casca" }));
     if (base.vagas) {
@@ -119,7 +153,7 @@
       return `<button type="button" data-piso="${seguro(p)}" class="${p === pisoAtual ? "ativo" : ""}">${seguro(p)}${alerta ? '<span class="ponto"></span>' : ""}</button>`;
     }).join("");
     $("pisos").querySelectorAll("button").forEach((b) => b.addEventListener("click", () => {
-      pisoAtual = b.dataset.piso; selecionada = null; fecharInspetor(); botoesPisos(); desenhar(); ajustar();
+      pisoAtual = b.dataset.piso; selecionada = null; fecharInspetor(); botoesPisos(); ajustar();
     }));
   }
 
@@ -137,12 +171,12 @@
     desenhar();
     const prob = z.problema_id
       ? `<a class="btn btn-sm btn-danger w-100 mb-2" href="/telas/problemas/${z.problema_id}">Ver problema aberto #${z.problema_id}</a>` : "";
-    const gato = z.gato ? `<div class="alert alert-dark py-1 px-2 small mb-2">🐈‍⬛ O gato preto está aqui: é a zona esquecida há mais tempo.</div>` : "";
+    const gato = z.gato ? `<div class="alert alert-warning py-1 px-2 small mb-2">🐈‍⬛ O gato preto está aqui: é a zona esquecida há mais tempo.</div>` : "";
     const repete = (z.reincidencia || []).length ? `<div class="small text-warning mb-2">🔁 Problema repetido: ${seguro(z.reincidencia.join(", "))}</div>` : "";
     $("inspetor").innerHTML = `
       <div class="d-flex justify-content-between align-items-start mb-1">
         <span class="badge estado-${z.estado}">${seguro(z.rotulo)}</span>
-        <button type="button" class="btn-close btn-close-white btn-sm" id="fechar-inspetor" aria-label="Fechar"></button>
+        <button type="button" class="btn-close btn-sm" id="fechar-inspetor" aria-label="Fechar"></button>
       </div>
       <div class="fw-bold fs-6">${seguro(z.nome)}</div>
       <div class="small text-secondary mb-2">Piso ${seguro(z.piso)} · prazo ${z.prazo_minutos} min · QR: ${seguro(z.local_qr)}</div>
@@ -213,7 +247,8 @@
 
   // ---------- Dados ----------
   async function carregar() {
-    const dados = await chamarApi("/mapa");
+    const [dados, lay] = await Promise.all([chamarApi("/mapa"), chamarApi("/mapa/layout").catch(() => ({ pisos: {} }))]);
+    layouts = lay.pisos || {};
     zonas = dados.zonas.slice().sort((a, b) => (a.ordem_piso - b.ordem_piso) || a.nome.localeCompare(b.nome));
     if (!pisoAtual || !zonas.some((z) => z.piso === pisoAtual)) {
       // Começa no piso com mais coisa pedindo atenção
@@ -224,5 +259,5 @@
   }
 
   carregar().then(ajustar).catch(() => { caixa.innerHTML = '<div class="p-3 text-secondary">Não consegui carregar o mapa. Use a lista abaixo.</div>'; });
-  setInterval(() => { if (!document.hidden && !arrasto) carregar().then(() => { if (selecionada) abrir(selecionada); }); }, 15000);
+  setInterval(() => { if (!document.hidden && !arrasto) carregar().then(() => { if (selecionada) abrir(selecionada); }); }, 5000);  // definição: ≤ 5 s
 })();

@@ -25,7 +25,10 @@ USUARIOS = (
     ("otto", "Otto Lima", "supervisor", "Supervisor", None),
     ("lia", "Lia Prado", "coordenacao", "Coordenação", None),
     ("caio", "Caio Nunes", "manutencao", "Manutenção", "manutencao"),
+    # Sem crachá: o QR funciona sem entrar (aparelho compartilhado da equipe).
+    ("campo", "Campo (aparelho compartilhado)", "encarregado", "Equipe de campo", None),
 )
+SEM_CRACHA = {"campo"}
 
 ENCAMINHAMENTO = (
     ("hidraulica", "manutencao"),
@@ -101,6 +104,8 @@ def semear(conn: sqlite3.Connection, agora: datetime | None = None) -> None:
                 """,
                 (codigo, nome, papel, funcao, equipe_id),
             )
+            if codigo in SEM_CRACHA:
+                continue
             conn.execute(
                 "INSERT INTO crachas (codigo, usuario_id, ativo) VALUES (?, ?, 1)",
                 (codigo.upper(), conn.execute("SELECT last_insert_rowid() AS id").fetchone()["id"]),

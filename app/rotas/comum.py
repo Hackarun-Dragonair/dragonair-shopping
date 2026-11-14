@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from flask import jsonify, request, session
+from flask import current_app, jsonify, request, session
 
 from app.db import get_db
 
@@ -21,20 +21,19 @@ def json_resposta(payload, status: int = 200):
 
 
 def ator_atual() -> dict:
+    """Quem está agindo: o crachá da sessão; sem crachá, o aparelho de campo."""
     db = get_db()
-    codigo = session.get("usuario_codigo") or request.headers.get("X-Usuario")
+    codigo = session.get("usuario_codigo")
+    if not codigo and current_app.config.get("TESTING"):
+        codigo = request.headers.get("X-Usuario")  # atalho só para testes
     row = None
     if codigo:
-        row = db.execute(
-            "SELECT * FROM usuarios WHERE codigo = ?", (codigo,)
-        ).fetchone()
+        row = db.execute("SELECT * FROM usuarios WHERE codigo = ?", (codigo,)).fetchone()
+    if row is None:
+        row = db.execute("SELECT * FROM usuarios WHERE codigo = 'campo'").fetchone()
     if row is None:
         row = db.execute(
-            """
-            SELECT * FROM usuarios
-            WHERE papel = 'encarregado'
-            ORDER BY id LIMIT 1
-            """
+            "SELECT * FROM usuarios WHERE papel = 'encarregado' ORDER BY id LIMIT 1"
         ).fetchone()
     return dict(row)
 
