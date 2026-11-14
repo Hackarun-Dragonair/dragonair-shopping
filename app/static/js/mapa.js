@@ -1,6 +1,6 @@
 // Mapa interativo das zonas (SVG). Desenho FICTÍCIO feito pela equipe:
 // não usa a planta do shopping (dado sensível) nem nomes de lojas reais.
-// Lê GET /mapa a cada 15 s, pinta cada zona pelo estado e abre um painel ao tocar.
+// Lê GET /mapa a cada 5 s, pinta cada zona pelo estado e abre um painel ao tocar.
 (function () {
   const W = 1000;
   let H = 620;          // muda quando o piso tem planta de fundo (proporção da imagem)
@@ -72,6 +72,37 @@
     return e;
   }
 
+  // ---------- Formas: retângulo {x,y,w,h}, polígono {pts:"x,y x,y ..."} ou caminho SVG {d:"M..."} ----------
+  function pontos(pts) {
+    // "10,20 30,40" vira [[10,20], [30,40]]
+    return pts.trim().split(/\s+/).map((par) => par.split(",").map(Number));
+  }
+  function forma(f, attrs) {
+    if (f.pts) return el("polygon", Object.assign({ points: f.pts }, attrs));
+    if (f.d) return el("path", Object.assign({ d: f.d }, attrs));
+    return el("rect", Object.assign({ x: f.x, y: f.y, width: f.w, height: f.h, rx: 10 }, attrs));
+  }
+  // Onde fica o nome: lx/ly se a forma disser; senão a média dos pontos (ou o meio do retângulo)
+  function centro(f) {
+    if (f.lx !== undefined) return [f.lx, f.ly];
+    if (f.pts) {
+      const ps = pontos(f.pts);
+      return [ps.reduce((s, p) => s + p[0], 0) / ps.length, ps.reduce((s, p) => s + p[1], 0) / ps.length];
+    }
+    return [f.x + f.w / 2, f.y + f.h / 2];
+  }
+  // Canto de cima à direita, onde o gato senta
+  function canto(f) {
+    if (f.gx !== undefined) return [f.gx, f.gy];
+    if (f.pts) {
+      const ps = pontos(f.pts);
+      const [x, y] = ps.reduce((a, b) => (b[0] - b[1] > a[0] - a[1] ? b : a));
+      return [x - 24, y + 30];
+    }
+    if (f.d) { const [x, y] = centro(f); return [x + 40, y - 40]; }
+    return [f.x + f.w - 18, f.y + 28];
+  }
+
   function desenhoDoPiso(piso, daquele) {
     const base = PLANTA[piso] || { casca: `M60,80 L${W - 60},80 L${W - 60},${H - 60} L60,${H - 60} Z`, zonas: {} };
     const pos = Object.assign({}, base.zonas);
@@ -125,36 +156,47 @@
 
   function desenhar() {
     svg.innerHTML = "";
+    svg.setAttribute("class", "mapa-svg");
     semLugar([]);
     const daquele = zonas.filter((z) => z.piso === pisoAtual);
     const lay = layouts[pisoAtual];
     if (lay && (lay.imagem || (lay.celulas && lay.celulas.length))) return desenharPlanta(lay, daquele);
     H = 620;
     svg.setAttribute("viewBox", `0 0 ${W} ${H}`); svg.setAttribute("height", H);
+    // Tela estreita (celular): letras maiores e nome curto, para continuar legível com o mapa inteiro na tela
+    const pequeno = caixa.clientWidth < 600;
+    if (pequeno) svg.classList.add("mapa-pequeno");
     const { base, pos } = desenhoDoPiso(pisoAtual, daquele);
     svg.appendChild(el("path", { d: base.casca, class: "casca" }));
     if (base.vagas) {
-      for (let x = 130; x < 880; x += 38) {
-        svg.appendChild(el("line", { x1: x, y1: 120, x2: x, y2: 190, class: "vaga" }));
-        svg.appendChild(el("line", { x1: x, y1: 430, x2: x, y2: 500, class: "vaga" }));
+      // vagas inclinadas, como num estacionamento de verdade
+      for (let x = 140; x < 860; x += 38) {
+        svg.appendChild(el("line", { x1: x, y1: 125, x2: x + 18, y2: 190, class: "vaga" }));
+        svg.appendChild(el("line", { x1: x + 18, y1: 430, x2: x, y2: 495, class: "vaga" }));
       }
     }
     (base.deco || []).forEach((d) => {
-      svg.appendChild(el("rect", { x: d.x, y: d.y, width: d.w, height: d.h, rx: 8, class: "deco" }));
-      svg.appendChild(el("text", { x: d.x + d.w / 2, y: d.y + d.h / 2, class: "deco-texto" }, d.t));
+      svg.appendChild(forma(d, { class: "deco" }));
+      const [tx, ty] = centro(d);
+      svg.appendChild(el("text", { x: tx, y: ty, class: "deco-texto" }, d.t));
     });
     daquele.forEach((z) => {
       const p = pos[z.codigo];
-      const r = el("rect", { x: p.x, y: p.y, width: p.w, height: p.h, rx: 10,
+      const r = forma(p, {
         class: `zona z-${z.estado}${selecionada === z.codigo ? " selecionada" : ""}`, tabindex: 0, role: "button",
         "aria-label": `${z.nome}: ${z.rotulo}` });
       r.addEventListener("click", (e) => { e.stopPropagation(); abrir(z.codigo); });
       r.addEventListener("keydown", (e) => { if (e.key === "Enter") abrir(z.codigo); });
       svg.appendChild(r);
-      const cx = p.x + p.w / 2, cy = p.y + p.h / 2;
-      svg.appendChild(el("text", { x: cx, y: cy - 9, class: "zona-texto" }, z.nome.replace("Praça de alimentação — ", "Praça ")));
-      svg.appendChild(el("text", { x: cx, y: cy + 12, class: "zona-texto zona-sub" }, `${z.rotulo}${z.ha ? " · " + z.ha : ""}`));
-      if (z.gato) svg.appendChild(el("text", { x: p.x + p.w - 18, y: p.y + 28, class: "gato-svg" }, "🐈‍⬛"));
+      const [cx, cy] = centro(p);
+      const nome = pequeno && p.curto ? p.curto : z.nome.replace("Praça de alimentação — ", "Praça ");
+      const sub = pequeno ? z.rotulo : `${z.rotulo}${z.ha ? " · " + z.ha : ""}`;
+      svg.appendChild(el("text", { x: cx, y: cy - (pequeno ? 14 : 9), class: "zona-texto" }, nome));
+      svg.appendChild(el("text", { x: cx, y: cy + (pequeno ? 16 : 12), class: "zona-texto zona-sub" }, sub));
+      if (z.gato) {
+        const [gx, gy] = canto(p);
+        svg.appendChild(el("text", { x: gx, y: gy, class: "gato-svg" }, "🐈‍⬛"));
+      }
     });
   }
 
@@ -255,7 +297,7 @@
   $("zoom-mais").addEventListener("click", () => zoom(1.25));
   $("zoom-menos").addEventListener("click", () => zoom(0.8));
   $("zoom-ajustar").addEventListener("click", ajustar);
-  window.addEventListener("resize", ajustar);
+  window.addEventListener("resize", () => { desenhar(); ajustar(); });  // redesenha: no celular o texto muda de tamanho
 
   // ---------- Dados ----------
   async function carregar() {
