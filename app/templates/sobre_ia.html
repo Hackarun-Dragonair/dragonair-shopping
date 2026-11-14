@@ -1,32 +1,89 @@
-{# Como a IA funciona e quanto ela acerta (números reais do teste cego). #}
+{# Como a IA funciona e quanto ela acerta (números reais do teste cego, calculados no boot). #}
 {% extends "base.html" %}
 {% block titulo %}Sobre a IA · Ronda Viva{% endblock %}
 {% block conteudo %}
-<div style="max-width: 760px">
-<h1 class="h4">Sobre a IA</h1>
-<p>A IA lê o que a pessoa escreveu na ronda e <strong>sugere</strong> a categoria e a prioridade. Quem decide é o supervisor.
+<div style="max-width: 860px">
+<div class="titulo-tela">
+  <div>
+    <h1>Sobre a IA</h1>
+    <div class="small text-secondary">Sugere categoria e prioridade. Quem decide é o supervisor.</div>
+  </div>
+</div>
+<p>A IA lê o que a pessoa escreveu na ronda e <strong>sugere</strong> a categoria e a prioridade.
 Ela foi treinada pela equipe e roda <strong>dentro do sistema, sem internet e sem API paga</strong>.</p>
 
 <div class="row g-2 my-3">
-  <div class="col-4"><div class="card h-100"><div class="card-body">
-    <div class="numero-grande">{{ (r.acerto_categoria * 100)|round|int }}%</div><div class="small text-secondary">acerto na categoria</div></div></div></div>
-  <div class="col-4"><div class="card h-100"><div class="card-body">
-    <div class="numero-grande">{{ (r.acerto_prioridade * 100)|round|int }}%</div><div class="small text-secondary">acerto na prioridade</div></div></div></div>
-  <div class="col-4"><div class="card h-100"><div class="card-body">
-    <div class="numero-grande text-secondary">{{ (r.acerto_baseline * 100)|round|int }}%</div><div class="small text-secondary">regra simples de palavras (comparação)</div></div></div></div>
+  <div class="col-6 col-lg-3"><div class="kpi kpi-ia">
+    <div class="numero-grande">{{ (r.acerto_categoria * 100)|round|int }}%</div>
+    <div class="small text-secondary">acerto na categoria</div></div></div>
+  <div class="col-6 col-lg-3"><div class="kpi kpi-ia">
+    <div class="numero-grande">{{ (r.acerto_prioridade * 100)|round|int }}%</div>
+    <div class="small text-secondary">acerto na prioridade</div></div></div>
+  <div class="col-6 col-lg-3"><div class="kpi kpi-ok">
+    <div class="numero-grande" style="color: var(--ok)">{{ (r.recall_p1 * 100)|round|int }}%</div>
+    <div class="small text-secondary">dos P1 marcados como P1 ({{ (r.recall_p1 * r.p1_total)|round|int }} de {{ r.p1_total }})</div></div></div>
+  <div class="col-6 col-lg-3"><div class="kpi kpi-cinza">
+    <div class="numero-grande" style="color: var(--grafite)">{{ (r.acerto_baseline * 100)|round|int }}%</div>
+    <div class="small text-secondary">regra simples de palavras na categoria (comparação)</div></div></div>
 </div>
-<p class="small text-secondary">Medido num <strong>teste cego</strong>: {{ r.teste }} frases que o modelo nunca viu (treinado com {{ r.treino }}). Motor: {{ fonte }}. Frases fictícias escritas pela equipe.</p>
+<p class="small text-secondary"><strong>n = {{ r.teste }}</strong> frases do <strong>teste cego</strong>: escritas e rotuladas à mão pela equipe, sem IA, e que o modelo nunca viu (treinado com {{ r.treino }}). Motor: {{ fonte }}. Frases fictícias. Com n pequeno, o número é uma indicação, não uma garantia.</p>
+
+{% if r.comparacao %}
+<div class="card my-3"><div class="card-body">
+  <h2 class="h6">Regras x modelo x modelo + regra dura</h2>
+  <div class="table-responsive">
+  <table class="table table-sm mb-2">
+    <thead><tr><th>Jeito</th><th class="text-end">Categoria</th><th class="text-end">Prioridade</th><th class="text-end">Recall P1</th></tr></thead>
+    <tbody>
+    {% for linha in r.comparacao %}
+      <tr{% if loop.last %} style="font-weight: 600"{% endif %}>
+        <td>{{ linha.nome }}</td>
+        <td class="text-end">{{ (linha.categoria * 100)|round|int }}%</td>
+        <td class="text-end">{{ (linha.prioridade * 100)|round|int }}%</td>
+        <td class="text-end">{{ (linha.recall_p1 * 100)|round|int }}%</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  </div>
+  <p class="small text-secondary mb-0">Só regras: palavras-chave, sem modelo. Só modelo: sem regra nenhuma. Modelo + regra dura: o que o sistema mostra; a regra só sobe a prioridade, nunca baixa. Recall P1: dos casos que eram P1, quantos saíram P1. Mesmo teste cego, n = {{ r.teste }} ({{ r.p1_total }} P1).</p>
+</div></div>
+{% endif %}
+
+{% if r.matriz %}
+<div class="card my-3"><div class="card-body">
+  <h2 class="h6">Onde a IA acerta e erra a categoria</h2>
+  <div class="table-responsive">
+  <table class="table table-sm small text-center mb-2">
+    <thead><tr><th class="text-start">Esperado \ Previsto</th>
+      {% for c in r.matriz_classes %}<th>{{ nomes.get(c, c) }}</th>{% endfor %}</tr></thead>
+    <tbody>
+    {% for linha in r.matriz %}{% set i = loop.index0 %}
+      <tr><th class="text-start">{{ nomes.get(r.matriz_classes[i], r.matriz_classes[i]) }}</th>
+      {% for v in linha %}
+        {% if loop.index0 == i %}<td style="color: var(--ok); font-weight: 600">{{ v }}</td>
+        {% elif v > 0 %}<td style="color: var(--problema); font-weight: 600">{{ v }}</td>
+        {% else %}<td class="text-secondary">{{ v }}</td>{% endif %}
+      {% endfor %}</tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  </div>
+  <p class="small text-secondary mb-0">Diagonal = acertos. Fora da diagonal = confusões. Teste cego, n = {{ r.teste }}.</p>
+</div></div>
+{% endif %}
+<p class="small text-secondary">Também medimos 16 frases reais do jeito que a equipe de campo escreve, mas com <strong>rótulos sugeridos por IA, ainda a revisar</strong>. Por isso elas ficam fora do número oficial; o resultado está em <code>docs/evidencias/modelo/resumo.md</code>.</p>
 
 <h2 class="h6 mt-4">Como ela aprendeu</h2>
 <ol class="small">
-  <li>Cada frase vira números (TF-IDF): palavras e pedaços de palavra, para entender erro de digitação.</li>
-  <li>Um modelo de Regressão Logística aprende quais palavras indicam cada categoria e prioridade.</li>
-  <li>Comparamos com uma regra simples de palavras-chave, para provar que a IA vale a pena.</li>
+  <li>Cada frase é normalizada (minúsculas, sem acento) e vira números com TF-IDF de <strong>pedaços de 3 a 5 letras dentro das palavras</strong>. Isso tolera erro de digitação ("vazano", "banhero").</li>
+  <li>Um modelo de Regressão Logística aprende quais pedaços indicam cada categoria e, num segundo modelo, cada prioridade.</li>
+  <li>Comparamos com uma regra simples de palavras-chave, no mesmo teste cego, para provar que a IA vale a pena.</li>
 </ol>
 
 <h2 class="h6 mt-4">Regras que a IA não muda</h2>
 <ul class="small">
-  <li>Fumaça, fogo, choque ou pessoa presa → <strong>P1</strong> e aviso <strong>"Avise a brigada pelo rádio"</strong>. Ninguém consegue rebaixar. O sistema não aciona ninguém sozinho.</li>
+  <li>Fumaça, fogo, choque ou pessoa presa: <strong>P1</strong> e aviso <strong>"Avise a brigada pelo rádio"</strong>. Ninguém consegue rebaixar. O sistema não aciona ninguém sozinho.</li>
   <li>A IA nunca fecha um problema nem avalia pessoas.</li>
   <li>Toda sugestão e toda correção do supervisor ficam na linha do tempo.</li>
 </ul>
