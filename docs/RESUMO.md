@@ -24,7 +24,7 @@ Um site responsivo (celular, tablet e computador, sem instalar nada) para a rond
 Também existe: editor de mapa (o gestor envia uma imagem de fundo e pinta bloquinhos por zona), etiquetas QR em PDF, alertas por zona, e o Easter Egg da sexta-feira 13 (um gato preto se esconde na zona mais esquecida).
 
 ## Diferencial
-- **Mostra o que NÃO aconteceu.** Folha, rádio e apps de checklist registram a tarefa feita. A zona cinza mostra onde ninguém olhou.
+- **Mostra o lugar, não só a tarefa.** Folha e rádio não mostram nada; app de checklist cobra a tarefa atrasada. A Ronda Viva mostra **onde** ninguém olhou: a zona fica cinza no mapa antes de o cliente reclamar, e o problema escrito do jeito do funcionário vira fila com prioridade.
 - **IA que funciona sem internet e foi medida com honestidade**, com uma regra de segurança que ela não consegue desfazer.
 - **Registro que não se apaga:** o shopping consegue mostrar que cuidou.
 
