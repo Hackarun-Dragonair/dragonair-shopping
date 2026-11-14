@@ -408,7 +408,7 @@ def finalizar(base):
         audio = ["-i", AUDIO]
         af = ["-af", f"apad,atrim=0:{TOTAL:.3f},aresample=48000"]
     ffmpeg("-i", base, *audio, "-map", "0:v", "-map", "1:a", "-vf", vf, *af,
-           "-c:v", "libx264", "-preset", "slow", "-crf", "19", "-maxrate", "4500k", "-bufsize", "9000k",
+           "-c:v", "libx264", "-preset", "slow", "-crf", "17", "-maxrate", "4000k", "-bufsize", "8000k",
            "-profile:v", "high", "-pix_fmt", "yuv420p", "-r", FPS,
            "-c:a", "aac", "-b:a", "160k", "-ac", "2", "-ar", "48000",
            "-t", f"{TOTAL:.3f}", "-movflags", "+faststart", SAIDA)
