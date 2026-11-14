@@ -15,7 +15,7 @@ Um site responsivo (celular, tablet e computador, sem instalar nada) para a rond
 
 ## Como funciona
 1. **Funcionário (celular):** lê o QR da zona. Não precisa entrar com crachá. Toca OK, Atenção ou Problema. No Problema, escreve do seu jeito ou toca um botão pronto ("Vaso entupido", "Quadro aberto"...).
-2. **IA:** sugere categoria (Hidráulica, Elétrica, Climatização, Limpeza, Segurança, Estrutura), prioridade (P1 a P4) e equipe. Mostra a confiança; quando fica entre duas categorias, pergunta "É mais X ou Y?" (sem segunda opção e abaixo de 50%, avisa "IA em dúvida, confira"). A pessoa pode mudar antes de registrar.
+2. **IA:** sugere categoria (Hidráulica, Elétrica, Climatização, Limpeza, Segurança, Estrutura), prioridade (P1 a P4) e equipe. Mostra a confiança; quando fica entre duas categorias, pergunta "É mais X ou Y?" (sem segunda opção e abaixo de 50%, avisa "IA em dúvida, confira"). Esse aviso aparece na maioria das vezes: a pessoa confere sempre e pode mudar antes de registrar.
 3. **Regra de risco acima da IA:** fumaça, fogo, choque ou pessoa presa → **P1** e "Avise a brigada pelo rádio". Ninguém rebaixa (nem a IA, nem o gestor). O sistema não chama ninguém sozinho.
 4. **Gestor (computador):** entra com crachá, confirma ou corrige a sugestão. A ocorrência vai para a **fila** (Aberto → Em atendimento → Resolvido) da equipe certa. A fila se atualiza sozinha a cada 5 s.
 5. **Linha do tempo:** registro, sugestão da IA, aviso de risco, quem assumiu, confirmação e solução, cada um com hora. O banco bloqueia apagar ou alterar esses registros. Vira um dossiê para imprimir.
@@ -41,7 +41,7 @@ Também existe: editor de mapa (o gestor envia uma imagem de fundo e pinta bloqu
 
 "Recall de P1" = dos casos que eram P1 de verdade, quantos o sistema marcou como P1.
 
-**Limite (sendo honestos):** o teste cego é pequeno (20 frases) e foi escrito pela mesma equipe do treino. O 100% mostra que o modelo aprendeu o nosso jeito de escrever, não que vai acertar 100% no shopping. Com frases reais o acerto cai (81% e 62%), e esses rótulos ainda precisam de revisão humana. No teste de campo, o modelo sozinho deu P2 para "sensor de fumaça piscando"; foi a regra dura que garantiu o P1. Por isso a IA só sugere e o gestor confirma.
+**Limite (sendo honestos):** o teste cego é pequeno (20 frases) e foi escrito pela mesma equipe do treino. O 100% mostra que o modelo aprendeu o nosso jeito de escrever, não que vai acertar 100% no shopping. Com frases reais o acerto cai (81% e 62%), e esses rótulos ainda precisam de revisão humana. No teste de campo, o modelo sozinho deu P2 para "sensor de fumaça piscando"; foi a regra dura que garantiu o P1. O teste cego também serviu para escolher entre duas versões do modelo, e algumas frases dele parecem com as do treino: por isso o número mais perto do real é o do campo (81% e 62%, rótulos a revisar). A confiança costuma ficar abaixo de 50% (16 de 20 frases no teste cego, 13 de 16 no campo; média 37%), então o aviso de dúvida aparece quase sempre. O maior ganho da IA é na **prioridade**: 95% contra 40% das palavras-chave no teste cego, 62% contra 12% no campo. Próximos passos: validação cruzada, um teste escrito por pessoas de fora e calibrar a confiança. Por isso a IA só sugere e o gestor confirma.
 
 **No desenvolvimento:** Claude, Cursor e Gemini ajudaram em ideias, código, telas, testes e documentos. Tudo declarado e revisado pela equipe em `docs/IA.md`.
 

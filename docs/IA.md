@@ -38,7 +38,7 @@ A equipe revisou e responde por todo conteúdo gerado com IA.
 **Como medimos:** `python -m app.avaliar` gera `docs/evidencias/modelo/` (CSV por frase + `resumo.md` com acurácia, F1 macro, recall de P1, matriz de confusão e a comparação de 3 jeitos). A tela **"Sobre a IA"** (`/telas/sobre-a-ia`) calcula os mesmos números do teste cego no boot.
 
 **Como lidamos com os erros da IA:**
-- Ela só **sugere**. A tela mostra a confiança, e abaixo de 50% avisa "IA em dúvida, confira".
+- Ela só **sugere**. A tela mostra a confiança, e abaixo de 50% avisa "IA em dúvida, confira". Esse aviso **aparece na maioria das vezes**, não só em casos raros (ver "Limite" abaixo). Por isso a pessoa e o gestor sempre conferem.
 - Quando ela fica em dúvida entre duas categorias, a tela da zona faz uma pergunta de desempate.
 - **Regra fixa acima da IA** (`app/dominio.py`): fumaça, fogo, choque ou pessoa presa → **P1** e "Avise a brigada pelo rádio". Ninguém rebaixa, nem a IA nem o supervisor. O sistema não aciona ninguém sozinho.
 - Toda sugestão e toda correção ficam na **linha do tempo**, que não se apaga.
@@ -63,5 +63,9 @@ A equipe revisou e responde por todo conteúdo gerado com IA.
 **Limite (sendo honestos):**
 - O teste cego é **pequeno (n = 20)** e foi escrito pela mesma equipe que escreveu o treino: o 100% de categoria mostra que o modelo aprendeu o nosso jeito de escrever, não prova que vai acertar 100% no shopping.
 - Com frases reais do campo o acerto cai (81% / 62%). Esse é o número mais perto da realidade, mas os rótulos dele ainda são da IA; só vira número oficial depois que duas pessoas da equipe revisarem.
-- O recall de P1 de 100% vem do modelo + regras de prioridade. A regra dura em si garante só fumaça, fogo, choque e pessoa presa; os outros P1 (faísca, saída de emergência travada, extintor ausente, forro pendurado) o modelo acertou.
+- O teste cego também foi usado para **escolher entre duas versões** do modelo (a versão com FeatureUnion foi descartada porque piorou nele). E algumas frases dele são **parecidas com frases do treino** (ex.: "pessoa presa dentro do elevador" no teste e "pessoa presa no elevador" no treino). As duas coisas deixam o 100% mais otimista do que a realidade.
+- Por isso o número **mais perto do real é o do teste de campo**: 81% de categoria e 62% de prioridade, com rótulos ainda a revisar. Próximo passo: validação cruzada (dividir o treino em partes e testar cada parte com o resto) e um teste novo escrito por pessoas de fora, que não viram o treino.
+- **A confiança costuma ficar abaixo de 50%.** Medimos (14/11, `obter_modelo().prever` em cada frase): no teste cego, 16 de 20 frases ficaram abaixo de 50%; no teste de campo, 13 de 16. A média foi 37% nos dois (com 6 categorias, um chute daria 17%). É natural com 145 frases de treino. Na prática, o aviso de dúvida aparece quase sempre, e a pessoa confirma a categoria com um toque. Calibrar a confiança é próximo passo.
+- **Onde a IA mais ajuda é na prioridade**, não na categoria. Comparando com as palavras-chave sozinhas: no teste cego, prioridade 95% contra 40%; no campo, 62% contra 12%. Na categoria a diferença é menor (100% contra 90%; 81% contra 69%).
+- O recall de P1 de 100% vem do modelo + regras de prioridade. A regra dura em si garante só fumaça, fogo, choque e pessoa presa; os outros P1 (faísca, saída de emergência travada, extintor ausente, forro pendurado) o modelo acertou. **Gás não está na regra dura**: "cheiro de gás" ainda depende da IA (hoje sai como Limpeza P2). Incluir gás na regra é uma decisão da equipe.
 - Por isso a IA só sugere e o supervisor confirma.
