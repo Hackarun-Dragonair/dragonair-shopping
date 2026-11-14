@@ -93,6 +93,7 @@
     const cw = W / lay.colunas, ch = H / lay.linhas;
     const porZona = {};
     lay.celulas.forEach(([c, li, cod]) => (porZona[cod] = porZona[cod] || []).push([c, li]));
+    semLugar(daquele.filter((z) => !porZona[z.codigo]));
     daquele.forEach((z) => {
       const cels = porZona[z.codigo];
       if (!cels) return;
@@ -112,8 +113,19 @@
     });
   }
 
+  // Zona que o gestor ainda não pintou na planta não pode sumir: aparece como botão abaixo do mapa
+  function semLugar(lista) {
+    const div = $("sem-lugar");
+    if (!div) return;
+    div.classList.toggle("d-none", !lista.length);
+    div.innerHTML = lista.length ? '<span class="text-secondary me-1">Ainda sem lugar na planta:</span>' + lista.map((z) =>
+      `<button type="button" class="chip estado-${seguro(z.estado)} border-0 me-1 mb-1" data-zona="${seguro(z.codigo)}">${seguro(z.nome)} · ${seguro(z.rotulo)}</button>`).join("") : "";
+    div.querySelectorAll("button").forEach((b) => b.addEventListener("click", () => abrir(b.dataset.zona)));
+  }
+
   function desenhar() {
     svg.innerHTML = "";
+    semLugar([]);
     const daquele = zonas.filter((z) => z.piso === pisoAtual);
     const lay = layouts[pisoAtual];
     if (lay && (lay.imagem || (lay.celulas && lay.celulas.length))) return desenharPlanta(lay, daquele);

@@ -18,3 +18,4 @@ def test_mapa_carrega_script_e_aviso_de_planta(client):
     html = client.get("/").get_data(as_text=True)
     assert "js/mapa.js" in html
     assert "Editar mapa" in html
+    assert 'id="sem-lugar"' in html  # zonas ainda não pintadas na planta não somem
